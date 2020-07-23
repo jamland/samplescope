@@ -1,0 +1,20 @@
+:root {
+  /* color names */
+  --white-color: #fff;
+  --blue-grey: #606c76;
+  --dark-grey: #2d2d2d;
+  --light-grey: rgb(238, 238, 238);
+
+  /* theme colors */
+  --primary-color: #4ba8f4;
+
+  /* global colors */
+  --body-bg-color: var(--white-color);
+  --main-color: #ddd;
+  --border-color: #d1d1d1;
+  --bg-color: #f4f5f6;
+
+  /* header */
+  --app-header-color: var(--dark-grey);
+  --app-header-text-color: var(--light-grey);
+}

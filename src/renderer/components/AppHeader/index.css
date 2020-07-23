@@ -1,0 +1,34 @@
+.app-header {
+  --icon-width: 40px;
+}
+
+.app-header {
+  flex: 0;
+  background: var(--app-header-color);
+  color: var(--app-header-text-color);
+  height: 80px;
+  padding: 2em;
+}
+
+.app-header-search {
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+}
+
+.app-header-search .svg-icon {
+  width: var(--icon-width);
+  /* margin-right: calc(0 - var(--icon-width)); */
+  margin-right: -30px;
+  padding-bottom: 1em;
+  opacity: 0.75;
+}
+
+.app-header-search input[type='text'] {
+  border: none;
+  border-radius: 0;
+  color: white;
+  padding-left: var(--icon-width);
+  padding-bottom: 0.5em;
+  position: relative;
+}

@@ -1,0 +1,9 @@
+.player-wrapper {
+  display: flex;
+  margin-top: auto;
+  flex: 0 0 100px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  align-items: center;
+}

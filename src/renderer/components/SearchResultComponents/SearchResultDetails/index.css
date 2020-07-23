@@ -1,0 +1,42 @@
+.sample-details-section {
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  background: #4c4c4c;
+  height: 80%;
+  border-radius: 5px;
+  width: 40%;
+  color: white;
+  padding: 1em;
+  word-break: break-word;
+}
+
+.sample-details-section h5 {
+  text-align: right;
+  word-break: break-all;
+}
+
+.download-button {
+  flex: 0;
+  margin-left: auto;
+}
+
+.detailsTable {
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.detailsCol {
+  flex: 1;
+}
+
+.detailsRow {
+  display: flex;
+}
+
+.detailsCellTh {
+  flex: 0 0 80px;
+  opacity: 0.5;
+}

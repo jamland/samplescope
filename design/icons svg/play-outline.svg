@@ -1,0 +1,12 @@
+<svg
+    height='100%'
+    viewBox='0 0 17 20'
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <path
+      d="M2 .566A2 2 0 013.043.86l12.164 7.433a2 2 0 010 3.414L3.043 19.14A2 2 0 010 17.434V2.566a2 2 0 012-2zm0 16.868L14.165 10 2 2.566v14.868z"
+      fill='currentcolor'
+      className="svg-icon"
+    />
+  </svg>
