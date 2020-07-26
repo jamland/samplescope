@@ -1,87 +1,94 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useAudio } from 'react-use';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { AppContext } from '~/context/App.context';
-import './index.css';
+import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
+import { SampleInstance } from '@modules/freesound-search/freesound.types';
 
-const AudioPlayer = () => {
-  const { selectedSample } = useContext(AppContext);
-  const [audioPlayerProps, setAudioPlayerProps] = useState({
-    src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-    autoPlay: false,
-  });
+const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
+  container: ref,
+  waveColor: '#eee',
+  progressColor: 'OrangeRed',
+  cursorColor: 'OrangeRed',
+  barWidth: 3,
+  barRadius: 3,
+  responsive: true,
+  height: 50,
+  // If true, normalize by the maximum peak instead of 1.0.
+  normalize: true,
+  // Use the PeakCache to improve rendering speed of large waveforms.
+  partialRender: true,
+});
 
+interface Props {
+  sample: SampleInstance;
+}
+
+const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
+  const waveformRef = useRef<HTMLDivElement>(null);
+  const wavesurfer = useRef(null);
+  const [playing, setPlay] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+
+  // create new WaveSurfer instance
+  // On component mount and when url changes
   useEffect(() => {
-    if (selectedSample && selectedSample.url) {
-      const audioFile = selectedSample.previews['preview-hq-mp3'];
+    const url = sample.previews?.['preview-lq-mp3'];
 
-      setAudioPlayerProps({
-        src: audioFile,
-        autoPlay: true,
+    if (url && waveformRef.current) {
+      const params = formWaveSurferParams(waveformRef.current);
+      wavesurfer.current = WaveSurfer.create(params);
+
+      wavesurfer.current.load(url);
+
+      wavesurfer.current.on('ready', function() {
+        // https://wavesurfer-js.org/docs/methods.html
+        // wavesurfer.current.play();
+        // setPlay(true);
+
+        wavesurfer.current.setVolume(volume);
+        setVolume(volume);
       });
     }
-  }, [selectedSample?.url]);
 
-  const [audio, audioState, controls] = useAudio(
-    <audio {...audioPlayerProps} />
-  );
+    // Removes events, elements and disconnects Web Audio nodes.
+    // when component unmount
+    return () => wavesurfer.current.destroy();
+  }, [sample.id]);
+
+  const handlePlayPause = () => {
+    setPlay(!playing);
+    wavesurfer.current.playPause();
+  };
+
+  const onVolumeChange = e => {
+    const { target } = e;
+    const newVolume = +target.value;
+
+    if (newVolume) {
+      setVolume(newVolume);
+      wavesurfer.current.setVolume(newVolume || 1);
+    }
+  };
 
   return (
-    <div className="player-wrapper">
+    <div>
+      <div id="waveform" ref={waveformRef} />
       <div>
-        {/* audio is React's <audio> element that you have to insert somewhere in your render tree */}
-        <small>{audio}</small>
-        {/* <small style={{ fontSize: '.75em' }}>
-            <pre>{JSON.stringify(audioState, null, 2)}</pre>
-          </small> */}
-
-        <button className="button" onClick={controls.play}>
-          Play
-        </button>
-        <button className="button button-outline" onClick={controls.pause}>
-          Pause
-        </button>
-
-        <button className="button button-outline" onClick={controls.mute}>
-          Mute
-        </button>
-        <button className="button button-outline" onClick={controls.unmute}>
-          Un-mute
-        </button>
-        <br />
-        <button
-          className="Namebutton button-outline"
-          onClick={() => controls.volume(0.1)}
-        >
-          Volume: 10%
-        </button>
-        <button
-          className="button button-outline"
-          onClick={() => controls.volume(0.5)}
-        >
-          Volume: 50%
-        </button>
-        <button
-          className="button button-outline"
-          onClick={() => controls.volume(1)}
-        >
-          Volume: 100%
-        </button>
-        <button
-          className="Namebutton button-outline"
-          onClick={() => controls.seek(audioState.time - 5)}
-        >
-          -5 sec
-        </button>
-        <button
-          className="Namebutton button-outline"
-          onClick={() => controls.seek(audioState.time + 5)}
-        >
-          +5 sec
-        </button>
+        <input
+          type="range"
+          id="volume"
+          name="volume"
+          // waveSurfer recognize value of `0` same as `1`
+          //  so we need to set some zero-ish value for silence
+          min="0.001"
+          max="1"
+          step=".005"
+          onChange={onVolumeChange}
+          defaultValue={volume}
+        />
+        <button onClick={handlePlayPause}>{!playing ? 'Play' : 'Pause'}</button>
       </div>
     </div>
   );
 };
 
-export default React.memo(AudioPlayer);
+export default AudioPlayer;

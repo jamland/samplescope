@@ -11,8 +11,16 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.result-list-item[data-isactive='true'] * {
+  font-weight: 500;
+}
+
 .result-list-item h5 {
   margin-bottom: 0;
+  margin-bottom: 0;
+  color: #444;
+  font-weight: 300;
+  font-size: 2rem;
 }
 
 .result-list-item svg {

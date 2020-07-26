@@ -2,7 +2,6 @@ import React, { Profiler } from 'react';
 
 import SearchResultComponents from './components/SearchResultComponents';
 import AppHeader from '@components/AppHeader';
-import AudioPlayer from '@components/AudioPlayer';
 import { AppContextProvider } from './context/App.context';
 
 import './styles/global.css';
@@ -16,7 +15,6 @@ const App = () => {
         <div className="app-shell">
           <AppHeader />
           <SearchResultComponents />
-          <AudioPlayer />
 
           {/* <SettingsScreen /> */}
 

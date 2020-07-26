@@ -1,0 +1,82 @@
+.sample-details-section {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 20px;
+  right: 20px;
+  background: #4c4c4c;
+  height: 95%;
+  border-radius: 5px;
+  width: 50%;
+  color: white;
+  padding: 1em 2em;
+  word-break: break-word;
+  z-index: 2;
+}
+
+.sample-details-text {
+  flex: 1;
+  overflow: scroll;
+}
+
+.sample-details-section h5 {
+  text-align: right;
+  word-break: break-all;
+}
+
+.download-button {
+  flex: 0;
+  margin-left: auto;
+}
+
+.detailsTable {
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.detailsCol {
+  flex: 1;
+}
+
+.detailsRow {
+  display: flex;
+}
+
+.detailsCellTh {
+  flex: 0 0 80px;
+  opacity: 0.5;
+}
+
+.audio-player-container {
+  height: 100px;
+  margin-bottom: auto;
+  flex: 0 0 100px;
+}
+
+.download-container {
+  margin-top: auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex: 0;
+}
+
+.download-container button {
+  width: 100%;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0.5em 0 0;
+}
+
+.download-container button svg {
+  margin-right: 1em;
+}
+
+.download-container .download-progress {
+  margin-left: 1em;
+}

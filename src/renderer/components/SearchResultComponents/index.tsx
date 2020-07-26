@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 
 import SearchResultList from '~/components/SearchResultComponents/SearchResultList';
-import SearchResultDetails from '~/components/SearchResultComponents/SearchResultDetails';
+import ResultDetails from '~/components/SearchResultComponents/ResultDetails';
+import ResultCount from '~/components/SearchResultComponents/ResultCount';
 import useSampleSearch from '@hooks/useSampleSearch';
 import { AppContext } from '~/context/App.context';
 
@@ -28,20 +29,11 @@ const SearchResultsComponents = () => {
 
   return (
     <div className="search-results-wrapper">
-      <SearchResultDetails />
+      <ResultDetails />
 
       <div style={{ backgroundColor: 'tomato' }}>{error && 'Error'}</div>
 
-      <div
-        style={{
-          borderBottom: '1px solid rgba(0,0,0,.15)',
-          padding: '.5em 2em',
-        }}
-      >
-        {!loading && (
-          <small>{Number(foundCount).toLocaleString()} samples found</small>
-        )}
-      </div>
+      <ResultCount loading={loading} foundCount={foundCount} />
 
       <div className="search-results-list">
         <SearchResultList

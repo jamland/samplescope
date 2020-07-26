@@ -7,7 +7,7 @@ import {
   SampleInstance,
 } from '@modules/freesound-search/freesound.types';
 
-type FoundCount = number | undefined;
+export type FoundCount = number | undefined;
 export type SelectedSample = SamplePreview | SampleInstance | null;
 
 type ContextProps = State & {

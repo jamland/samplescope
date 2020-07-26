@@ -4,8 +4,8 @@ const { download } = require('electron-dl');
 //
 // require('dotenv').config();
 
-const path = require('path');
-const os = require('os');
+// const path = require('path');
+// const os = require('os');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -30,11 +30,13 @@ const createWindow = () => {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 980,
+    width: 1200,
     height: 680,
     webPreferences: {
       nodeIntegration: true,
     },
+    backgroundColor: '#ffffff',
+    show: false,
   });
 
   // and load the index.html of the app.
@@ -51,20 +53,73 @@ const createWindow = () => {
     mainWindow = null;
   });
 
-  // ipcMain.on('download-file', async (event, { url }) => {
-  //   const focusedWindow = mainWindow.getFocusedWindow();
-  //   console.log(await download(focusedWindow, url));
-  // });
-
-  ipcMain.on('download-file', async (event, { url }) => {
-    console.log('Download started...');
-
-    const focusedWindow = BrowserWindow.getFocusedWindow();
-    console.log(await download(focusedWindow, url, savedFileOptions));
-
-    event.reply('download-done', 'download is done!');
+  // Showing window gracefully
+  // prevent visual flash while scripts loading
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 };
+
+// ipcMain.on('download-file', async (event, { url }) => {
+//   const focusedWindow = mainWindow.getFocusedWindow();
+//   console.log(await download(focusedWindow, url));
+// });
+
+ipcMain.on('download-file', async (event, arg) => {
+  const { url, filename } = arg;
+
+  if (!url) {
+    event.reply('download-done', {
+      result: 'error',
+      message: 'no URL param provided for download',
+    });
+  } else {
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+
+    try {
+      const options = {
+        ...savedFileOptions,
+        filename,
+      };
+      await download(focusedWindow, url, options);
+
+      event.reply('download-done', {
+        result: 'success',
+        message: 'File downloaded!',
+      });
+    } catch (error) {
+      event.reply('download-done', {
+        result: 'error',
+        message: error.message,
+      });
+    }
+  }
+});
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow);
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and import them here.
 
 const savedFileOptions = {
   // Type: boolean
@@ -102,7 +157,7 @@ const savedFileOptions = {
   // Type: Function
   // Optional callback that receives a number between 0 and 1 representing the progress of the current download.
   onProgress: progress => {
-    console.log('progress', progress);
+    mainWindow.webContents.send('download-progress', { progress });
   },
 
   // Type: Function
@@ -117,30 +172,5 @@ const savedFileOptions = {
   // Type: boolean
   // Default: true
   // Shows the file count badge on macOS/Linux dock icons when download is in progress.
-  showBadge: true,
+  // showBadge: true,
 };
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

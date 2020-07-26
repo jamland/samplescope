@@ -128,6 +128,8 @@ export interface SampleInstance {
 
   // Dictionary containing the results of the AudioCommons analysis for the given sound.
   ac_analysis: acAnalysisDetails;
+
+  pack_name: string;
 }
 
 type SampleImages = {
@@ -142,10 +144,10 @@ type SampleImages = {
 };
 
 type SamplePreviews = {
-  'preview-hq-mp3': URL;
-  'preview-hq-ogg': URL;
-  'preview-lq-mp3': URL;
-  'preview-lq-ogg': URL;
+  'preview-hq-mp3': string;
+  'preview-hq-ogg': string;
+  'preview-lq-mp3': string;
+  'preview-lq-ogg': string;
 };
 
 type SampleFileType = 'wav' | 'aif' | 'aiff' | 'mp3' | 'm4a' | 'flac';
