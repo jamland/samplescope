@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import SearchResultList from '~/components/SearchResultComponents/SearchResultList';
 import ResultDetails from '~/components/SearchResultComponents/ResultDetails';
 import ResultCount from '~/components/SearchResultComponents/ResultCount';
+import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
 import useSampleSearch from '@hooks/useSampleSearch';
 import { AppContext } from '~/context/App.context';
 
@@ -47,4 +48,9 @@ const SearchResultsComponents = () => {
   );
 };
 
-export default SearchResultsComponents;
+const SearchResultsComponentsMemo = React.memo(SearchResultsComponents);
+const WrappedSearchResultsComponents = WithErrorBoundary(
+  SearchResultsComponentsMemo
+);
+
+export default React.memo(WrappedSearchResultsComponents);

@@ -10,6 +10,7 @@ body {
   margin: 0;
   font-size: 1.5em;
   background-color: var(--body-bg-color);
+  cursor: default;
 }
 
 input {

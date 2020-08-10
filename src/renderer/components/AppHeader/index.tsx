@@ -3,9 +3,10 @@ import { useDebounce } from 'react-use';
 
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
+import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
 import './index.css';
 
-const AppHeader = () => {
+const AppHeader: React.FC<{}> = () => {
   const [inputValue, setInputValue] = useState('');
   const { setSearchQuery: setDebouncedValue, foundCount } = useContext(
     AppContext
@@ -45,4 +46,7 @@ const AppHeader = () => {
   );
 };
 
-export default React.memo(AppHeader);
+const AppHeaderMemo = React.memo(AppHeader);
+const WrappedAppHeader = WithErrorBoundary(AppHeaderMemo);
+
+export default React.memo(WrappedAppHeader);

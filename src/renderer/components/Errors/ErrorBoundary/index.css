@@ -1,0 +1,24 @@
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+  justify-content: center;
+  width: 100%;
+  cursor: default;
+}
+
+.error-warning-section {
+  display: flex;
+}
+
+.error-warning-icon {
+  margin-right: 0.5em;
+}
+
+.error-warning-text {
+  line-height: 1.25em;
+  font-size: 0.75em;
+}
+
+/* .error-details {} */
