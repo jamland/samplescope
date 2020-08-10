@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useContext } from 'react';
+import { useKeyPressEvent } from 'react-use';
 
 import {
   SampleList,
@@ -6,6 +7,7 @@ import {
 } from '@modules/freesound-search/freesound.types';
 import { AppContext } from '~/context/App.context';
 import SearchResultListItem from './SearchResultListItem';
+import eventPlayerEmitter from '@modules/EventPlayerEmitter';
 
 type Props = {
   loading: boolean;
@@ -55,8 +57,47 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
   const onItemClick = (sample: SamplePreview) => {
-    setSelectedSample(sample);
+    if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
+
+  const onNextClick = () => {
+    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+    const nextSample = samples[indexSelected + 1];
+    setSelectedSample(nextSample);
+  };
+
+  useKeyPressEvent('ArrowDown', () => {
+    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+
+    if (indexSelected < samples.length - 1) {
+      // select next or firest in list
+      const nextSample = samples[indexSelected + 1];
+      setSelectedSample(nextSample);
+    }
+  });
+
+  useKeyPressEvent('ArrowUp', () => {
+    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+    if (indexSelected > 0) {
+      const nextSample = samples[indexSelected - 1];
+      setSelectedSample(nextSample);
+    }
+  });
+
+  useKeyPressEvent('ArrowRight', () => {
+    if (selectedSample) {
+      eventPlayerEmitter.emit(eventPlayerEmitter.play, true);
+    } else {
+      setSelectedSample(samples[0]);
+      eventPlayerEmitter.emit(eventPlayerEmitter.play, true);
+    }
+  });
+
+  useKeyPressEvent('ArrowLeft', () => {
+    if (selectedSample) {
+      eventPlayerEmitter.emit(eventPlayerEmitter.play, false);
+    }
+  });
 
   return (
     <div>
@@ -72,6 +113,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
               sample={sample}
               refForLastItem={refForLastItem}
               onItemClick={onItemClick}
+              onNextClick={onNextClick}
             />
           );
         })}

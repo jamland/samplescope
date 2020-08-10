@@ -7,7 +7,9 @@ import './index.css';
 
 const AppHeader = () => {
   const [inputValue, setInputValue] = useState('');
-  const { setSearchQuery: setDebouncedValue } = useContext(AppContext);
+  const { setSearchQuery: setDebouncedValue, foundCount } = useContext(
+    AppContext
+  );
 
   useDebounce(
     () => {
@@ -22,6 +24,10 @@ const AppHeader = () => {
     setInputValue(value);
   };
 
+  const placeholderText = foundCount
+    ? `Search over ${Number(foundCount).toLocaleString()} samples`
+    : 'Search';
+
   return (
     <div className="app-header">
       <div className="app-header-search">
@@ -30,8 +36,9 @@ const AppHeader = () => {
           // set value so it will be reflected here when changed from other places
           value={inputValue}
           type="text"
-          placeholder="search"
+          placeholder={placeholderText}
           onChange={handleSearch}
+          autoFocus={true}
         />
       </div>
     </div>

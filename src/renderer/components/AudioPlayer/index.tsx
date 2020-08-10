@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
+
 import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import eventPlayerEmitter from '@modules/EventPlayerEmitter';
+
+import './index.css';
 
 const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
   container: ref,
@@ -20,18 +23,34 @@ const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
 
 interface Props {
   sample: SampleInstance;
+  // onWaveformLoaded: () => void;
 }
 
 const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
-  const wavesurfer = useRef(null);
+  const wavesurfer = useRef<WaveSurfer>();
   const [playing, setPlay] = useState(false);
   const [volume, setVolume] = useState(0.5);
+
+  // on mount
+  useEffect(() => {
+    const playEvent = eventPlayerEmitter.subscribe(
+      eventPlayerEmitter.play,
+      (playOrStop: boolean) => {
+        playSample(playOrStop);
+      }
+    );
+
+    return () => {
+      playEvent.unsubscribe();
+    };
+  }, []);
 
   // create new WaveSurfer instance
   // On component mount and when url changes
   useEffect(() => {
     const url = sample.previews?.['preview-lq-mp3'];
+    setPlay(false);
 
     if (url && waveformRef.current) {
       const params = formWaveSurferParams(waveformRef.current);
@@ -40,23 +59,44 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
       wavesurfer.current.load(url);
 
       wavesurfer.current.on('ready', function() {
-        // https://wavesurfer-js.org/docs/methods.html
-        // wavesurfer.current.play();
-        // setPlay(true);
+        if (wavesurfer.current) {
+          // onWaveformLoaded();
+          wavesurfer.current.setVolume(volume);
+          setVolume(volume);
+        }
+      });
 
-        wavesurfer.current.setVolume(volume);
-        setVolume(volume);
+      wavesurfer.current.drawer.on('click', e => {
+        if (wavesurfer.current) {
+          const isPlaying = wavesurfer.current.isPlaying();
+          if (!isPlaying) {
+            e.preventDefault();
+            playSample(true);
+          }
+        }
       });
     }
 
     // Removes events, elements and disconnects Web Audio nodes.
     // when component unmount
-    return () => wavesurfer.current.destroy();
+    return () => {
+      if (wavesurfer.current) wavesurfer.current.destroy();
+    };
   }, [sample.id]);
 
   const handlePlayPause = () => {
     setPlay(!playing);
     wavesurfer.current.playPause();
+  };
+
+  const playSample = shouldPlay => {
+    setPlay(shouldPlay);
+
+    if (shouldPlay) {
+      wavesurfer.current.play();
+    } else {
+      wavesurfer.current.stop();
+    }
   };
 
   const onVolumeChange = e => {
@@ -70,9 +110,8 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
   };
 
   return (
-    <div>
-      <div id="waveform" ref={waveformRef} />
-      <div>
+    <div className="audio-player">
+      <div className="audio-player-volume">
         <input
           type="range"
           id="volume"
@@ -80,12 +119,15 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
           // waveSurfer recognize value of `0` same as `1`
           //  so we need to set some zero-ish value for silence
           min="0.001"
-          max="1"
+          max="1.5"
           step=".005"
           onChange={onVolumeChange}
           defaultValue={volume}
+          title={volume * 100 + '%'}
         />
-        <button onClick={handlePlayPause}>{!playing ? 'Play' : 'Pause'}</button>
+      </div>
+      <div className="audio-player-wave">
+        <div id="waveform" ref={waveformRef} />
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ const defaultTextSearchProps = {
 const getByURL = async (
   url: URL,
   abortController: AbortController = new AbortController()
-): Promise<SearchTextResponse> => {
+): Promise<SearchTextResponse | null> => {
   try {
     const postfix = `&token=${config.apiKey}`;
     const response = await fetch(url + postfix, {
@@ -64,12 +64,16 @@ const getByURL = async (
       // });
     }
   } catch (error) {
-    const detail = {
-      message: error.message,
-    };
-    const event = new CustomEvent('requestError', { detail });
-    window.dispatchEvent(event);
-    return Promise.reject(new Error(error.message));
+    if (error.name === 'AbortError') {
+      return Promise.resolve(null);
+    } else {
+      const detail = {
+        message: error.message,
+      };
+      const event = new CustomEvent('requestError', { detail });
+      window.dispatchEvent(event);
+      return Promise.reject(new Error(error.message));
+    }
   }
 };
 
@@ -106,6 +110,8 @@ const searchText = async ({
 
   return getByURL(url, abortController);
 };
+
+const cache = {};
 
 /**
  * TODO:
@@ -174,7 +180,23 @@ const fetchSoundInstance = async ({
   id,
 }: SearchInstanceRequest): Promise<SampleInstance> => {
   const url = `${API.SOUNDS}${id}/?`;
-  return getByURL(url);
+
+  const cachedResult = cache[url];
+
+  if (cachedResult) {
+    return Promise.resolve(cachedResult);
+  } else {
+    try {
+      const result = await getByURL(url);
+      cache[url] = result;
+      console.log('cache', cache);
+      return Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  // return getByURL(url);
 };
 
 export default {

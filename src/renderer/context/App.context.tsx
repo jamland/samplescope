@@ -46,10 +46,13 @@ export const AppContextProvider = ({
 }: React.ProviderProps<undefined>) => {
   const [state, setState] = useSetState(initialState);
 
-  const setSearchQuery = (searchQuery: string) => setState({ searchQuery });
+  const setSearchQuery = (searchQuery: string) => {
+    setSelectedSample(null);
+    setState({ searchQuery });
+  };
   const setResultCount = (foundCount: FoundCount) => setState({ foundCount });
 
-  const setSelectedSample = async (selectedSample: SamplePreview) => {
+  const setSelectedSample = async (selectedSample: SamplePreview | null) => {
     // set sample preview info as sample details, before more info loaded
     // so user will see at least something, while it loads
     setState({
@@ -57,6 +60,8 @@ export const AppContextProvider = ({
       selectedIsLoading: true,
       selectedIsLoaded: false,
     });
+
+    if (!selectedSample) return;
 
     try {
       // get sample details

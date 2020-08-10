@@ -10,8 +10,6 @@ import './index.css';
 const ResultDetails: React.FC<{}> = () => {
   const { selectedSample } = useContext(AppContext);
 
-  console.log('selectedSample', selectedSample);
-
   if (!selectedSample) return null;
 
   const isDetailsAvailable =

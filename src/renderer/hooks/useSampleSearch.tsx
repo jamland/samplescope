@@ -72,11 +72,12 @@ const useSampleSearch = (query: string) => {
           abortController
         );
 
-        updateSampleList(freeSoundResponse);
+        if (freeSoundResponse) updateSampleList(freeSoundResponse);
       } catch (e) {
-        console.warn('fetch error', e);
-        if (e.name === 'AbortError') return undefined;
-        setState({ error: true });
+        console.dir('fetch error', e.name);
+        if (e.name !== 'AbortError') {
+          setState({ error: true });
+        }
       }
     })();
 
@@ -89,7 +90,7 @@ const useSampleSearch = (query: string) => {
     url: URL | null,
     query: string,
     abortController: AbortController
-  ): Promise<SearchResponse> => {
+  ): Promise<SearchResponse | null> => {
     // in case of new search use this
     if (url === null) {
       return freesoundSearch.searchText({

@@ -10,6 +10,7 @@ type Props = {
   isSampleActive: boolean;
   refForLastItem: {};
   onItemClick: (sample: SamplePreview) => void;
+  onNextClick: () => void;
 };
 
 const SearchResultListItem: React.FunctionComponent<Props> = ({
@@ -17,6 +18,7 @@ const SearchResultListItem: React.FunctionComponent<Props> = ({
   isSampleActive,
   refForLastItem,
   onItemClick,
+  onNextClick,
 }: Props) => {
   return (
     <li
