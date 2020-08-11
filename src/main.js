@@ -1,5 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { download } = require('electron-dl');
+const windowStateKeeper = require('electron-window-state');
+
+const defaultWidth = 1200;
+const defaultHeight = 680;
 
 //
 // require('dotenv').config();
@@ -28,10 +32,20 @@ const createWindow = () => {
   //   )
   // );
 
+  // Load the previous window state with fallback to defaults
+  const mainWindowState = windowStateKeeper({
+    defaultWidth,
+    defaultHeight,
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 680,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 350,
+    minHeight: 500,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -58,6 +72,11 @@ const createWindow = () => {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
+
+  // register listeners on the window, so windowStateKeeper can update the state
+  // automatically (the listeners will be removed when the window is closed)
+  // and restore the maximized or full screen state
+  mainWindowState.manage(mainWindow);
 };
 
 // ipcMain.on('download-file', async (event, { url }) => {
@@ -99,7 +118,11 @@ ipcMain.on('download-file', async (event, arg) => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  console.log(app.getName());
+  console.log(app.getVersion());
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
