@@ -4,6 +4,8 @@ import { useDebounce } from 'react-use';
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
+import eventEmitter from '@modules/EventEmitter';
+import { Sliders } from 'react-feather';
 import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
@@ -25,6 +27,10 @@ const AppHeader: React.FC<{}> = () => {
     setInputValue(value);
   };
 
+  const handleSettingsOpen = () => {
+    eventEmitter.emit(eventEmitter.toggleSidebar, true);
+  };
+
   const placeholderText = foundCount
     ? `Search over ${Number(foundCount).toLocaleString()} samples`
     : 'Search';
@@ -32,15 +38,26 @@ const AppHeader: React.FC<{}> = () => {
   return (
     <div className="app-header">
       <div className="app-header-search">
-        <SearchIcon />
-        <input
-          // set value so it will be reflected here when changed from other places
-          value={inputValue}
-          type="text"
-          placeholder={placeholderText}
-          onChange={handleSearch}
-          autoFocus={true}
-        />
+        <div>
+          <button
+            className="small settings-toggler"
+            onClick={handleSettingsOpen}
+          >
+            <Sliders />
+          </button>
+        </div>
+
+        <div className="search-box">
+          <SearchIcon />
+          <input
+            // set value so it will be reflected here when changed from other places
+            value={inputValue}
+            type="text"
+            placeholder={placeholderText}
+            onChange={handleSearch}
+            autoFocus={true}
+          />
+        </div>
       </div>
     </div>
   );

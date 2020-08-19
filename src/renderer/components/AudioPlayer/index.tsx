@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
 
 import { SampleInstance } from '@modules/freesound-search/freesound.types';
-import eventPlayerEmitter from '@modules/EventPlayerEmitter';
+import eventEmitter from '@modules/EventEmitter';
 
 import './index.css';
 
@@ -34,8 +34,8 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
 
   // on mount
   useEffect(() => {
-    const playEvent = eventPlayerEmitter.subscribe(
-      eventPlayerEmitter.play,
+    const playEvent = eventEmitter.subscribe(
+      eventEmitter.play,
       (playOrStop: boolean) => {
         playSample(playOrStop);
       }

@@ -7,20 +7,22 @@
   background: var(--app-header-color);
   color: var(--app-header-text-color);
   height: 80px;
-  padding: 2em;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
 }
 
 .app-header-search {
   display: flex;
   align-items: center;
   max-width: 600px;
+  margin-top: 1em;
 }
 
 .app-header-search .svg-icon {
   width: var(--icon-width);
   /* margin-right: calc(0 - var(--icon-width)); */
   margin-right: -30px;
-  padding-bottom: 1em;
   opacity: 0.75;
 }
 
@@ -31,4 +33,18 @@
   padding-left: var(--icon-width);
   padding-bottom: 0.5em;
   position: relative;
+  margin: 0;
+}
+
+.search-box {
+  flex: 1;
+  display: flex;
+}
+
+.settings-toggler {
+  padding: 0.5em;
+  width: 40px;
+  margin-right: 20px;
+  background: none;
+  border-color: rgba(255, 255, 255, 0.1);
 }

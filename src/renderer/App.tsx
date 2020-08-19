@@ -2,6 +2,7 @@ import React, { Profiler } from 'react';
 
 import SearchResultComponents from './components/SearchResultComponents';
 import AppHeader from '@components/AppHeader';
+import Settings from '@components/Settings';
 import ErrorTracker from '~/components/Errors/ErrorTracker';
 import { AppContextProvider } from './context/App.context';
 
@@ -15,10 +16,12 @@ const App = () => {
       <AppContextProvider value={undefined}>
         <Profiler id="App" onRender={() => {}}>
           <div className="app-shell">
-            <AppHeader />
-            <SearchResultComponents />
+            <Settings />
 
-            {/* <SettingsScreen /> */}
+            <div className="main-screen">
+              <AppHeader />
+              <SearchResultComponents />
+            </div>
 
             {/* <Content /> */}
           </div>

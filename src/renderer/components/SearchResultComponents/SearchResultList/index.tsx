@@ -7,7 +7,7 @@ import {
 } from '@modules/freesound-search/freesound.types';
 import { AppContext } from '~/context/App.context';
 import SearchResultListItem from './SearchResultListItem';
-import eventPlayerEmitter from '@modules/EventPlayerEmitter';
+import eventEmitter from '@modules/EventEmitter';
 
 type Props = {
   loading: boolean;
@@ -86,16 +86,16 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 
   useKeyPressEvent('ArrowRight', () => {
     if (selectedSample) {
-      eventPlayerEmitter.emit(eventPlayerEmitter.play, true);
+      eventEmitter.emit(eventEmitter.play, true);
     } else {
       setSelectedSample(samples[0]);
-      eventPlayerEmitter.emit(eventPlayerEmitter.play, true);
+      eventEmitter.emit(eventEmitter.play, true);
     }
   });
 
   useKeyPressEvent('ArrowLeft', () => {
     if (selectedSample) {
-      eventPlayerEmitter.emit(eventPlayerEmitter.play, false);
+      eventEmitter.emit(eventEmitter.play, false);
     }
   });
 

@@ -1,0 +1,32 @@
+.settings-sidebar {
+  flex: 0;
+  flex-shrink: 0;
+  flex-basis: 0;
+  width: 0;
+  min-height: 100vh;
+  transition: flex-basis 0.3s ease;
+  overflow: hidden;
+}
+
+.settings-sidebar[data-open='true'] {
+  flex-basis: 400px;
+}
+
+.settings-sidebar .app-header > * {
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+
+.settings-sidebar .settings-content {
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.settings-content {
+  padding: 3em 2em 1em;
+}
+
+.settings-sidebar[data-open='true'] .app-header > *,
+.settings-sidebar[data-open='true'] .settings-content {
+  opacity: 1;
+}
