@@ -87,3 +87,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Private data like test dev certificate
+private/

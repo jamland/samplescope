@@ -13,7 +13,7 @@ export enum MenuItems {
 }
 
 const Settings: React.FC<Props> = props => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState(MenuItems.Services);
 
   useEffect(() => {

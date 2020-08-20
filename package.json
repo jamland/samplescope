@@ -1,18 +1,28 @@
 {
   "name": "samplescope",
-  "productName": "samplescope",
+  "productName": "Samplescope",
   "version": "0.9.2",
   "description": "Search samples over internet sources",
   "main": ".webpack/main",
+  "repository": "https://github.com/jamland/samplescope",
   "scripts": {
-    "start": "electron-forge start",
-    "start:watch": "nodemon --exec 'electron-forge start'",
+    "start": "DEV_MODE=true electron-forge start",
+    "start:watch": "DEV_MODE=true nodemon --exec 'electron-forge start'",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "lint:app": "electron-forge lint"
   },
-  "keywords": [],
+  "keywords": [
+    "audio",
+    "samples",
+    "audio samples",
+    "mp3",
+    "wav",
+    "ogg",
+    "music production"
+  ],
   "author": {
     "name": "Andy Burkovetsky",
     "email": "jamandyjam@gmail.com"
@@ -20,12 +30,20 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "appBundleId": "com.github.jamland.samplescope",
+        "icon": "./assets/icons/icon.icns",
+        "appCategoryType": "public.app-category.music"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "samplescope_v2"
+            "name": "samplescope",
+            "certificateFile": "./private/samplescope-dev.p12",
+            "certificatePassword": "",
+            "iconUrl": "./assets/icons/icon.ico",
+            "loadingGif": ""
           }
         },
         {
