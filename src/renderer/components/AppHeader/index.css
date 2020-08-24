@@ -15,8 +15,8 @@
 .app-header-search {
   display: flex;
   align-items: center;
-  max-width: 600px;
   margin-top: 1em;
+  flex: 1;
 }
 
 .app-header-search .svg-icon {
@@ -34,6 +34,10 @@
   padding-bottom: 0.5em;
   position: relative;
   margin: 0;
+}
+
+.app-header-search input[type='text']::placeholder {
+  color: var(--app-header-text-placeholder-color);
 }
 
 .search-box {

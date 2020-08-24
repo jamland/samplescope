@@ -33,7 +33,18 @@
       "packagerConfig": {
         "appBundleId": "com.github.jamland.samplescope",
         "icon": "./assets/icons/icon.icns",
-        "appCategoryType": "public.app-category.music"
+        "appCategoryType": "public.app-category.music",
+        "osxSign": {
+          "identity": "Developer ID Application: Andy Burkovetsky / Jamland (LT94ZKYDCJ)",
+          "hardened-runtime": true,
+          "entitlements": "entitlements.plist",
+          "entitlements-inherit": "entitlements.plist",
+          "signature-flags": "library"
+        },
+        "osxNotarize": {
+          "appleId": "desireddada@gmail.com",
+          "appleIdPassword": ""
+        }
       },
       "makers": [
         {

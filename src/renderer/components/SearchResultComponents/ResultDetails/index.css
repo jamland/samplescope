@@ -4,7 +4,7 @@
   flex-direction: column;
   top: 20px;
   right: 20px;
-  background: #4c4c4c;
+  background: var(--gray-700);
   height: 95%;
   border-radius: 5px;
   width: 50%;
@@ -30,7 +30,7 @@
 }
 
 .detailsTable {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--gray-900);
   display: flex;
   padding: 1em;
   margin: 1em 0;
