@@ -66,6 +66,13 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     setSelectedSample(nextSample);
   };
 
+  const playPause = (e: Event, sample: SamplePreview) => {
+    e.stopPropagation();
+
+    if (sample.id !== selectedSample?.id) setSelectedSample(sample);
+    eventEmitter.emit(eventEmitter.play, true);
+  };
+
   useKeyPressEvent('ArrowDown', () => {
     const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
 
@@ -114,6 +121,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
               refForLastItem={refForLastItem}
               onItemClick={onItemClick}
               onNextClick={onNextClick}
+              onPlayPauseClick={playPause}
             />
           );
         })}

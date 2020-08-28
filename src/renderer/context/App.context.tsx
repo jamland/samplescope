@@ -22,6 +22,7 @@ interface State {
   selectedIsLoading: boolean;
   selectedIsLoaded: boolean;
   foundCount: FoundCount;
+  volume: number;
 }
 
 const initialState: State = {
@@ -30,6 +31,7 @@ const initialState: State = {
   selectedIsLoading: false,
   selectedIsLoaded: false,
   foundCount: undefined,
+  volume: 0.5,
 };
 
 const defaultProps = {

@@ -11,6 +11,7 @@ type Props = {
   refForLastItem: {};
   onItemClick: (sample: SamplePreview) => void;
   onNextClick: () => void;
+  onPlayPauseClick: (e: Event, sample: SamplePreview) => void;
 };
 
 const SearchResultListItem: React.FunctionComponent<Props> = ({
@@ -19,15 +20,21 @@ const SearchResultListItem: React.FunctionComponent<Props> = ({
   refForLastItem,
   onItemClick,
   onNextClick,
+  onPlayPauseClick,
 }: Props) => {
+  const onClickHandler = () => onItemClick(sample);
+  const onPlayPauseClickHandler = (e: Event) => onPlayPauseClick(e, sample);
+
   return (
     <li
       {...refForLastItem}
-      onClick={() => onItemClick(sample)}
+      onClick={onClickHandler}
       className="result-list-item"
       data-isactive={isSampleActive}
     >
-      <PlayIcon width="32" />
+      <div onClick={onPlayPauseClickHandler}>
+        <PlayIcon width="32" />
+      </div>
       <div>
         <h5>{sample.name}</h5>
 

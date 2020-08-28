@@ -23,21 +23,29 @@ const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
 
 interface Props {
   sample: SampleInstance;
+  volume: number;
   // onWaveformLoaded: () => void;
 }
 
-const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
+const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
   const [playing, setPlay] = useState(false);
-  const [volume, setVolume] = useState(0.5);
 
   // on mount
   useEffect(() => {
     const playEvent = eventEmitter.subscribe(
       eventEmitter.play,
       (playOrStop: boolean) => {
-        playSample(playOrStop);
+        console.log('wavesurfer.current.isReady', wavesurfer.current?.isReady);
+
+        if (wavesurfer.current?.isReady) playSample(playOrStop);
+        else {
+          if (!wavesurfer.current) return;
+          wavesurfer.current.on('ready', function() {
+            playSample(playOrStop);
+          });
+        }
       }
     );
 
@@ -62,7 +70,6 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
         if (wavesurfer.current) {
           // onWaveformLoaded();
           wavesurfer.current.setVolume(volume);
-          setVolume(volume);
         }
       });
 
@@ -84,12 +91,14 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
     };
   }, [sample.id]);
 
-  const handlePlayPause = () => {
-    setPlay(!playing);
-    wavesurfer.current.playPause();
-  };
+  useEffect(() => {
+    if (wavesurfer.current) {
+      wavesurfer.current.setVolume(volume);
+    }
+  }, [volume]);
 
-  const playSample = shouldPlay => {
+  const playSample = (shouldPlay: boolean) => {
+    if (!wavesurfer.current) return;
     setPlay(shouldPlay);
 
     if (shouldPlay) {
@@ -99,36 +108,9 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
     }
   };
 
-  const onVolumeChange = e => {
-    const { target } = e;
-    const newVolume = +target.value;
-
-    if (newVolume) {
-      setVolume(newVolume);
-      wavesurfer.current.setVolume(newVolume || 1);
-    }
-  };
-
   return (
-    <div className="audio-player">
-      <div className="audio-player-volume">
-        <input
-          type="range"
-          id="volume"
-          name="volume"
-          // waveSurfer recognize value of `0` same as `1`
-          //  so we need to set some zero-ish value for silence
-          min="0.001"
-          max="1.5"
-          step=".005"
-          onChange={onVolumeChange}
-          defaultValue={volume}
-          title={volume * 100 + '%'}
-        />
-      </div>
-      <div className="audio-player-wave">
-        <div id="waveform" ref={waveformRef} />
-      </div>
+    <div className="audio-player-wave">
+      <div id="waveform" ref={waveformRef} />
     </div>
   );
 };
