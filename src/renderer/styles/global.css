@@ -12,6 +12,7 @@ body {
   margin: 0;
   font-size: 1.5em;
   background-color: var(--body-bg-color);
+  color: var(--main-color);
   cursor: default;
 }
 
@@ -24,9 +25,14 @@ input::placeholder {
   /* color: rgba(255, 255, 255, 0.5); */
 }
 
-a {
-  /* color: #09d3ac; */
-  text-decoration: none;
+/**
+ * highlight all unwrapped links with red color
+ * so it can be seen. There are shouldn't be unwrapped links
+ */
+a:not(.browser-link) {
+  color: tomato;
+  font-weight: bold;
+  background: lime;
 }
 
 ul {

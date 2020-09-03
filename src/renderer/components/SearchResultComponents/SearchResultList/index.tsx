@@ -3,7 +3,7 @@ import { useKeyPressEvent } from 'react-use';
 
 import {
   SampleList,
-  SamplePreview,
+  SampleInstance,
 } from '@modules/freesound-search/freesound.types';
 import { AppContext } from '~/context/App.context';
 import SearchResultListItem from './SearchResultListItem';
@@ -56,7 +56,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   const setRefForLastItemInList = (samples: SampleList, index: number) =>
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
-  const onItemClick = (sample: SamplePreview) => {
+  const onItemClick = (sample: SampleInstance) => {
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
 
@@ -66,11 +66,20 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     setSelectedSample(nextSample);
   };
 
-  const playPause = (e: Event, sample: SamplePreview) => {
+  const playPause = (e: Event, sample: SampleInstance) => {
     e.stopPropagation();
 
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
     eventEmitter.emit(eventEmitter.play, true);
+  };
+
+  const playOrReplay = () => {
+    if (selectedSample) {
+      eventEmitter.emit(eventEmitter.play, true);
+    } else {
+      setSelectedSample(samples[0]);
+      eventEmitter.emit(eventEmitter.play, true);
+    }
   };
 
   useKeyPressEvent('ArrowDown', () => {
@@ -91,14 +100,8 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     }
   });
 
-  useKeyPressEvent('ArrowRight', () => {
-    if (selectedSample) {
-      eventEmitter.emit(eventEmitter.play, true);
-    } else {
-      setSelectedSample(samples[0]);
-      eventEmitter.emit(eventEmitter.play, true);
-    }
-  });
+  useKeyPressEvent('ArrowRight', () => playOrReplay());
+  useKeyPressEvent('Enter', () => playOrReplay());
 
   useKeyPressEvent('ArrowLeft', () => {
     if (selectedSample) {

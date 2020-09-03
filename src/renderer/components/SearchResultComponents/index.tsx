@@ -9,6 +9,12 @@ import { AppContext } from '~/context/App.context';
 
 import './index.css';
 
+/**
+ * This component holds all request fetches for sample via `useSampleSearch` hook
+ * It uses searchQuery from App.context set in <AppHeader />
+ * It render result search list and sample details
+ */
+
 const SearchResultsComponents = () => {
   const { searchQuery, setResultCount, foundCount } = useContext(AppContext);
 

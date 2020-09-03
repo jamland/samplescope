@@ -1,33 +1,44 @@
+@import '../../../../styles/theme.css';
+
 .result-list-item {
   display: flex;
   padding: 5px 0 5px 10px;
   margin: 0 0 0 -10px;
   cursor: default;
+  font-weight: 400;
   transition: background-color 0.2s ease;
+}
+
+.result-list-item svg {
+  margin-top: 3px;
+  flex: 0 0 16px;
+  margin-right: 1em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .result-list-item[data-isactive='true'],
 .result-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .result-list-item[data-isactive='true'] * {
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--result-list-active-color);
+}
+
+.result-list-item:hover svg,
+.result-list-item[data-isactive='true'] svg {
+  opacity: 0.5;
+  fill: var(--result-list-color);
 }
 
 .result-list-item h5 {
   margin-bottom: 0;
   margin-bottom: 0;
-  color: #444;
-  font-weight: 300;
+  color: var(--result-list-color);
+  font-weight: 500;
   font-size: 2rem;
-}
-
-.result-list-item svg {
-  margin-top: -2px;
-  flex: 0 0 16px;
-  margin-right: 1em;
-  opacity: 0.25;
 }
 
 .tag-list {
@@ -44,7 +55,5 @@
   text-overflow: ellipsis;
   display: inline-block;
   max-width: 80px;
-  /* text-decoration: underline; */
   font-weight: 400;
-  color: #bbb;
 }

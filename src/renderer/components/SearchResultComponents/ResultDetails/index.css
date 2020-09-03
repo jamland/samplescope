@@ -9,14 +9,14 @@
   border-radius: 5px;
   width: 50%;
   color: white;
-  padding: 1em 2em;
   word-break: break-word;
   z-index: 2;
 }
 
 .sample-details-text {
   flex: 1;
-  overflow: scroll;
+  overflow-y: auto;
+  padding: 1em 2em;
 }
 
 .sample-details-section h5 {
@@ -53,10 +53,11 @@
   margin-bottom: auto;
   flex: 0 0 50px;
   display: flex;
-  margin-bottom: 20px;
+  padding: 1em 2em 0;
 }
 
 .audio-player-loader {
+  height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -70,6 +71,8 @@
 .audio-player-wave-container {
   display: flex;
   flex: 1 1 90%;
+  height: 50px;
+  overflow: hidden;
 }
 
 .audio-player-volume {
@@ -120,6 +123,7 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 }
 
 .download-container {
+  padding: 1em 2em;
   margin-top: auto;
   text-align: center;
   align-items: center;

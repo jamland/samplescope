@@ -64,6 +64,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
       <button
         onClick={handleDownloadFile}
         disabled={downloading || !isDetailsAvailable}
+        className="button button-outline"
       >
         <DownloadCloud />
         {downloading ? (

@@ -20,7 +20,6 @@ const Settings: React.FC<Props> = props => {
     const toggleSidebarEvent = eventEmitter.subscribe(
       eventEmitter.toggleSidebar,
       () => {
-        console.log('toggleSidebarEvent', isOpen);
         setIsOpen(!isOpen);
       }
     );
@@ -43,7 +42,10 @@ const Settings: React.FC<Props> = props => {
 
         {activeMenuItem === MenuItems.About && (
           <div className="about-app">
-            Version: {process.env.npm_package_version}
+            <div>Version: {process.env.npm_package_version}</div>
+            <div>Contacts: Twitter, Github</div>
+            <div>License ....</div>
+            <div>Privacy ....</div>
           </div>
         )}
       </div>

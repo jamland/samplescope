@@ -14,20 +14,14 @@ const ResultDetails: React.FC<{}> = () => {
 
   if (!selectedSample) return null;
 
-  const isDetailsAvailable =
-    selectedSample && (selectedSample as SampleInstance).previews;
-
   return (
     <div className="sample-details-section">
-      <AudioPlayerWithLoader
-        sample={selectedSample}
-        loading={!isDetailsAvailable}
-      />
+      <AudioPlayerWithVolume sample={selectedSample} />
 
       <div className="sample-details-text">
         <h3>{selectedSample.name}</h3>
 
-        {isDetailsAvailable && <InstanceDetails sample={selectedSample} />}
+        <InstanceDetails sample={selectedSample} />
       </div>
 
       <DownloadButton sample={selectedSample} />
@@ -35,15 +29,17 @@ const ResultDetails: React.FC<{}> = () => {
   );
 };
 
-interface AudioPlayerWithLoaderProps {
+/**
+ * Component to wrap volume and audio player
+ */
+
+interface AudioPlayerWithVolumeProps {
   sample: SampleInstance;
-  loading: boolean;
 }
 
-const AudioPlayerWithLoader: React.FC<AudioPlayerWithLoaderProps> = ({
+const AudioPlayerWithVolume: React.FC<AudioPlayerWithVolumeProps> = ({
   sample,
-  loading,
-}: AudioPlayerWithLoaderProps) => {
+}: AudioPlayerWithVolumeProps) => {
   const [volume, setVolume] = useState(0.5);
 
   const onVolumeChange = (e: Event) => {
@@ -73,12 +69,7 @@ const AudioPlayerWithLoader: React.FC<AudioPlayerWithLoaderProps> = ({
       </div>
 
       <div className="audio-player-wave-container">
-        {loading && (
-          <div className="audio-player-loader">
-            <LoaderThreeDots height="15px" fill="white" />
-          </div>
-        )}
-        {!loading && <AudioPlayer sample={sample} volume={volume} />}
+        <AudioPlayer sample={sample} volume={volume} />
       </div>
     </div>
   );

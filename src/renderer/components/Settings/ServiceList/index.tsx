@@ -1,5 +1,6 @@
 import React from 'react';
 
+import BrowserLink from '~/components/BrowserLink';
 import freesoundLogo from '~/images/freesound-logo.png';
 import './index.css';
 
@@ -9,9 +10,13 @@ const ServiceList = () => {
       <div className="service-item">
         <img src={freesoundLogo} alt="asdf" />
         <h3>
-          <a href="https://freesound.org/">Freesound.org</a>
+          <BrowserLink
+            href="https://freesound.org/"
+            data-link="https://freesound.org/"
+            text="Freesound.org"
+          />
         </h3>
-        <div>~450k free samples</div>
+        <div>~460k free samples</div>
       </div>
     </div>
   );

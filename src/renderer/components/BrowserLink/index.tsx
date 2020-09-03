@@ -4,7 +4,7 @@ import './index.css';
 const { shell } = require('electron');
 
 interface IProps {
-  href: URL;
+  href: string;
   text: string;
 }
 

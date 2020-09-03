@@ -1,17 +1,16 @@
 import React from 'react';
 
 import PlayIcon from '~/components/icons/PlayIcon';
-import { SamplePreview } from '@modules/freesound-search/freesound.types';
+import { SampleInstance } from '@modules/freesound-search/freesound.types';
 
 import './index.css';
 
 type Props = {
-  sample: SamplePreview;
+  sample: SampleInstance;
   isSampleActive: boolean;
   refForLastItem: {};
-  onItemClick: (sample: SamplePreview) => void;
-  onNextClick: () => void;
-  onPlayPauseClick: (e: Event, sample: SamplePreview) => void;
+  onItemClick: (sample: SampleInstance) => void;
+  onPlayPauseClick: (e: Event, sample: SampleInstance) => void;
 };
 
 const SearchResultListItem: React.FunctionComponent<Props> = ({
@@ -19,7 +18,6 @@ const SearchResultListItem: React.FunctionComponent<Props> = ({
   isSampleActive,
   refForLastItem,
   onItemClick,
-  onNextClick,
   onPlayPauseClick,
 }: Props) => {
   const onClickHandler = () => onItemClick(sample);
@@ -33,7 +31,7 @@ const SearchResultListItem: React.FunctionComponent<Props> = ({
       data-isactive={isSampleActive}
     >
       <div onClick={onPlayPauseClickHandler}>
-        <PlayIcon width="32" />
+        <PlayIcon width="24" />
       </div>
       <div>
         <h5>{sample.name}</h5>

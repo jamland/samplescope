@@ -1,3 +1,8 @@
+.browser-link {
+  color: var(--link-color);
+}
+
 .browser-link:hover {
   cursor: pointer;
+  color: var(--link-color-hover);
 }

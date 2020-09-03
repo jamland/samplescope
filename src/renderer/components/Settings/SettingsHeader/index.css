@@ -23,8 +23,8 @@
 
 .settings-menu-item[data-active='true'] {
   opacity: 1;
+  color: var(--settings-nav-icon-icon);
 }
 
 .settings-menu-item[data-active='false'] {
-  opacity: 0.25;
 }

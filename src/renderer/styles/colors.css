@@ -119,15 +119,4 @@
 
   /* theme colors */
   --primary-color: var(--yellow-500);
-
-  /* global colors */
-  --body-bg-color: var(--white-color);
-  --main-color: var(--gray-900);
-  --border-color: var(--gray-800);
-  --bg-color: var(--blue-100);
-
-  /* header */
-  --app-header-color: var(--gray-900);
-  --app-header-text-color: var(--gray-400);
-  --app-header-text-placeholder-color: var(--gray-600);
 }
