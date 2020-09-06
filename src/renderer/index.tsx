@@ -30,6 +30,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import App from './App.tsx';
+import analytics from '@modules/analytics.renderer';
+
+analytics.startAnalytics();
 
 console.log(
   '👋 This message is being logged by "renderer.js", included via webpack'

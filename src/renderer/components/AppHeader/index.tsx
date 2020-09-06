@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDebounce } from 'react-use';
 
+import analytics from '@modules/analytics.renderer';
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
@@ -17,6 +18,13 @@ const AppHeader: React.FC<{}> = () => {
   useDebounce(
     () => {
       setDebouncedValue(inputValue);
+
+      analytics.trackEvent({
+        name: 'SEARCH_TEXT',
+        action: 'Search query changed',
+        label: 'Search Query',
+        value: inputValue,
+      });
     },
     300,
     [inputValue]

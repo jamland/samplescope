@@ -1,9 +1,15 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { download } = require('electron-dl');
 const windowStateKeeper = require('electron-window-state');
+const analyticsGoogle = require('./modules/analytics.google');
+
+global.analyticsGoogle = analyticsGoogle;
 
 const defaultWidth = 1200;
 const defaultHeight = 680;
+
+// for tracking user session time
+let startTime;
 
 //
 // require('dotenv').config();
@@ -48,6 +54,7 @@ const createWindow = () => {
     minHeight: 500,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
     backgroundColor: '#ffffff',
     show: false,
@@ -61,18 +68,22 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
-  });
-
   // Showing window gracefully
   // prevent visual flash while scripts loading
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
+    startTime = new Date().getMilliseconds();
+  });
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    const endTime = new Date().getMilliseconds();
+    const interactionTime = startTime - endTime;
+    analyticsGoogle.trackSessionTiming(interactionTime);
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null;
   });
 
   // register listeners on the window, so windowStateKeeper can update the state
@@ -181,7 +192,7 @@ const savedFileOptions = {
 
   // Type: Function
   // Optional callback that receives a number between 0 and 1 representing the progress of the current download.
-  onProgress: progress => {
+  onProgress: (progress) => {
     mainWindow.webContents.send('download-progress', { progress });
   },
 

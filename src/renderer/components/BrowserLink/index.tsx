@@ -5,7 +5,7 @@ const { shell } = require('electron');
 
 interface IProps {
   href: string;
-  text: string;
+  text: string | ReactNode;
 }
 
 const BrowserLink = ({ href, text }: IProps) => (

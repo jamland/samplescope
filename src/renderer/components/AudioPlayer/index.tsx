@@ -31,7 +31,6 @@ interface Props {
  * This component play audio and generates / show waveform for it
  * using wavesurfer.js
  */
-
 const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
@@ -42,12 +41,10 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     const playEvent = eventEmitter.subscribe(
       eventEmitter.play,
       (playOrStop: boolean) => {
-        console.log('wavesurfer.current.isReady', wavesurfer.current?.isReady);
-
         if (wavesurfer.current?.isReady) playSample(playOrStop);
         else {
           if (!wavesurfer.current) return;
-          wavesurfer.current.on('ready', function() {
+          wavesurfer.current.on('ready', function () {
             playSample(playOrStop);
           });
         }
@@ -71,7 +68,7 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
       wavesurfer.current.load(url);
 
-      wavesurfer.current.on('ready', function() {
+      wavesurfer.current.on('ready', function () {
         if (wavesurfer.current) {
           setWaveformLoaded(true);
           wavesurfer.current.setVolume(volume);
