@@ -10,6 +10,7 @@
   padding: 1em 2em;
   display: flex;
   align-items: center;
+  font-family: 'Open Sans';
 }
 
 .app-header-search {
@@ -46,9 +47,8 @@
 }
 
 .settings-toggler {
-  padding: 0.5em;
-  width: 40px;
-  margin-right: 20px;
+  padding: 0;
+  width: 30px;
+  margin: -10px 40px 0 -10px;
   background: none;
-  border-color: rgba(255, 255, 255, 0.1);
 }

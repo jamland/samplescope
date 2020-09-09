@@ -5,17 +5,13 @@ const analyticsGoogle = require('./modules/analytics.google');
 
 global.analyticsGoogle = analyticsGoogle;
 
-const defaultWidth = 1200;
-const defaultHeight = 680;
+const defaultWidth = 950;
+const defaultHeight = 800;
 
 // for tracking user session time
 let startTime;
 
-//
-// require('dotenv').config();
-
-// const path = require('path');
-// const os = require('os');
+const isDevMode = process.env?.DEV_MODE === 'true';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -54,7 +50,10 @@ const createWindow = () => {
     minHeight: 500,
     webPreferences: {
       nodeIntegration: true,
+      // allow main process be accesible in renderer via `remote` prop
       enableRemoteModule: true,
+      // enable devtools only for dev mode
+      devTools: isDevMode,
     },
     backgroundColor: '#ffffff',
     show: false,
@@ -63,7 +62,7 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  if (process.env?.DEV_MODE === 'true') {
+  if (isDevMode) {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
   }

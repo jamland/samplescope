@@ -1,0 +1,58 @@
+@import '../../../../styles/theme.css';
+
+.result-list-item {
+  display: flex;
+  padding: 5px 0 5px 10px;
+  margin: 0 0 0 -10px;
+  cursor: default;
+  transition: background-color 0.2s ease;
+}
+
+.result-list-item svg {
+  margin-top: 3px;
+  flex: 0 0 16px;
+  margin-right: 1em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.result-list-item[data-isactive='true'],
+.result-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.result-list-item[data-isactive='true'] * {
+  font-weight: 500;
+  color: var(--result-list-active-color);
+}
+
+.result-list-item:hover svg,
+.result-list-item[data-isactive='true'] svg {
+  opacity: 0.5;
+  fill: var(--result-list-color);
+}
+
+.result-list-item h5 {
+  margin-bottom: 0;
+  margin-bottom: 0;
+  color: var(--result-list-color);
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.tag-list {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 60vw;
+}
+
+.tag-list span {
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 80px;
+  font-weight: 400;
+}

@@ -4,6 +4,10 @@ const path = require('path');
 
 rules.push(
   {
+    test: /\.(woff|woff2|eot|ttf)$/,
+    loader: 'url-loader?limit=100000',
+  },
+  {
     test: /\.css$/,
     use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
     exclude: /node_modules/,
