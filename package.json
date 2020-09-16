@@ -159,7 +159,7 @@
     "nodemon": "^2.0.4",
     "prettier": "^1.19.1",
     "react-hot-loader": "^4.12.21",
-    "style-loader": "^0.23.1",
+    "style-loader": "^1.2.1",
     "typescript": "^3.9.2",
     "url-loader": "^4.1.0"
   }
