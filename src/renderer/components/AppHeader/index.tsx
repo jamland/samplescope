@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useDebounce } from 'react-use';
 
+import analytics from '@modules/analytics.renderer';
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
 import eventEmitter from '@modules/EventEmitter';
-import { Sliders } from 'react-feather';
+
+import freesoundLogo from '~/images/samplescope-icon.png';
 import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
@@ -17,6 +19,13 @@ const AppHeader: React.FC<{}> = () => {
   useDebounce(
     () => {
       setDebouncedValue(inputValue);
+
+      analytics.trackEvent({
+        name: 'SEARCH_TEXT',
+        action: 'Search query changed',
+        label: 'Search Query',
+        value: inputValue,
+      });
     },
     300,
     [inputValue]
@@ -40,10 +49,11 @@ const AppHeader: React.FC<{}> = () => {
       <div className="app-header-search">
         <div>
           <button
-            className="small settings-toggler"
+            className=" button-clear settings-toggler"
             onClick={handleSettingsOpen}
           >
-            <Sliders />
+            {/* <img src={sampleScopeIcon} alt="samplescope logo" /> */}
+            <img src={freesoundLogo} alt="asdf" />
           </button>
         </div>
 

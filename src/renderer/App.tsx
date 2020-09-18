@@ -1,6 +1,6 @@
 import React, { Profiler } from 'react';
 
-import SearchResultComponents from './components/SearchResultComponents';
+import SearchResults from './components/SearchResults';
 import AppHeader from '@components/AppHeader';
 import Settings from '@components/Settings';
 import ErrorTracker from '~/components/Errors/ErrorTracker';
@@ -20,7 +20,7 @@ const App = () => {
 
             <div className="main-screen">
               <AppHeader />
-              <SearchResultComponents />
+              <SearchResults />
             </div>
 
             {/* <Content /> */}

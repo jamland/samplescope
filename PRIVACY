@@ -1,0 +1,4 @@
+App tracks some of its behaviour for analytics and bug tracking.
+It also tracks some user's personal information, specifically
+(ONLY): user location (country and city) and user OS. NO OTHER
+personal data is tracked.

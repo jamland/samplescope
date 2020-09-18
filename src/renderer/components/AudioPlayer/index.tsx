@@ -2,15 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
 
 import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
 import eventEmitter from '@modules/EventEmitter';
 
 import './index.css';
 
 const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
   container: ref,
-  waveColor: '#eee',
-  progressColor: 'OrangeRed',
-  cursorColor: 'OrangeRed',
+  waveColor: '#e1e4e8',
+  progressColor: '#dbab09',
+  cursorColor: '#dbab09',
   barWidth: 3,
   barRadius: 3,
   responsive: true,
@@ -23,21 +24,30 @@ const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
 
 interface Props {
   sample: SampleInstance;
-  // onWaveformLoaded: () => void;
+  volume: number;
 }
 
-const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
+/**
+ * This component play audio and generates / show waveform for it
+ * using wavesurfer.js
+ */
+const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
-  const [playing, setPlay] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [waveFormLoaded, setWaveformLoaded] = useState(false);
 
   // on mount
   useEffect(() => {
     const playEvent = eventEmitter.subscribe(
       eventEmitter.play,
       (playOrStop: boolean) => {
-        playSample(playOrStop);
+        if (wavesurfer.current?.isReady) playSample(playOrStop);
+        else {
+          if (!wavesurfer.current) return;
+          wavesurfer.current.on('ready', function () {
+            playSample(playOrStop);
+          });
+        }
       }
     );
 
@@ -50,7 +60,7 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
   // On component mount and when url changes
   useEffect(() => {
     const url = sample.previews?.['preview-lq-mp3'];
-    setPlay(false);
+    setWaveformLoaded(false);
 
     if (url && waveformRef.current) {
       const params = formWaveSurferParams(waveformRef.current);
@@ -58,15 +68,14 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
 
       wavesurfer.current.load(url);
 
-      wavesurfer.current.on('ready', function() {
+      wavesurfer.current.on('ready', function () {
         if (wavesurfer.current) {
-          // onWaveformLoaded();
+          setWaveformLoaded(true);
           wavesurfer.current.setVolume(volume);
-          setVolume(volume);
         }
       });
 
-      wavesurfer.current.drawer.on('click', e => {
+      wavesurfer.current.drawer.on('click', (e: Event) => {
         if (wavesurfer.current) {
           const isPlaying = wavesurfer.current.isPlaying();
           if (!isPlaying) {
@@ -84,51 +93,31 @@ const AudioPlayer: React.FC<Props> = ({ sample }: Props) => {
     };
   }, [sample.id]);
 
-  const handlePlayPause = () => {
-    setPlay(!playing);
-    wavesurfer.current.playPause();
-  };
+  useEffect(() => {
+    if (wavesurfer.current) {
+      wavesurfer.current.setVolume(volume);
+    }
+  }, [volume]);
 
-  const playSample = shouldPlay => {
-    setPlay(shouldPlay);
+  const playSample = (shouldPlay: boolean) => {
+    if (!wavesurfer.current) return;
 
     if (shouldPlay) {
+      wavesurfer.current.skipBackward();
       wavesurfer.current.play();
     } else {
       wavesurfer.current.stop();
     }
   };
 
-  const onVolumeChange = e => {
-    const { target } = e;
-    const newVolume = +target.value;
-
-    if (newVolume) {
-      setVolume(newVolume);
-      wavesurfer.current.setVolume(newVolume || 1);
-    }
-  };
-
   return (
-    <div className="audio-player">
-      <div className="audio-player-volume">
-        <input
-          type="range"
-          id="volume"
-          name="volume"
-          // waveSurfer recognize value of `0` same as `1`
-          //  so we need to set some zero-ish value for silence
-          min="0.001"
-          max="1.5"
-          step=".005"
-          onChange={onVolumeChange}
-          defaultValue={volume}
-          title={volume * 100 + '%'}
-        />
-      </div>
-      <div className="audio-player-wave">
-        <div id="waveform" ref={waveformRef} />
-      </div>
+    <div className="audio-player-wave">
+      {!waveFormLoaded && (
+        <div className="audio-player-loader">
+          <LoaderThreeDots height="15px" fill="white" />
+        </div>
+      )}
+      <div id="waveform" ref={waveformRef} />
     </div>
   );
 };

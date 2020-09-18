@@ -3,7 +3,7 @@ import { useKeyPressEvent } from 'react-use';
 
 import {
   SampleList,
-  SamplePreview,
+  SampleInstance,
 } from '@modules/freesound-search/freesound.types';
 import { AppContext } from '~/context/App.context';
 import SearchResultListItem from './SearchResultListItem';
@@ -30,7 +30,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 
   // each time last item ref created we call this fn
   const lastSampleElementRef = useCallback(
-    node => {
+    (node) => {
       // if loading don't trigger scroll
       // otherwise it will constantly call API
       if (loading) return;
@@ -40,7 +40,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
       if (observer.current) observer.current.disconnect();
 
       // asynchronously observe changes in the intersection
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         // if node is visible on screen && hasMore
         if (entries[0].isIntersecting && hasMore) {
           updatePagination();
@@ -56,18 +56,41 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   const setRefForLastItemInList = (samples: SampleList, index: number) =>
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
-  const onItemClick = (sample: SamplePreview) => {
+  const onItemClick = (sample: SampleInstance) => {
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
 
   const onNextClick = () => {
-    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+    const indexSelected = samples.findIndex(
+      (el) => el.id === selectedSample?.id
+    );
     const nextSample = samples[indexSelected + 1];
     setSelectedSample(nextSample);
   };
 
+  const playPause = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    sample: SampleInstance
+  ) => {
+    e.stopPropagation();
+
+    if (sample.id !== selectedSample?.id) setSelectedSample(sample);
+    eventEmitter.emit(eventEmitter.play, true);
+  };
+
+  const playOrReplay = () => {
+    if (selectedSample) {
+      eventEmitter.emit(eventEmitter.play, true);
+    } else {
+      setSelectedSample(samples[0]);
+      eventEmitter.emit(eventEmitter.play, true);
+    }
+  };
+
   useKeyPressEvent('ArrowDown', () => {
-    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+    const indexSelected = samples.findIndex(
+      (el) => el.id === selectedSample?.id
+    );
 
     if (indexSelected < samples.length - 1) {
       // select next or firest in list
@@ -77,21 +100,17 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   });
 
   useKeyPressEvent('ArrowUp', () => {
-    const indexSelected = samples.findIndex(el => el.id === selectedSample?.id);
+    const indexSelected = samples.findIndex(
+      (el) => el.id === selectedSample?.id
+    );
     if (indexSelected > 0) {
       const nextSample = samples[indexSelected - 1];
       setSelectedSample(nextSample);
     }
   });
 
-  useKeyPressEvent('ArrowRight', () => {
-    if (selectedSample) {
-      eventEmitter.emit(eventEmitter.play, true);
-    } else {
-      setSelectedSample(samples[0]);
-      eventEmitter.emit(eventEmitter.play, true);
-    }
-  });
+  useKeyPressEvent('ArrowRight', () => playOrReplay());
+  useKeyPressEvent('Enter', () => playOrReplay());
 
   useKeyPressEvent('ArrowLeft', () => {
     if (selectedSample) {
@@ -113,7 +132,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
               sample={sample}
               refForLastItem={refForLastItem}
               onItemClick={onItemClick}
-              onNextClick={onNextClick}
+              onPlayPauseClick={playPause}
             />
           );
         })}

@@ -2,34 +2,34 @@ import React from 'react';
 import { useSetState } from 'react-use';
 
 import freesoundSearch from '@modules/freesound-search';
-import {
-  SamplePreview,
-  SampleInstance,
-} from '@modules/freesound-search/freesound.types';
+import { SampleInstance } from '@modules/freesound-search/freesound.types';
+
+/**
+ * Context store some global data like searchQuery, selectedSample, foundCount, volume
+ * selectedSample selected in list and used in <ResulDetails />
+ */
 
 export type FoundCount = number | undefined;
-export type SelectedSample = SamplePreview | SampleInstance | null;
+export type SelectedSample = SampleInstance | null;
 
 type ContextProps = State & {
   setSearchQuery: (searchQuery: string) => void;
-  setSelectedSample: (sample: SamplePreview) => void;
+  setSelectedSample: (sample: SampleInstance) => void;
   setResultCount: (count: FoundCount) => void;
 };
 
 interface State {
   searchQuery: string;
   selectedSample: SelectedSample;
-  selectedIsLoading: boolean;
-  selectedIsLoaded: boolean;
   foundCount: FoundCount;
+  volume: number;
 }
 
 const initialState: State = {
   searchQuery: '',
   selectedSample: null,
-  selectedIsLoading: false,
-  selectedIsLoaded: false,
   foundCount: undefined,
+  volume: 0.5,
 };
 
 const defaultProps = {
@@ -50,40 +50,20 @@ export const AppContextProvider = ({
     setSelectedSample(null);
     setState({ searchQuery });
   };
+
   const setResultCount = (foundCount: FoundCount) => setState({ foundCount });
 
-  const setSelectedSample = async (selectedSample: SamplePreview | null) => {
-    // set sample preview info as sample details, before more info loaded
-    // so user will see at least something, while it loads
-    setState({
-      selectedSample,
-      selectedIsLoading: true,
-      selectedIsLoaded: false,
-    });
-
+  const setSelectedSample = async (selectedSample: SampleInstance | null) => {
     if (!selectedSample) return;
 
-    try {
-      // get sample details
-      const SampleInstance = await fetchSampleInstance(selectedSample.id);
-
-      setState({
-        selectedSample: SampleInstance,
-      });
-    } catch (error) {
-      // TODO:
-      console.error(error);
-    } finally {
-      setState({
-        selectedIsLoading: false,
-        selectedIsLoaded: true,
-      });
-    }
+    setState({
+      selectedSample,
+    });
   };
 
+  // unused
   const fetchSampleInstance = async (
     id: string | number
-    // TODO: loop how to abort it when user clicks next samples
     // abortController: AbortController
   ): Promise<SampleInstance> => {
     // in case of new search use this

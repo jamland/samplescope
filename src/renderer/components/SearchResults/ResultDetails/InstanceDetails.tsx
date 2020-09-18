@@ -9,9 +9,6 @@ interface Props {
 }
 
 const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
-  // assume details not loaded if `download` property doesn't exist
-  if (sample.download === undefined) return null;
-
   const duration = formatDuration(sample.duration);
   const sampleRate = formatSampleRate(sample.samplerate);
   const channels = formatChannels(sample.channels);
@@ -44,6 +41,7 @@ const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
       <div>
         {' ©'} <BrowserLink href={sample.license} text="License" />
       </div>
+      <div>Created: {sample.created}</div>
 
       <div>{sample.description}</div>
     </>
@@ -70,7 +68,7 @@ const formatBytesToSize = (bytes: number): string => {
 
 interface DetailsRowProps {
   name: string;
-  value: string;
+  value: string | number;
 }
 
 const DetailsRow: React.FC<DetailsRowProps> = ({

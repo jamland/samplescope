@@ -4,8 +4,8 @@ import './index.css';
 const { shell } = require('electron');
 
 interface IProps {
-  href: URL;
-  text: string;
+  href: string;
+  text: string | ReactNode;
 }
 
 const BrowserLink = ({ href, text }: IProps) => (

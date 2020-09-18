@@ -14,8 +14,8 @@ export interface SearchTextRequest {
 
 export interface SearchTextResponse {
   count: number;
-  next: URL | null;
-  previous: URL | null;
+  next: string | null;
+  previous: string | null;
   results: Array<SamplePreview>;
 }
 
@@ -23,7 +23,7 @@ export type SampleList = Array<SamplePreview>;
 
 export interface SamplePreview {
   id: SampleId;
-  license: URL;
+  license: string;
   name: SampleName;
   username: SampleAuthor;
   tags?: Array<string>;
@@ -34,7 +34,7 @@ export interface SampleInstance {
   id: SampleId;
 
   // The URI for this sound on the Freesound website.
-  url: URL;
+  url: string;
 
   // The name user gave to the sound.
   name: SampleName;
@@ -52,7 +52,7 @@ export interface SampleInstance {
   created: Date;
 
   // The license under which the sound is available to you.
-  license: URL;
+  license: string;
 
   // The type of sound (wav, aif, aiff, mp3, m4a or flac).
   type: SampleFileType;
@@ -79,13 +79,13 @@ export interface SampleInstance {
   username: SampleAuthor;
 
   // If the sound is part of a pack, this URI points to that pack’s API resource.
-  pack: URL;
+  pack: string;
 
   // The URI for retrieving the original sound.
-  download: URL;
+  download: string;
 
   // The URI for bookmarking the sound.
-  bookmark: URL;
+  bookmark: string;
 
   // Dictionary containing the URIs for mp3 and ogg versions of the sound. The dictionary includes the fields preview-hq-mp3 and preview-lq-mp3 (for ~128kbps quality and ~64kbps quality mp3 respectively), and preview-hq-ogg and preview-lq-ogg (for ~192kbps quality and ~80kbps quality ogg respectively). API authentication is required for retrieving sound previews (Token or OAuth2).
   previews: SamplePreviews;
@@ -103,28 +103,28 @@ export interface SampleInstance {
   num_ratings: number;
 
   // The URI for rating the sound.
-  rate: URL;
+  rate: string;
 
   // The URI of a paginated list of the comments of the sound.
-  comments: URL;
+  comments: string;
 
   // The number of comments.
   num_comments: number;
 
   // The URI to comment the sound.
-  comment: URL;
+  comment: string;
 
   // URI pointing to the similarity resource (to get a list of similar sounds).
-  similar_sounds: URL;
+  similar_sounds: string;
 
   // Dictionary containing requested descriptors information according to the descriptors request parameter (see below). This field will be null if no descriptors were specified (or invalid descriptor names specified) or if the analysis data for the sound is not available.
   analysis: object | string;
 
   // URI pointing to the complete analysis results of the sound (see Analysis Descriptor Documentation).
-  analysis_stats: URL;
+  analysis_stats: string;
 
   // The URI for retrieving a JSON file with analysis information for each frame of the sound (see Analysis Descriptor Documentation).
-  analysis_frames: URL;
+  analysis_frames: string;
 
   // Dictionary containing the results of the AudioCommons analysis for the given sound.
   ac_analysis: acAnalysisDetails;
@@ -133,14 +133,14 @@ export interface SampleInstance {
 }
 
 type SampleImages = {
-  spectral_bw_l: URL;
-  spectral_bw_m: URL;
-  spectral_l: URL;
-  spectral_m: URL;
-  waveform_bw_l: URL;
-  waveform_bw_m: URL;
-  waveform_l: URL;
-  waveform_m: URL;
+  spectral_bw_l: string;
+  spectral_bw_m: string;
+  spectral_l: string;
+  spectral_m: string;
+  waveform_bw_l: string;
+  waveform_bw_m: string;
+  waveform_l: string;
+  waveform_m: string;
 };
 
 type SamplePreviews = {

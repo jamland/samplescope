@@ -1,13 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 
-import SearchResultList from '~/components/SearchResultComponents/SearchResultList';
-import ResultDetails from '~/components/SearchResultComponents/ResultDetails';
-import ResultCount from '~/components/SearchResultComponents/ResultCount';
+import SearchResultList from '~/components/SearchResults/SearchResultList';
+import ResultDetails from '~/components/SearchResults/ResultDetails';
+import ResultCount from '~/components/SearchResults/ResultCount';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
 import useSampleSearch from '@hooks/useSampleSearch';
 import { AppContext } from '~/context/App.context';
 
 import './index.css';
+
+/**
+ * This component holds all request fetches for sample via `useSampleSearch` hook
+ * It uses searchQuery from App.context set in <AppHeader />
+ * It render result search list and sample details
+ */
 
 const SearchResultsComponents = () => {
   const { searchQuery, setResultCount, foundCount } = useContext(AppContext);

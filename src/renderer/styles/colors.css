@@ -1,20 +1,122 @@
+/**
+ * Color system based on GitHub's Primer Design System colors (MIT License)
+ * https://primer.style/css/support/color-system
+ */
+
 :root {
+  /* Black based on same hue as --gray-900 */
+  --black: #1b1f23;
+  --white: #fff;
+
+  /* -------- Grays -------- */
+  --gray-000: #fafbfc;
+  --gray-100: #f6f8fa;
+  --gray-200: #e1e4e8;
+  --gray-300: #d1d5da;
+  --gray-400: #959da5;
+  --gray-500: #6a737d;
+  --gray-600: #586069;
+  --gray-700: #444d56;
+  --gray-800: #2f363d;
+  /* body font color */
+  --gray-900: #24292e;
+
+  /* -------- Blue -------- */
+  --blue-000: #f1f8ff;
+  --blue-100: #dbedff;
+  --blue-200: #c8e1ff;
+  --blue-300: #79b8ff;
+  --blue-400: #2188ff;
+  /* Default: Passes AA with #fff */
+  --blue-500: #0366d6;
+  --blue-600: #005cc5;
+  --blue-700: #044289;
+  --blue-800: #032f62;
+  /* Passes with 1/2/300 blues */
+  --blue-900: #05264c;
+
+  /* -------- Green -------- */
+  --green-000: #f0fff4;
+  --green-100: #dcffe4;
+  --green-200: #bef5cb;
+  --green-300: #85e89d;
+  --green-400: #34d058;
+  /* Default. passes AA Large */
+  --green-500: #28a745;
+  /* Text green, passes AA on #fff */
+  --green-600: #22863a;
+  --green-700: #176f2c;
+  --green-800: #165c26;
+  --green-900: #144620;
+
+  /* -------- Yellow -------- */
+  --yellow-000: #fffdef;
+  --yellow-100: #fffbdd;
+  --yellow-200: #fff5b1;
+  --yellow-300: #ffea7f;
+  --yellow-400: #ffdf5d;
+  --yellow-500: #ffd33d;
+  --yellow-600: #f9c513;
+  --yellow-700: #dbab09;
+  --yellow-800: #b08800;
+  --yellow-900: #735c0f;
+
+  /* -------- Orange -------- */
+  --orange-000: #fff8f2;
+  --orange-100: #ffebda;
+  --orange-200: #ffd1ac;
+  --orange-300: #ffab70;
+  --orange-400: #fb8532;
+  /* Default. passes AA Large with #fff */
+  --orange-500: #f66a0a;
+  --orange-600: #e36209;
+  --orange-700: #d15704;
+  --orange-800: #c24e00;
+  --orange-900: #a04100;
+
+  /* -------- Red -------- */
+  --red-000: #ffeef0;
+  --red-100: #ffdce0;
+  --red-200: #fdaeb7;
+  --red-300: #f97583;
+  --red-400: #ea4a5a;
+  /* Default. passes AA */
+  --red-500: #d73a49;
+  --red-600: #cb2431;
+  --red-700: #b31d28;
+  --red-800: #9e1c23;
+  --red-900: #86181d;
+
+  /* -------- Purple -------- */
+  --purple-000: #f5f0ff;
+  --purple-100: #e6dcfd;
+  --purple-200: #d1bcf9;
+  --purple-300: #b392f0;
+  --purple-400: #8a63d2;
+  /* passes AA with #fff */
+  --purple-500: #6f42c1;
+  --purple-600: #5a32a3;
+  --purple-700: #4c2889;
+  --purple-800: #3a1d6e;
+  --purple-900: #29134e;
+
+  /* -------- Pink -------- */
+  --pink-000: #ffeef8;
+  --pink-100: #fedbf0;
+  --pink-200: #f9b3dd;
+  --pink-300: #f692ce;
+  --pink-400: #ec6cb9;
+  --pink-500: #ea4aaa;
+  --pink-600: #d03592;
+  --pink-700: #b93a86;
+  --pink-800: #99306f;
+  --pink-900: #6d224f;
+
   /* color names */
   --white-color: #fff;
   --blue-grey: #606c76;
-  --dark-grey: #2d2d2d;
   --light-grey: rgb(238, 238, 238);
 
   /* theme colors */
-  --primary-color: #4ba8f4;
-
-  /* global colors */
-  --body-bg-color: var(--white-color);
-  --main-color: #ddd;
-  --border-color: #d1d1d1;
-  --bg-color: #f4f5f6;
-
-  /* header */
-  --app-header-color: var(--dark-grey);
-  --app-header-text-color: var(--light-grey);
+  --primary-color: var(--yellow-500);
 }

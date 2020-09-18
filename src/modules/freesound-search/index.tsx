@@ -1,7 +1,7 @@
 /**
  * API for Freesound.org
+ * 📚 https://freesound.org/docs/api/resources_apiv2.html
  */
-// 📚 https://freesound.org/docs/api/resources_apiv2.html
 
 import API from './endpoints';
 import ErrorEmitter from '@modules/ErrorEmitter';
@@ -106,7 +106,29 @@ const searchText = async ({
   duration,
   abortController,
 }: SearchTextRequest = defaultTextSearchProps): Promise<SearchTextResponse> => {
-  const url = `${API.SEARCH_TEXT}?query=${query}`;
+  const fields = [
+    'id',
+    'name',
+    'username',
+    'previews',
+    'bitdepth',
+    'bitrate',
+    'channels',
+    'created',
+    'description',
+    'duration',
+    'filesize',
+    'license',
+    'num_downloads',
+    'pack',
+    'pack_name',
+    'samplerate',
+    'similar_sounds',
+    'tags',
+    'type',
+  ].join(',');
+  const sort = query === '' ? 'created_desc' : 'score';
+  const url = `${API.SEARCH_TEXT}?query=${query}&sort=${sort}&fields=${fields}`;
 
   return getByURL(url, abortController);
 };

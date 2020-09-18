@@ -2,12 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { DownloadCloud } from 'react-feather';
 
+import analytics from '@modules/analytics.renderer';
 import { SelectedSample } from '~/context/App.context';
 import { SampleInstance } from '@modules/freesound-search/freesound.types';
 
 interface Props {
   sample: SampleInstance;
 }
+
+type ProgressNumbers = {
+  percent: number;
+  totalBytes: number;
+  transferredBytes: number;
+};
+
+type ProgressResult = {
+  message: string;
+  result: string;
+};
+
+type DownloadProgress = ProgressNumbers | ProgressResult;
 
 const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
   const [downloading, setDownloading] = useState(false);
@@ -24,17 +38,17 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
 
   const onProgressUpdate = (
     event: Event,
-    { progress }: { progress: number }
+    { progress }: { progress: DownloadProgress }
   ) => {
-    if (progress) {
-      const rounded = Math.round(progress * 100);
+    if (progress.percent) {
+      const rounded = Math.round(progress.percent * 100);
       setProgress(rounded);
     }
   };
 
-  const onDownloadDone = (event: Event, arg) => {
+  const onDownloadDone = (event: Event, arg: any) => {
     setDownloading(false);
-    console.log('download done!', arg); // prints "pong"
+    console.log('download done!', arg);
 
     // TODO: error msg
     // {message: "no url param for download", result: "error"}
@@ -43,7 +57,6 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
   };
 
   const handleDownloadFile = () => {
-    console.log('handleDownloadFile', downloading);
     if (!sample || downloading) return;
 
     const url = getUrlFrom(sample);
@@ -54,6 +67,13 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
 
       setDownloading(true);
       setProgress(0);
+
+      analytics.trackEvent({
+        name: 'DOWNLOAD_FILE',
+        action: 'Download File Started',
+        label: 'File Name',
+        value: `${sample.id}: ${sample.name}`,
+      });
     }
   };
 
@@ -64,6 +84,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
       <button
         onClick={handleDownloadFile}
         disabled={downloading || !isDetailsAvailable}
+        className="button button-outline"
       >
         <DownloadCloud />
         {downloading ? (

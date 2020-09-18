@@ -1,0 +1,150 @@
+.sample-details-section {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 20px;
+  right: 20px;
+  background: var(--gray-700);
+  height: 95%;
+  border-radius: 5px;
+  width: 50%;
+  color: white;
+  word-break: break-word;
+  z-index: 2;
+}
+
+.sample-details-text {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1em 2em;
+}
+
+.sample-details-section h5 {
+  text-align: right;
+  word-break: break-all;
+}
+
+.download-button {
+  flex: 0;
+  margin-left: auto;
+}
+
+.detailsTable {
+  background: var(--gray-900);
+  display: flex;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+.detailsCol {
+  flex: 1;
+}
+
+.detailsRow {
+  display: flex;
+}
+
+.detailsCellTh {
+  flex: 0 0 80px;
+  opacity: 0.5;
+}
+
+.audio-player-container {
+  margin-bottom: auto;
+  flex: 0 0 50px;
+  display: flex;
+  padding: 1em 2em 0;
+}
+
+.audio-player-loader {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio-player-loader svg {
+  margin-left: -30px;
+}
+
+.audio-player-wave-container {
+  display: flex;
+  flex: 1 1 90%;
+  height: 50px;
+  overflow: hidden;
+}
+
+.audio-player-volume {
+  flex: 0 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -20px;
+}
+
+input[type='range'] {
+  height: 20px;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  transform: rotate(-90deg);
+}
+
+input[type='range']:focus {
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 19px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: none;
+  border-radius: 0px;
+  border: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  box-shadow: none;
+  border: none;
+  height: 20px;
+  width: 2px;
+  border-radius: 0px;
+  background: #ffc526;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -1px;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+  /* background: #A4A6AB; */
+}
+
+.download-container {
+  padding: 1em 2em;
+  margin-top: auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex: 0;
+}
+
+.download-container button {
+  width: 100%;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0.5em 0 0;
+}
+
+.download-container button svg {
+  margin-right: 1em;
+}
+
+.download-container .download-progress {
+  margin-left: 1em;
+}
