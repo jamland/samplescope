@@ -30,69 +30,7 @@
   },
   "license": "MIT",
   "config": {
-    "forge": {
-      "packagerConfig": {
-        "appBundleId": "com.github.jamland.samplescope",
-        "appCopyright": "MIT License",
-        "icon": "./assets/icons/icon.icns",
-        "appCategoryType": "public.app-category.music",
-        "osxSign": {
-          "identity": "Developer ID Application: Andrii Pylypchuk / Jamland (LT94ZKYDCJ)",
-          "hardened-runtime": true,
-          "entitlements": "entitlements.plist",
-          "entitlements-inherit": "entitlements.plist",
-          "signature-flags": "library"
-        },
-        "osxNotarize": {
-          "appleId": "desireddada@gmail.com",
-          "appleIdPassword": ""
-        }
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "samplescope",
-            "certificateFile": "./private/samplescope-dev.p12",
-            "certificatePassword": "",
-            "iconUrl": "./assets/icons/icon.ico",
-            "loadingGif": ""
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
-            "mainConfig": "./webpack.main.config.js",
-            "renderer": {
-              "config": "./webpack.renderer.config.js",
-              "entryPoints": [
-                {
-                  "html": "./src/index.html",
-                  "js": "./src/renderer/index.tsx",
-                  "name": "main_window"
-                }
-              ]
-            }
-          }
-        ]
-      ]
-    }
+    "forge": "./forge.config.js"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
@@ -161,6 +99,7 @@
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^2.0.0",
     "electron": "^10.1.2",
+    "electron-notarize": "^1.0.0",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
