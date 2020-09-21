@@ -67,7 +67,7 @@
     "react-error-boundary": "^2.3.2",
     "react-feather": "^2.0.8",
     "react-infinite-scroller": "^1.2.4",
-    "react-query-devtools": "^2.4.7",
+    "react-query-devtools": "^2.5.0",
     "react-transition-group": "^4.4.1",
     "react-use": "^15.3.4",
     "styled-components": "^5.2.0",
