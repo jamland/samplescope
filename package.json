@@ -57,7 +57,7 @@
     "nucleus-nodejs": "^3.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-error-boundary": "^2.3.2",
+    "react-error-boundary": "^3.0.2",
     "react-feather": "^2.0.8",
     "react-use": "^15.3.4",
     "styled-components": "^5.2.0",
