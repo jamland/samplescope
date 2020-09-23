@@ -44,6 +44,18 @@ module.exports = {
     //   config: {},
     // },
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'jamland',
+          name: 'samplescope',
+        },
+        prerelease: true,
+      },
+    },
+  ],
   plugins: [
     [
       '@electron-forge/plugin-webpack',

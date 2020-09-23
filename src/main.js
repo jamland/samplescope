@@ -3,6 +3,9 @@ const { download } = require('electron-dl');
 const windowStateKeeper = require('electron-window-state');
 const analyticsGoogle = require('./modules/analytics.google');
 
+// auto-update module
+require('update-electron-app')();
+
 global.analyticsGoogle = analyticsGoogle;
 
 const defaultWidth = 950;
