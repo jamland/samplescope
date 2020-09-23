@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "@bugsnag/js": "^7.3.4",
+    "@bugsnag/js": "^7.3.5",
     "@bugsnag/plugin-react": "^7.3.4",
     "electron-dl": "^3.0.2",
     "electron-open-link-in-browser": "^1.0.2",
