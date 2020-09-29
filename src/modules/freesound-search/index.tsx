@@ -28,14 +28,17 @@ const init = (apiKey: string): void => {
   config.apiKey = apiKey;
 };
 
-const defaultTextSearchProps = {
+const defaultTextSearchProps: {
+  query: string;
+  abortController: AbortController;
+} = {
   query: '',
   // duration: [0, 1],
   abortController: null,
 };
 
 const getByURL = async (
-  url: URL,
+  url: string,
   abortController: AbortController = new AbortController()
 ): Promise<SearchTextResponse | null> => {
   try {
@@ -57,6 +60,7 @@ const getByURL = async (
     } else {
       searchQuery.response = body;
 
+      // @ts-ignore
       return Promise.resolve(searchQuery.response);
       // const result = await sf.query({
       //   search: [ 'drum', 'bass' ],
@@ -203,22 +207,13 @@ const fetchSoundInstance = async ({
 }: SearchInstanceRequest): Promise<SampleInstance> => {
   const url = `${API.SOUNDS}${id}/?`;
 
-  const cachedResult = cache[url];
-
-  if (cachedResult) {
-    return Promise.resolve(cachedResult);
-  } else {
-    try {
-      const result = await getByURL(url);
-      cache[url] = result;
-      console.log('cache', cache);
-      return Promise.resolve(result);
-    } catch (error) {
-      return Promise.reject(error);
-    }
+  try {
+    const result = await getByURL(url);
+    // @ts-ignore
+    return Promise.resolve(result);
+  } catch (error) {
+    return Promise.reject(error);
   }
-
-  // return getByURL(url);
 };
 
 export default {

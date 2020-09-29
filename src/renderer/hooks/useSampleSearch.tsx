@@ -11,13 +11,13 @@ interface State {
   samples: SampleList;
   hasMore: boolean;
   meta: Meta;
-  nextPageToLoad: URL | null;
+  nextPageToLoad: string | null;
 }
 
 interface Meta {
   count: number;
-  next: URL | null;
-  previous: URL | null;
+  next: string | null;
+  previous: string | null;
 }
 
 interface SearchResponse {
@@ -64,7 +64,7 @@ const useSampleSearch = (query: string) => {
 
     const abortController = new AbortController();
 
-    (async function() {
+    (async function () {
       try {
         const freeSoundResponse = await fetchSamples(
           state.nextPageToLoad,
@@ -87,7 +87,7 @@ const useSampleSearch = (query: string) => {
   }, [query, state.nextPageToLoad]);
 
   const fetchSamples = async (
-    url: URL | null,
+    url: string | null,
     query: string,
     abortController: AbortController
   ): Promise<SearchResponse | null> => {
@@ -111,7 +111,7 @@ const useSampleSearch = (query: string) => {
     const { count, next, previous } = freeSoundResponse;
     const hasMore = next !== null;
 
-    setState(prevState => ({
+    setState((prevState) => ({
       samples: [...prevState.samples, ...newSamples],
       hasMore,
       loading: false,

@@ -12,6 +12,7 @@ import './App.css';
 
 const App = () => {
   return (
+    // @ts-ignore
     <ErrorTracker>
       <AppContextProvider value={undefined}>
         <Profiler id="App" onRender={() => {}}>
@@ -22,8 +23,6 @@ const App = () => {
               <AppHeader />
               <SearchResults />
             </div>
-
-            {/* <Content /> */}
           </div>
         </Profiler>
       </AppContextProvider>

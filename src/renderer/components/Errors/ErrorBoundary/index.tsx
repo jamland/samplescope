@@ -45,8 +45,12 @@ const ErrorFallback: React.FC<Props> = ({
 // }}
 // resetKeys={[username]}
 
-export const WithErrorBoundary = (Component: ReactNode) => (props: any) => (
+export const WithErrorBoundary = (Component: React.ReactNode) => (
+  props: any
+) => (
+  // @ts-ignore
   <ErrorBoundary FallbackComponent={ErrorFallback}>
+    {/* @ts-ignore */}
     <Component {...props} />
   </ErrorBoundary>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
+import { SvgProps } from './types';
 
-const LoaderBars = (props: any) => {
+const LoaderBars = (props: SvgProps) => {
   return (
     <svg
       className="loader-bars"

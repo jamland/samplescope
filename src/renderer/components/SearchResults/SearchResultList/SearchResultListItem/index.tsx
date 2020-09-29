@@ -1,18 +1,18 @@
 import React from 'react';
 
 import PlayIcon from '~/components/icons/PlayIcon';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 import './index.css';
 
 type Props = {
-  sample: SampleInstance;
+  sample: SamplePreview;
   isSampleActive: boolean;
   refForLastItem: {};
-  onItemClick: (sample: SampleInstance) => void;
+  onItemClick: (sample: SamplePreview) => void;
   onPlayPauseClick: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    sample: SampleInstance
+    sample: SamplePreview
   ) => void;
 };
 

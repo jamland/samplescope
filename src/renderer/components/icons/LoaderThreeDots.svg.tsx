@@ -1,6 +1,7 @@
 import React from 'react';
+import { SvgProps } from './types';
 
-const LoaderThreeDots = (props: any) => {
+const LoaderThreeDots = (props: SvgProps) => {
   return (
     <svg
       className="loader-three-dots"

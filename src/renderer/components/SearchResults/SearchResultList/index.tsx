@@ -3,7 +3,7 @@ import { useKeyPressEvent } from 'react-use';
 
 import {
   SampleList,
-  SampleInstance,
+  SamplePreview,
 } from '@modules/freesound-search/freesound.types';
 import { AppContext } from '~/context/App.context';
 import SearchResultListItem from './SearchResultListItem';
@@ -56,7 +56,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   const setRefForLastItemInList = (samples: SampleList, index: number) =>
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
-  const onItemClick = (sample: SampleInstance) => {
+  const onItemClick = (sample: SamplePreview) => {
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
 
@@ -70,7 +70,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 
   const playPause = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    sample: SampleInstance
+    sample: SamplePreview
   ) => {
     e.stopPropagation();
 
