@@ -2,7 +2,7 @@ import React from 'react';
 import { useSetState } from 'react-use';
 
 import freesoundSearch from '@modules/freesound-search';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 /**
  * Context store some global data like searchQuery, selectedSample, foundCount, volume
@@ -10,11 +10,11 @@ import { SampleInstance } from '@modules/freesound-search/freesound.types';
  */
 
 export type FoundCount = number | undefined;
-export type SelectedSample = SampleInstance | null;
+export type SelectedSample = SamplePreview | null;
 
 type ContextProps = State & {
   setSearchQuery: (searchQuery: string) => void;
-  setSelectedSample: (sample: SampleInstance) => void;
+  setSelectedSample: (sample: SamplePreview) => void;
   setResultCount: (count: FoundCount) => void;
 };
 
@@ -53,7 +53,7 @@ export const AppContextProvider = ({
 
   const setResultCount = (foundCount: FoundCount) => setState({ foundCount });
 
-  const setSelectedSample = async (selectedSample: SampleInstance | null) => {
+  const setSelectedSample = async (selectedSample: SamplePreview | null) => {
     if (!selectedSample) return;
 
     setState({
@@ -62,10 +62,10 @@ export const AppContextProvider = ({
   };
 
   // unused
-  const fetchSampleInstance = async (
+  const fetchSamplePreview = async (
     id: string | number
     // abortController: AbortController
-  ): Promise<SampleInstance> => {
+  ): Promise<SamplePreview> => {
     // in case of new search use this
     return freesoundSearch.fetchSoundInstance({
       id,

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import BrowserLink from '~/components/BrowserLink';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 interface Props {
-  sample: SampleInstance;
+  sample: SamplePreview;
 }
 
 const Author: React.FC<Props> = ({ sample }: Props) => (

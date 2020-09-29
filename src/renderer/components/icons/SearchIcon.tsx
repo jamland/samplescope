@@ -1,13 +1,5 @@
 import React from 'react';
-import CSS from 'csstype';
-
-type Props = {
-  style?: CSS.Properties;
-  fill?: CSS.ColorProperty;
-  width?: CSS.WidthProperty<string>;
-  className?: string;
-  viewBox?: string;
-};
+import { SvgProps } from './types';
 
 const SVG = ({
   style = {},
@@ -15,7 +7,7 @@ const SVG = ({
   width = '100%',
   className = '',
   viewBox = '0 0 32 32',
-}: Props) => (
+}: SvgProps) => (
   <svg
     width={width}
     style={style}

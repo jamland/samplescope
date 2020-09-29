@@ -23,10 +23,57 @@ export type SampleList = Array<SamplePreview>;
 
 export interface SamplePreview {
   id: SampleId;
-  license: string;
   name: SampleName;
+
+  // The username of the uploader of the sound.
   username: SampleAuthor;
-  tags?: Array<string>;
+
+  // Dictionary containing the URIs for mp3 and ogg versions of the sound. The dictionary includes the fields preview-hq-mp3 and preview-lq-mp3 (for ~128kbps quality and ~64kbps quality mp3 respectively), and preview-hq-ogg and preview-lq-ogg (for ~192kbps quality and ~80kbps quality ogg respectively). API authentication is required for retrieving sound previews (Token or OAuth2).
+  previews: SamplePreviews;
+
+  // The bit depth of the sound.
+  bitdepth: number;
+
+  // The bit rate of the sound in kbps.
+  bitrate: number;
+
+  // The date when the sound was uploaded (e.g. “2014-04-16T20:07:11.145”).
+  created: Date;
+
+  // The number of channels.
+  channels: number;
+
+  // The description the user gave to the sound.
+  description: string;
+
+  // The duration of the sound in seconds.
+  duration: number;
+
+  // The size of the file in bytes.
+  filesize: number;
+
+  // The license under which the sound is available to you.
+  license: string;
+
+  // The number of times the sound was downloaded.
+  num_downloads: number;
+
+  // If the sound is part of a pack, this URI points to that pack’s API resource.
+  pack: string;
+
+  pack_name: string;
+
+  // The samplerate of the sound.
+  samplerate: number;
+
+  // URI pointing to the similarity resource (to get a list of similar sounds).
+  similar_sounds: string;
+
+  // An array of tags the user gave to the sound.
+  tags: Array<string>;
+
+  // The type of sound (wav, aif, aiff, mp3, m4a or flac).
+  type: SampleFileType;
 }
 
 export interface SampleInstance {

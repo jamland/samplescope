@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
 
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
 import eventEmitter from '@modules/EventEmitter';
 
@@ -23,7 +23,7 @@ const formWaveSurferParams = (ref: HTMLDivElement): WaveSurferParams => ({
 });
 
 interface Props {
-  sample: SampleInstance;
+  sample: SamplePreview;
   volume: number;
 }
 

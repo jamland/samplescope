@@ -25,7 +25,7 @@ interface IEventEmitter {
 
 const EventEmitter: IEventEmitter = {
   events: {},
-  on: function(eventName: EventName, fn: OnEventFn) {
+  on: function (eventName: EventName, fn: OnEventFn) {
     if (!this.events[eventName]) this.events[eventName] = [];
 
     this.events[eventName].push(fn);
@@ -35,14 +35,14 @@ const EventEmitter: IEventEmitter = {
     // removelistener();
     return () => {
       this.events[eventName] = this.events[eventName].filter(
-        eventFn => fn !== eventFn
+        (eventFn: Function) => fn !== eventFn
       );
     };
   },
-  emit: function(eventName: EventName, data: any) {
+  emit: function (eventName: EventName, data: any) {
     const event = this.events[eventName];
     if (event) {
-      event.forEach(fn => {
+      event.forEach((fn: Function) => {
         // eslint-disable-next-line no-useless-call
         fn.call(null, data);
       });

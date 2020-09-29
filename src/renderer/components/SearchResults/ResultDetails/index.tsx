@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 
 import { AppContext } from '~/context/App.context';
 import AudioPlayer from '@components/AudioPlayer';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 import InstanceDetails from './InstanceDetails';
 import DownloadButton from './DownloadButton';
-import LoaderBars from '@components/icons/LoaderBars.svg';
-import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
+// import LoaderBars from '@components/icons/LoaderBars.svg';
+// import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
 import './index.css';
 
 const ResultDetails: React.FC<{}> = () => {
@@ -34,7 +34,7 @@ const ResultDetails: React.FC<{}> = () => {
  */
 
 interface AudioPlayerWithVolumeProps {
-  sample: SampleInstance;
+  sample: SamplePreview;
 }
 
 const AudioPlayerWithVolume: React.FC<AudioPlayerWithVolumeProps> = ({
@@ -42,9 +42,9 @@ const AudioPlayerWithVolume: React.FC<AudioPlayerWithVolumeProps> = ({
 }: AudioPlayerWithVolumeProps) => {
   const [volume, setVolume] = useState(0.5);
 
-  const onVolumeChange = (e: Event) => {
+  const onVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
-    const updatedVolume = +target.value;
+    const updatedVolume = +(target as HTMLInputElement).value;
     if (updatedVolume) {
       setVolume(updatedVolume);
     }

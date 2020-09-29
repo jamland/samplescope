@@ -4,10 +4,10 @@ import { DownloadCloud } from 'react-feather';
 
 import analytics from '@modules/analytics.renderer';
 import { SelectedSample } from '~/context/App.context';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 interface Props {
-  sample: SampleInstance;
+  sample: SamplePreview;
 }
 
 type ProgressNumbers = {
@@ -36,12 +36,9 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
     };
   }, []);
 
-  const onProgressUpdate = (
-    event: Event,
-    { progress }: { progress: DownloadProgress }
-  ) => {
-    if (progress.percent) {
-      const rounded = Math.round(progress.percent * 100);
+  const onProgressUpdate = (event: Event, downloadState: DownloadProgress) => {
+    if ('percent' in downloadState && downloadState.percent) {
+      const rounded = Math.round(downloadState.percent * 100);
       setProgress(rounded);
     }
   };
@@ -107,13 +104,13 @@ const getUrlFrom = (sample: SelectedSample) => {
   if (!sample || !('previews' in sample)) return null;
 
   if ('preview-hq-mp3' in sample.previews)
-    return (sample as SampleInstance).previews['preview-hq-mp3'];
+    return (sample as SamplePreview).previews['preview-hq-mp3'];
   else if ('preview-hq-ogg' in sample.previews)
-    return (sample as SampleInstance).previews['preview-hq-ogg'];
+    return (sample as SamplePreview).previews['preview-hq-ogg'];
   else if ('preview-lq-ogg' in sample.previews)
-    return (sample as SampleInstance).previews['preview-lq-ogg'];
+    return (sample as SamplePreview).previews['preview-lq-ogg'];
   else if ('preview-lq-mp3' in sample.previews)
-    return (sample as SampleInstance).previews['preview-lq-mp3'];
+    return (sample as SamplePreview).previews['preview-lq-mp3'];
   else return null;
 };
 

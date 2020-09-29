@@ -2,10 +2,10 @@ import React from 'react';
 
 import BrowserLink from '~/components/BrowserLink';
 import Author from './Author';
-import { SampleInstance } from '@modules/freesound-search/freesound.types';
+import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 interface Props {
-  sample: SampleInstance;
+  sample: SamplePreview;
 }
 
 const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
@@ -62,8 +62,8 @@ const formatChannels = (channels: number): string => {
 const formatBytesToSize = (bytes: number): string => {
   var sizes = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
   if (bytes === 0) return '0 Byte';
-  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+  var i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i];
 };
 
 interface DetailsRowProps {

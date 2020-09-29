@@ -2,9 +2,7 @@ import React from 'react';
 import Bugsnag from '@bugsnag/js';
 import BugsnagPluginReact from '@bugsnag/plugin-react';
 
-interface Props {
-  children: ReactNode;
-}
+interface Props {}
 
 Bugsnag.start({
   apiKey: process.env.BUGSNAG_API_KEY || '',
@@ -13,7 +11,7 @@ Bugsnag.start({
 
 const ErrorBoundary = Bugsnag.getPlugin('react')?.createErrorBoundary(React);
 
-const ErrorTracker: React.FC<Props> = ({ children }: Props) => {
+const ErrorTracker: React.PropsWithChildren<Props> = ({ children }: any) => {
   if (ErrorBoundary) return <ErrorBoundary>{children}</ErrorBoundary>;
   else return children;
 };
