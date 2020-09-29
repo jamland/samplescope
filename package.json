@@ -62,7 +62,7 @@
     "react-use": "^15.3.4",
     "styled-components": "^5.2.0",
     "universal-analytics": "^0.4.23",
-    "update-electron-app": "^1.5.0",
+    "update-electron-app": "^2.0.1",
     "wavesurfer.js": "^4.0.1"
   },
   "devDependencies": {
