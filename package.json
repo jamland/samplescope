@@ -1,7 +1,7 @@
 {
   "name": "samplescope",
   "productName": "samplescope",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Search samples over internet sources",
   "main": ".webpack/main",
   "repository": "https://github.com/jamland/samplescope",
