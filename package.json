@@ -47,7 +47,7 @@
     "@bugsnag/js": "^7.3.5",
     "@bugsnag/plugin-react": "^7.3.5",
     "@electron-forge/cli": "6.0.0-beta.52",
-    "@electron-forge/maker-deb": "6.0.0-beta.52",
+    "@electron-forge/maker-deb": "6.0.0-beta.53",
     "@electron-forge/maker-rpm": "6.0.0-beta.52",
     "@electron-forge/maker-squirrel": "6.0.0-beta.52",
     "@electron-forge/maker-zip": "6.0.0-beta.52",
