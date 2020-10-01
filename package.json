@@ -4,7 +4,7 @@
   "version": "1.2.0",
   "description": "Search samples over internet sources",
   "main": ".webpack/main",
-  "repository": "https://github.com/jamland/samplescope",
+  "repository": "github:jamland/samplescope",
   "scripts": {
     "start": "cross-env DEV_MODE=true electron-forge start",
     "start:watch": "cross-env DEV_MODE=true nodemon --exec 'electron-forge start'",
