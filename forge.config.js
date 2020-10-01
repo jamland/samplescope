@@ -48,7 +48,6 @@ module.exports = {
           owner: 'jamland',
           name: 'samplescope',
         },
-        prerelease: true,
       },
     },
   ],
