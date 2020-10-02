@@ -63,8 +63,7 @@ const createWindow = () => {
       // allow main process be accesible in renderer via `remote` prop
       enableRemoteModule: true,
       // enable devtools only for dev mode
-      // devTools: isDevMode,
-      devTools: true,
+      devTools: isDevMode,
     },
     backgroundColor: '#ffffff',
     show: false,
