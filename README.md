@@ -1,6 +1,6 @@
 # Samplescope
 
-[Download Samplescope for Mac OS](https://github.com/jamland/samplescope/releases/)
+Download [Samplescope for Mac OS](https://github.com/jamland/samplescope/releases/)
 
 ## Simply
 Samplescope is app to search audio samples over internet
