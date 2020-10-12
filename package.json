@@ -80,7 +80,7 @@
     "install": "^0.13.0",
     "lint-staged": "^10.4.0",
     "milligram": "^1.4.1",
-    "node-loader": "^1.0.1",
+    "node-loader": "^1.0.2",
     "node-localstorage": "^2.1.6",
     "nodemon": "^2.0.4",
     "normalize.css": "^8.0.1",
