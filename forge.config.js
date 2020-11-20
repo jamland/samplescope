@@ -24,7 +24,8 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'samplescope_02',
+        // certificateFile: './cert.pfx',
+        // certificatePassword: 'this-is-a-secret'
       },
     },
     {

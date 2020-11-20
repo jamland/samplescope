@@ -10,13 +10,19 @@ import './styles/global.css';
 import './styles/theme.css';
 import './App.css';
 
+import os from 'os';
+
+console.log('os', os.platform())
+
 const App = () => {
+  const platform = os?.platform()
+
   return (
     // @ts-ignore
     <ErrorTracker>
       <AppContextProvider value={undefined}>
         <Profiler id="App" onRender={() => {}}>
-          <div className="app-shell">
+          <div className="app-shell" data-platform={platform}>
             <Settings />
 
             <div className="main-screen">

@@ -5,10 +5,8 @@
 /* mono-space: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; */
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-  /* font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; */
   font-weight: 300;
   padding: 0;
   margin: 0;
@@ -18,9 +16,23 @@ body {
   cursor: default;
 }
 
+body [data-platform="win32"],
+body [data-platform="win32"] h1,
+body [data-platform="win32"] h2,
+body [data-platform="win32"] h3,
+body [data-platform="win32"] h4,
+body [data-platform="win32"] h5,
+body [data-platform="win32"] h6 {
+  font-weight: 400;
+}
+
 input {
   font-size: 2em;
   font-weight: 200;
+}
+
+body [data-platform="win32"] input {
+  font-weight: 300;
 }
 
 input::placeholder {

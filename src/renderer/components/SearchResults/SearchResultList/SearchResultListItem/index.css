@@ -36,8 +36,8 @@
   margin-bottom: 0;
   margin-bottom: 0;
   color: var(--result-list-color);
-  font-weight: 300;
   font-size: 2rem;
+  line-height: 1.25em;
 }
 
 .tag-list {
