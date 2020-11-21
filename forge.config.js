@@ -18,7 +18,7 @@ module.exports = {
       'entitlements-inherit': './assets/entitlements.plist',
       'signature-flags': 'library',
     },
-    platform: ['darwin'],
+    platform: ['darwin', 'win32'],
   },
   makers: [
     {

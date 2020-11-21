@@ -110,7 +110,8 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   });
 
   useKeyPressEvent('ArrowRight', () => playOrReplay());
-  useKeyPressEvent('Enter', () => playOrReplay());
+  // Enter conflicts with searchbar enter
+  // useKeyPressEvent('Enter', () => playOrReplay());
 
   useKeyPressEvent('ArrowLeft', () => {
     if (selectedSample) {

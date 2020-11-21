@@ -24,10 +24,22 @@ Some script commands uses `cross-env` to ensure to set and use environment varia
 | start       | Start app in DEV mode                  |
 | start:watch | Same and watch for changes             |
 | make        | Compile ready-to-use app               |
-| package     | `make`, notarize and publish to GitHub |
+| package     | Compile app (not distributable)        |
+| publish     | `make`, notarize and publish to GitHub |
 | lint        | Lint app                               |
 | lint:app    | Lint app w/ `electron-forge`           |
 | test        | Run tests                              |
+
+
+Details on [Electron Forge docs for CLI](https://www.electronforge.io/cli)
+
+### Publish
+
+This command will attempt to make the forge application and then publish it to the publish targets defined in `forge.config`.
+
+It will post to (or create if not exist) Github's Draft Releases with name of last version.
+You need to run publish on each platform you want to support, so `Samplescope-X.X.X.Setup.exe` will be made on posted from Win and `Samplescope-darwin-x64-X.X.X.zip` on MacOS.
+
 
 ## Private Keys
 

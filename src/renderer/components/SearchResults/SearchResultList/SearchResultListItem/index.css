@@ -26,6 +26,10 @@
   color: var(--result-list-active-color);
 }
 
+body [data-platform="win32"] .result-list-item[data-isactive='true'] * {
+  font-weight: 700;
+}
+
 .result-list-item:hover svg,
 .result-list-item[data-isactive='true'] svg {
   opacity: 0.5;

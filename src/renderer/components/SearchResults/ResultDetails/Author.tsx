@@ -1,6 +1,5 @@
 import React from 'react';
 
-import BrowserLink from '~/components/BrowserLink';
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
 
 interface Props {
@@ -21,12 +20,7 @@ const PackName: React.FunctionComponent<Props> = ({
   if (sample.pack)
     return (
       <>
-        from{' '}
-        <BrowserLink
-          href={sample.pack}
-          data-link={sample.pack}
-          text={sample.pack_name || 'Unnamed Pack'}
-        />
+        from {sample.pack_name || 'Unnamed Pack'}
       </>
     );
   else return null;
