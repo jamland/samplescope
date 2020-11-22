@@ -102,6 +102,7 @@
     "wavesurfer.js": "^4.1.0"
   },
   "dependencies": {
+    "custom-electron-titlebar": "^3.2.5",
     "electron-squirrel-startup": "^1.0.0"
   }
 }

@@ -1,8 +1,9 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import windowStateKeeper from 'electron-window-state';
-import analyticsGoogle from './modules/analytics.google';
+import analyticsGoogle from '../modules/analytics.google';
 import logger from 'electron-log';
+import appMenu from './menu';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -67,6 +68,14 @@ const createWindow = () => {
     },
     backgroundColor: '#ffffff',
     show: false,
+    // Native toolbar is hidden, instead custom added within /renderer/index file
+    titleBarStyle: "hidden",
+    frame: false,
+  });
+
+  // Create main app menu
+  appMenu({
+    appName: app.name
   });
 
   // and load the index.html of the app.

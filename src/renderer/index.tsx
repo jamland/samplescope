@@ -28,10 +28,16 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Titlebar, Color } from 'custom-electron-titlebar';
 
 import App from './App';
 // import analytics from '@modules/analytics.renderer';
 // analytics.startAnalytics();
+
+const grey900 = '#24292e';
+new Titlebar({
+  backgroundColor: Color.fromHex(grey900)
+});
 
 console.log(
   '👋 This message is being logged by "renderer.js", included via webpack'
