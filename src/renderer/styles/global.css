@@ -15,13 +15,17 @@ body {
   cursor: default;
 }
 
-body [data-platform="win32"],
-body [data-platform="win32"] h1,
-body [data-platform="win32"] h2,
-body [data-platform="win32"] h3,
-body [data-platform="win32"] h4,
-body [data-platform="win32"] h5,
-body [data-platform="win32"] h6 {
+body > .container-after-titlebar {
+  height: 100%;
+}
+
+body [data-platform='win32'],
+body [data-platform='win32'] h1,
+body [data-platform='win32'] h2,
+body [data-platform='win32'] h3,
+body [data-platform='win32'] h4,
+body [data-platform='win32'] h5,
+body [data-platform='win32'] h6 {
   font-weight: 400;
 }
 
@@ -30,7 +34,7 @@ input {
   font-weight: 200;
 }
 
-body [data-platform="win32"] input {
+body [data-platform='win32'] input {
   font-weight: 300;
 }
 
