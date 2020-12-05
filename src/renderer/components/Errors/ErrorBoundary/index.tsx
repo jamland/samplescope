@@ -27,7 +27,7 @@ const ErrorFallback: React.FC<Props> = ({
         </div>
       </div>
       <div className="error-details">
-        {console.warn(error.message)}
+        {/* {console.warn(error.message)} */}
 
         {/* if (DEV) { */}
         {/* <pre style={{ color: 'red' }}>{error.message}</pre> */}
