@@ -26,25 +26,15 @@ const defaultWidth = 950;
 const defaultHeight = 800;
 
 // for tracking user session time
-let startTime;
+let startTime: number;
 
 const isDevMode = process.env?.DEV_MODE === 'true';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow: BrowserWindow;
 
 const createWindow = () => {
-  // TODO: Dont forget to remove extensions before release
-  // https://electronjs.org/docs/tutorial/devtools-extension#how-to-remove-a-devtools-extension
-
-  // BrowserWindow.addDevToolsExtension(
-  //   path.join(
-  //     os.homedir(),
-  //     'Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0'
-  //   )
-  // );
-
   // Load the previous window state with fallback to defaults
   const mainWindowState = windowStateKeeper({
     defaultWidth,
@@ -69,13 +59,13 @@ const createWindow = () => {
     backgroundColor: '#ffffff',
     show: false,
     // Native toolbar is hidden, instead custom added within /renderer/index file
-    titleBarStyle: "hidden",
+    titleBarStyle: 'hidden',
     frame: false,
   });
 
   // Create main app menu
   appMenu({
-    appName: app.name
+    appName: app.name,
   });
 
   // and load the index.html of the app.
@@ -95,6 +85,7 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
+    console.log('closed.....');
     const endTime = new Date().getMilliseconds();
     const interactionTime = startTime - endTime;
     analyticsGoogle.trackSessionTiming(interactionTime);
@@ -103,6 +94,14 @@ const createWindow = () => {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  app.on('window-all-closed', function () {
+    // For macOS
+    // Close whole app when window closed
+    if (process.platform === 'darwin') {
+      app.quit();
+    }
   });
 
   // register listeners on the window, so windowStateKeeper can update the state

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import analytics from '@modules/analytics.renderer';
 import eventEmitter from '@modules/EventEmitter';
-import BrowserLink from '@components/BrowserLink';
 import SettingsHeader from './SettingsHeader';
 import ServiceList from './ServiceList';
-import { Twitter, GitHub } from 'react-feather';
+import AboutApp from './AboutApp';
+
 import './index.css';
 
 interface Props {}
@@ -47,44 +47,7 @@ const Settings: React.FC<Props> = (props) => {
       <div className="settings-content">
         {activeMenuItem === MenuItems.Services && <ServiceList />}
 
-        {activeMenuItem === MenuItems.About && (
-          <div className="about-app">
-            <p>
-              Version:{'  '}
-              {process.env.npm_package_version}
-            </p>
-            <p>
-              Contacts:{'  '}
-              <BrowserLink
-                href="https://twitter.com/dadasunrise"
-                data-link="https://twitter.com/dadasunrise"
-                text={<Twitter />}
-              />
-              {'  '}
-              <BrowserLink
-                href="https://github.com/jamland"
-                data-link="https://github.com/jamland"
-                text={<GitHub />}
-              />
-            </p>
-            <p>
-              License:{'  '}
-              <BrowserLink
-                href="https://github.com/jamland/samplescope/blob/master/LICENSE"
-                data-link="https://github.com/jamland/samplescope/blob/master/LICENSE"
-                text="⚖️ MIT"
-              />
-            </p>
-            <p>
-              Privacy:{'  '}
-              <BrowserLink
-                href="https://github.com/jamland/samplescope/blob/master/PRIVACY"
-                data-link="https://github.com/jamland/samplescope/blob/master/PRIVACY"
-                text="Read on GitHub"
-              />
-            </p>
-          </div>
-        )}
+        {activeMenuItem === MenuItems.About && <AboutApp />}
       </div>
     </div>
   );
