@@ -65,7 +65,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^4.2.1",
     "dotenv": "^8.2.0",
-    "dotenv-webpack": "^3.0.0",
+    "dotenv-webpack": "^6.0.0",
     "electron": "10.1.2",
     "electron-dl": "^3.0.2",
     "electron-log": "^4.3.0",
