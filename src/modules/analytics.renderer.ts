@@ -7,15 +7,12 @@
 const { remote } = require('electron');
 const analyticsGoogle = remote.getGlobal('analyticsGoogle');
 
-console.log('remote.getCurrentWebContents', remote.getCurrentWebContents());
-
 /**
  * GA started in main process
  * Nucleus in renderer
  */
 const startAnalytics = () => {
-  // console.log('Nucleus', Nucleus);
-  // Nucleus.appStarted?.();
+  // Nucleus.appStarted();
 };
 
 const trackEvent = ({

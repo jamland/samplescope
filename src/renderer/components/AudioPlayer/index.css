@@ -1,3 +1,7 @@
 .audio-player-wave {
   flex: 1;
 }
+
+#waveform > wave {
+  overflow: hidden !important;
+}

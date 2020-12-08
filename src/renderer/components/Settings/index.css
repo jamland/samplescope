@@ -24,6 +24,7 @@
 
 .settings-content {
   padding: 3em 2em 1em;
+  width: 400px;
 }
 
 .settings-sidebar[data-open='true'] .app-header > *,

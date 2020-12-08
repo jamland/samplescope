@@ -1,10 +1,5 @@
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
- * To learn more about the differences between the "main" and the "renderer" context in
- * Electron, visit:
- *
- * https://electronjs.org/docs/tutorial/application-architecture#main-and-renderer-processes
- *
  * By default, Node.js integration in this file is disabled. When enabling Node.js integration
  * in a renderer process, please be aware of potential security implications. You can read
  * more about security risks here:
@@ -28,13 +23,15 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Titlebar, Color } from 'custom-electron-titlebar';
 
 import App from './App';
 // import analytics from '@modules/analytics.renderer';
 // analytics.startAnalytics();
 
-console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack'
-);
+const grey900 = '#24292e';
+new Titlebar({
+  backgroundColor: Color.fromHex(grey900),
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));

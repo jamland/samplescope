@@ -18,13 +18,14 @@ module.exports = {
       'entitlements-inherit': './assets/entitlements.plist',
       'signature-flags': 'library',
     },
-    platform: ['darwin'],
+    platform: ['darwin', 'win32'],
   },
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        name: 'samplescope_02',
+        certificateFile: './CertificateWin.cer',
+        certificatePassword: ''
       },
     },
     {
