@@ -12,10 +12,8 @@ import './App.css';
 
 import os from 'os';
 
-console.log('os', os.platform())
-
 const App = () => {
-  const platform = os?.platform()
+  const platform = os?.platform();
 
   return (
     // @ts-ignore

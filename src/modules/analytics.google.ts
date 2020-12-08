@@ -21,7 +21,7 @@ nodeStorage.setItem('userid', userId);
 const gaApiKey = process.env.GA_API_KEY || '';
 const visitor = ua(gaApiKey, userId);
 // Allows filtering by the 'Application?' field in GA
-visitor.set('ds', 'app');
+// visitor.set('ds', 'app');
 visitor.set('uid', userId);
 
 function trackEvent(category, action, label, value) {
@@ -35,11 +35,14 @@ function trackEvent(category, action, label, value) {
     .send();
 }
 
-function trackScreenView(screenName) {
+// trackEvent('Test Event', 'test action');
+visitor.event('Event Category', 'Event Action').send();
+
+function trackScreenView(screenName: string) {
   visitor.screenview(screenName, appName, appVersion).send();
 }
 
-function trackSessionTiming(time) {
+function trackSessionTiming(time: string) {
   visitor.timing('User interaction', 'User Session Time', time).send();
 }
 

@@ -85,7 +85,6 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
-    console.log('closed.....');
     const endTime = new Date().getMilliseconds();
     const interactionTime = startTime - endTime;
     analyticsGoogle.trackSessionTiming(interactionTime);
@@ -98,7 +97,7 @@ const createWindow = () => {
 
   app.on('window-all-closed', function () {
     // For macOS
-    // Close whole app when window closed
+    // Close whole app when all windows closed
     if (process.platform === 'darwin') {
       app.quit();
     }

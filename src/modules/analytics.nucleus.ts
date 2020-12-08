@@ -2,8 +2,6 @@ import uuidv4 from 'uuid/v4';
 const { app } = require('electron').remote;
 const Nucleus = require('nucleus-nodejs');
 
-console.log('Nucleus', Nucleus);
-
 const { JSONStorage } = require('node-localstorage');
 const nodeStorage = new JSONStorage(app.getPath('userData'));
 
@@ -27,7 +25,5 @@ Nucleus.setUserId(userId);
 Nucleus.setProps({
   version: process.env.npm_package_version ?? 'unknown',
 });
-
-console.log('Nucleus', Nucleus);
 
 export default Nucleus;
