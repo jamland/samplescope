@@ -34,6 +34,16 @@ Some script commands uses `cross-env` to ensure to set and use environment varia
 
 Details on [Electron Forge docs for CLI](https://www.electronforge.io/cli)
 
+### Notarize
+
+The config could be found in `forge.config`.
+
+macOS: `APPLE_ID` & `APPLE_ID_PASSWORD` tokens needs to be added to `.env` file. All notarization works done by `src/hooks/notarize` hook on `publish` cmd.
+
+Windows: Code-sign certificate need to be placed within `private/` folder.
+
+The rest of the work for both platforms done automatically on `npm run publish` cmd.
+
 ### Publish
 
 This command will attempt to make the forge application and then publish it to the publish targets defined in `forge.config`.
