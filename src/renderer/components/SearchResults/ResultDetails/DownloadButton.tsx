@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { DownloadCloud } from 'react-feather';
 
-import analytics from '@modules/analytics.renderer';
+import analytics from '@modules/analytics/renderer';
 import { SelectedSample } from '~/context/App.context';
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
 

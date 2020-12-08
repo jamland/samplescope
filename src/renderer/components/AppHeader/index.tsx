@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useDebounce } from 'react-use';
 
-import analytics from '@modules/analytics.renderer';
+import analytics from '@modules/analytics/renderer';
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';

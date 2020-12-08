@@ -1,9 +1,10 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import windowStateKeeper from 'electron-window-state';
-import analyticsGoogle from '../modules/analytics.google';
+import analyticsGoogle from '../modules/analytics/google';
 import logger from 'electron-log';
 import appMenu from './menu';
+import '../modules/analytics/bugsnag.main';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 

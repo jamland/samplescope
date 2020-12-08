@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import analytics from '@modules/analytics.renderer';
+import analytics from '@modules/analytics/renderer';
 import eventEmitter from '@modules/EventEmitter';
 import SettingsHeader from './SettingsHeader';
 import ServiceList from './ServiceList';

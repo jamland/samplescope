@@ -3,7 +3,7 @@ import React, { Profiler } from 'react';
 import SearchResults from './components/SearchResults';
 import AppHeader from '@components/AppHeader';
 import Settings from '@components/Settings';
-import ErrorTracker from '~/components/Errors/ErrorTracker';
+import ErrorTracker from '@modules/analytics/bugsnag.renderer';
 import { AppContextProvider } from './context/App.context';
 
 import './styles/global.css';

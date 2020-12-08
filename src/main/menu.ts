@@ -43,7 +43,7 @@ const appMenu = ({ appName }: Props) => {
     submenu: [
       { role: 'reload' },
       { role: 'forceReload' },
-      ...(isDevMode && [{ role: 'toggleDevTools' }]),
+      ...(isDevMode ? [{ role: 'toggleDevTools' }] : []),
       { type: 'separator' },
       { role: 'resetZoom' },
       { role: 'zoomIn' },
