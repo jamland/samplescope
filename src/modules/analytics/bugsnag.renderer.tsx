@@ -9,7 +9,7 @@ Bugsnag.start({
   plugins: [new BugsnagPluginReact()],
 });
 
-// Bugsnag.notify(new Error('🩸 fTest error'));
+// Bugsnag.notify(new Error('🩸 TEST FROM MAKE'));
 
 const ErrorBoundary = Bugsnag.getPlugin('react')?.createErrorBoundary(React);
 

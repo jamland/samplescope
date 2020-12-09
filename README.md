@@ -11,7 +11,7 @@ Samplescope is app to search audio samples over internet
 There are 2 main stimulus for this app:
 
 - Give a user a simple (quick and easy) way to search over online samples
-- Research the field of available online audio resources.
+- Research the field of available online audio resources
 
 # Development
 

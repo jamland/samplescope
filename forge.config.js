@@ -25,7 +25,7 @@ module.exports = {
       name: '@electron-forge/maker-squirrel',
       config: {
         certificateFile: './CertificateWin.cer',
-        certificatePassword: ''
+        certificatePassword: '',
       },
     },
     {
