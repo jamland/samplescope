@@ -37,8 +37,8 @@ const AboutApp = () => {
           />
           {'  '}
           <BrowserLink
-            href="https://github.com/jamland"
-            data-link="https://github.com/jamland"
+            href="https://github.com/jamland/samplescope/discussions"
+            data-link="https://github.com/jamland/samplescope/discussions"
             text={<GitHub />}
           />
         </h2>

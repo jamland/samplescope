@@ -3,6 +3,7 @@ import ua from 'universal-analytics';
 import { JSONStorage } from 'node-localstorage';
 import uuidv4 from 'uuid/v4';
 
+const GA_API_KEY = 'UA-173935505-1';
 const nodeStorage = new JSONStorage(app.getPath('userData'));
 const appName = app.getName();
 const appVersion = app.getVersion();
@@ -18,7 +19,7 @@ if (process.env?.DEV_MODE === 'true') {
 // (re)save the userid, so it persists for the next app session.
 nodeStorage.setItem('userid', userId);
 
-const gaApiKey = process.env.GA_API_KEY || '';
+const gaApiKey = process.env.GA_API_KEY || GA_API_KEY || '';
 const visitor = ua(gaApiKey, userId);
 // Allows filtering by the 'Application?' field in GA
 // visitor.set('ds', 'app');
