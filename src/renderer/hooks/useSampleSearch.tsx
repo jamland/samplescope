@@ -3,7 +3,10 @@ import { useSetState } from 'react-use';
 
 import freesoundSearch from '@modules/freesound-search';
 import { SampleList } from '@modules/freesound-search/freesound.types';
-const apiKey = process.env.SAMPLESCOPE_FREESOUND_API_KEY;
+
+const remote = window.require('electron').remote;
+const env = remote.getGlobal('process').env;
+const apiKey = env.SAMPLESCOPE_FREESOUND_API_KEY;
 
 interface State {
   loading: boolean;
