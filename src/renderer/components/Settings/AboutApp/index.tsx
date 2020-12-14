@@ -22,8 +22,8 @@ const AboutApp = () => {
         <br />
         Privacy:{' '}
         <BrowserLink
-          href="https://github.com/jamland/samplescope/blob/master/PRIVACY"
-          data-link="https://github.com/jamland/samplescope/blob/master/PRIVACY"
+          href="https://github.com/jamland/samplescope/blob/master/PRIVACY.md"
+          data-link="https://github.com/jamland/samplescope/blob/master/PRIVACY.md"
           text="Read on GitHub"
         />
       </p>
