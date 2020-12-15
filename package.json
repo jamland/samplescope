@@ -68,7 +68,7 @@
     "dotenv-webpack": "^6.0.0",
     "electron": "10.1.2",
     "electron-dl": "^3.0.2",
-    "electron-log": "^4.3.0",
+    "electron-log": "^4.3.1",
     "electron-notarize": "^1.0.0",
     "electron-open-link-in-browser": "^1.0.2",
     "electron-window-state": "^5.0.3",
