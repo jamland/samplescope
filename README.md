@@ -1,3 +1,6 @@
+![Hero Image](https://github.com/jamland/samplescope/blob/main/assets/banner.png?raw=true)
+
+
 # Samplescope
 
 Download [Samplescope for Mac OS](https://github.com/jamland/samplescope/releases/)
