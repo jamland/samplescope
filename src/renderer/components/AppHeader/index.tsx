@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useDebounce } from 'react-use';
 
-import analytics from '@modules/analytics/renderer';
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
 import eventEmitter from '@modules/EventEmitter';
+import GA4 from '@modules/analytics/ga4';
 
 import freesoundLogo from '~/images/samplescope-icon.png';
 import './index.css';
@@ -20,12 +20,15 @@ const AppHeader: React.FC<{}> = () => {
     () => {
       setDebouncedValue(inputValue);
 
-      analytics.trackEvent({
-        name: 'SEARCH_TEXT',
-        action: 'Search query changed',
-        label: 'Search Query',
-        value: inputValue,
+      GA4.sendEvent('search', {
+        search_term: inputValue ?? '',
       });
+      // analytics.trackEvent({
+      //   name: 'SEARCH_TEXT',
+      //   action: 'Search query changed',
+      //   label: 'Search Query',
+      //   value: inputValue,
+      // });
     },
     300,
     [inputValue]

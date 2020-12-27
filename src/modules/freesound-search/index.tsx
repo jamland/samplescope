@@ -37,46 +37,57 @@ const defaultTextSearchProps: {
   abortController: null,
 };
 
+type RequestCache = {
+  [key: string]: SearchTextResponse;
+};
+
+const cache: any = {};
+
 const getByURL = async (
   url: string,
   abortController: AbortController = new AbortController()
 ): Promise<SearchTextResponse | null> => {
-  try {
-    const postfix = `&token=${config.apiKey}`;
-    const response = await fetch(url + postfix, {
-      signal: abortController.signal,
-    });
-    const body = await response.json();
+  // return cached response if it was done before already
+  if (cache[url]) return Promise.resolve(cache[url]);
+  else {
+    try {
+      const postfix = `&token=${config.apiKey}`;
+      const response = await fetch(url + postfix, {
+        signal: abortController.signal,
+      });
+      const body = await response.json();
 
-    if (!response.ok) {
-      const detail = {
-        response,
-        message: body.detail,
-      };
-      const event = new CustomEvent('requestError', { detail });
-      ErrorEmitter.emit(event.type, event.detail);
-      // window.dispatchEvent(event);
-      return Promise.reject(new Error(body.detail));
-    } else {
-      searchQuery.response = body;
-
-      // @ts-ignore
-      return Promise.resolve(searchQuery.response);
-      // const result = await sf.query({
-      //   search: [ 'drum', 'bass' ],
-      //   duration: [ 0.01, 1 ]
-      // });
-    }
-  } catch (error) {
-    if (error.name === 'AbortError') {
-      return Promise.resolve(null);
-    } else {
-      const detail = {
-        message: error.message,
-      };
-      const event = new CustomEvent('requestError', { detail });
-      window.dispatchEvent(event);
-      return Promise.reject(new Error(error.message));
+      if (!response.ok) {
+        const detail = {
+          response,
+          message: body.detail,
+        };
+        const event = new CustomEvent('requestError', { detail });
+        ErrorEmitter.emit(event.type, event.detail);
+        // window.dispatchEvent(event);
+        return Promise.reject(new Error(body.detail));
+      } else {
+        searchQuery.response = body;
+        // cache response for further repeated calls
+        cache[url] = searchQuery.response;
+        // @ts-ignore
+        return Promise.resolve(searchQuery.response);
+        // const result = await sf.query({
+        //   search: [ 'drum', 'bass' ],
+        //   duration: [ 0.01, 1 ]
+        // });
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return Promise.resolve(null);
+      } else {
+        const detail = {
+          message: error.message,
+        };
+        const event = new CustomEvent('requestError', { detail });
+        window.dispatchEvent(event);
+        return Promise.reject(new Error(error.message));
+      }
     }
   }
 };
@@ -136,8 +147,6 @@ const searchText = async ({
 
   return getByURL(url, abortController);
 };
-
-const cache = {};
 
 /**
  * TODO:

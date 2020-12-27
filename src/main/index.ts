@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import windowStateKeeper from 'electron-window-state';
-import analyticsGoogle from '../modules/analytics/google';
 import logger from 'electron-log';
 import appMenu from './menu';
 import '../modules/analytics/bugsnag.main';
@@ -20,8 +19,6 @@ if (require('electron-squirrel-startup')) {
   // eslint-disable-line global-require
   app.quit();
 }
-
-global.analyticsGoogle = analyticsGoogle ?? {};
 
 const defaultWidth = 950;
 const defaultHeight = 800;
@@ -55,7 +52,7 @@ const createWindow = () => {
       // allow main process be accesible in renderer via `remote` prop
       enableRemoteModule: true,
       // enable devtools only for dev mode
-      devTools: isDevMode,
+      devTools: true,
     },
     backgroundColor: '#ffffff',
     show: false,
@@ -74,8 +71,8 @@ const createWindow = () => {
 
   if (isDevMode) {
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
   }
+  mainWindow.webContents.openDevTools();
 
   // Showing window gracefully
   // prevent visual flash while scripts loading
@@ -86,10 +83,6 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
-    const endTime = new Date().getMilliseconds();
-    const interactionTime = startTime - endTime;
-    analyticsGoogle.trackSessionTiming(interactionTime);
-
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.

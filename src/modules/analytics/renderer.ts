@@ -6,6 +6,7 @@
 
 const { remote } = require('electron');
 const analyticsGoogle = remote.getGlobal('analyticsGoogle');
+console.log('analyticsGoogle', analyticsGoogle);
 
 /**
  * GA started in main process
@@ -26,7 +27,7 @@ const trackEvent = ({
   label: string;
   value: string | number;
 }) => {
-  analyticsGoogle.event?.(name, action, label, value);
+  analyticsGoogle.trackEvent?.(name, action, label, value);
   // Nucleus.track?.(name, {
   //   searchQuery: value,
   // });

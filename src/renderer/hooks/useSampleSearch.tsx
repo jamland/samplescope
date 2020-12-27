@@ -6,9 +6,28 @@ import { SampleList } from '@modules/freesound-search/freesound.types';
 
 const remote = window.require('electron').remote;
 const env = remote.getGlobal('process').env;
-const apiKey =
+
+const apiKeys = [
+  process.env.SAMPLESCOPE_FREESOUND_API_KEY_01 ??
+    env.SAMPLESCOPE_FREESOUND_API_KEY_01,
+  process.env.SAMPLESCOPE_FREESOUND_API_KEY_02 ??
+    env.SAMPLESCOPE_FREESOUND_API_KEY_02,
+  process.env.SAMPLESCOPE_FREESOUND_API_KEY_03 ??
+    env.SAMPLESCOPE_FREESOUND_API_KEY_03,
+  process.env.SAMPLESCOPE_FREESOUND_API_KEY_04 ??
+    env.SAMPLESCOPE_FREESOUND_API_KEY_04,
+];
+
+const apiKeyDev =
   process.env.SAMPLESCOPE_FREESOUND_API_KEY ??
   env.SAMPLESCOPE_FREESOUND_API_KEY;
+
+const randomInteger = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const randomIdx = randomInteger(0, apiKeys.length);
+const apiKey = apiKeys[randomIdx] ?? apiKeyDev;
 
 interface State {
   loading: boolean;
