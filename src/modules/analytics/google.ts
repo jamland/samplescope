@@ -1,10 +1,10 @@
 import { app } from 'electron';
 // import ua from 'universal-analytics';
 
-import Analytics from 'electron-google-analytics';
+// import Analytics from 'electron-google-analytics';
 import userId from '../../main/userId';
 
-const GA_API_KEY = 'UA-173935505-1';
+// const GA_API_KEY = 'UA-173935505-1';
 // const GA_API_KEY = 'G-15X5TFP4CY';
 // const appName = app.getName();
 // const appVersion = app.getVersion();
@@ -17,12 +17,12 @@ const GA_API_KEY = 'UA-173935505-1';
 
 // console.log('gaApiKey', gaApiKey);
 
-console.log('userId', userId);
+// console.log('userId', userId);
 
-const analytics = new Analytics(GA_API_KEY);
-analytics.set('uid', userId);
+// const analytics = new Analytics(GA_API_KEY);
+// analytics.set('uid', userId);
 
-analytics.pageview('http://example.com', '/home', 'Example');
+// analytics.pageview('http://example.com', '/home', 'Example');
 
 // visitor.pageview("/").send();
 
