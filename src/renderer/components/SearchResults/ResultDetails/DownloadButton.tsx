@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { DownloadCloud } from 'react-feather';
 
-import analytics from '@modules/analytics/renderer';
 import { SelectedSample } from '~/context/App.context';
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
+import GA4 from '@modules/analytics/ga4';
 
 interface Props {
   sample: SamplePreview;
@@ -65,11 +65,9 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
       setDownloading(true);
       setProgress(0);
 
-      analytics.trackEvent({
-        name: 'DOWNLOAD_FILE',
-        action: 'Download File Started',
-        label: 'File Name',
-        value: `${sample.id}: ${sample.name}`,
+      GA4.sendEvent('download', {
+        file_name: `${sample.id} ${sample.name}`,
+        sample_id: sample.id,
       });
     }
   };

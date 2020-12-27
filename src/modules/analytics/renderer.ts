@@ -4,8 +4,8 @@
  */
 // import Nucleus from '@modules/analytics.nucleus';
 
-const { remote } = require('electron');
-const analyticsGoogle = remote.getGlobal('analyticsGoogle');
+// const { remote } = require('electron');
+// const analyticsGoogle = remote.getGlobal('analyticsGoogle');
 
 /**
  * GA started in main process
@@ -26,7 +26,7 @@ const trackEvent = ({
   label: string;
   value: string | number;
 }) => {
-  analyticsGoogle.event?.(name, action, label, value);
+  // analyticsGoogle.trackEvent?.(name, action, label, value);
   // Nucleus.track?.(name, {
   //   searchQuery: value,
   // });
@@ -37,7 +37,7 @@ const trackEvent = ({
  * Nucleas track as another event
  */
 const screenview = (screenName: string) => {
-  analyticsGoogle.screenview?.(screenName);
+  // analyticsGoogle.screenview?.(screenName);
   // Nucleus.track?.(screenName);
 };
 

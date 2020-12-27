@@ -16,7 +16,7 @@ const ServiceList = () => {
             text="Freesound.org"
           />
         </h3>
-        <div>~480k free samples</div>
+        <div>~500k free samples</div>
       </div>
     </div>
   );

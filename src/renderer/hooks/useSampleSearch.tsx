@@ -6,9 +6,40 @@ import { SampleList } from '@modules/freesound-search/freesound.types';
 
 const remote = window.require('electron').remote;
 const env = remote.getGlobal('process').env;
-const apiKey =
-  process.env.SAMPLESCOPE_FREESOUND_API_KEY ??
-  env.SAMPLESCOPE_FREESOUND_API_KEY;
+
+/**
+ * This is dump way to scale freesound.org resources.
+ * Freesound have limit of 2k requests daily.
+ * So, we randomly distribute it over array of different API keys
+ */
+const getApiKey = () => {
+  // get key from renderer process otherwise from main process
+  const apiKeys = [
+    process.env.SAMPLESCOPE_FREESOUND_API_KEY_01 ??
+      env.SAMPLESCOPE_FREESOUND_API_KEY_01,
+    process.env.SAMPLESCOPE_FREESOUND_API_KEY_02 ??
+      env.SAMPLESCOPE_FREESOUND_API_KEY_02,
+    process.env.SAMPLESCOPE_FREESOUND_API_KEY_03 ??
+      env.SAMPLESCOPE_FREESOUND_API_KEY_03,
+    process.env.SAMPLESCOPE_FREESOUND_API_KEY_04 ??
+      env.SAMPLESCOPE_FREESOUND_API_KEY_04,
+  ];
+
+  // TODO: set separate API key for dev purposes
+  const apiKeyDev =
+    process.env.SAMPLESCOPE_FREESOUND_API_KEY ??
+    env.SAMPLESCOPE_FREESOUND_API_KEY;
+
+  const randomInteger = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  const randomIdx = randomInteger(0, apiKeys.length);
+  const apiKey = apiKeys[randomIdx] ?? apiKeyDev;
+  return apiKey;
+};
+
+const apiKey = getApiKey();
 
 interface State {
   loading: boolean;
