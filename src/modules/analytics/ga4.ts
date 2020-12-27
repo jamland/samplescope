@@ -11,8 +11,6 @@ const nodeStorage = new JSONStorage(app.getPath('userData'));
 const remote = window.require('electron').remote;
 const env = remote.getGlobal('process').env;
 
-console.log('env', env);
-
 // const measurementId = process.env.GA4_MEASUREMENT_ID ?? env.GA4_MEASUREMENT_ID;
 const measurementId = 'G-HTY5MME75G';
 const apiSecret = 'Xb8Rtz75T52vgGyQ1H-d2g';
@@ -59,7 +57,7 @@ const register = async () => {
   await loadScript(gtagScriptUrl);
 
   window.dataLayer = window.dataLayer || [];
-  console.log('window.dataLayer', window.dataLayer);
+  // console.log('window.dataLayer', window.dataLayer);
 
   if (!nodeStorage)
     return Promise.reject(`Can't start GA4. LocalStorage isn't available`);

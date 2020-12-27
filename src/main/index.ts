@@ -52,7 +52,7 @@ const createWindow = () => {
       // allow main process be accesible in renderer via `remote` prop
       enableRemoteModule: true,
       // enable devtools only for dev mode
-      devTools: true,
+      devTools: isDevMode,
     },
     backgroundColor: '#ffffff',
     show: false,
@@ -71,8 +71,8 @@ const createWindow = () => {
 
   if (isDevMode) {
     // Open the DevTools.
+    mainWindow.webContents.openDevTools();
   }
-  mainWindow.webContents.openDevTools();
 
   // Showing window gracefully
   // prevent visual flash while scripts loading
