@@ -72,10 +72,6 @@ const getByURL = async (
         cache[url] = searchQuery.response;
         // @ts-ignore
         return Promise.resolve(searchQuery.response);
-        // const result = await sf.query({
-        //   search: [ 'drum', 'bass' ],
-        //   duration: [ 0.01, 1 ]
-        // });
       }
     } catch (error) {
       if (error.name === 'AbortError') {
