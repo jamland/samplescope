@@ -20,7 +20,7 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const defaultWidth = 950;
+const defaultWidth = 920;
 const defaultHeight = 800;
 
 // for tracking user session time

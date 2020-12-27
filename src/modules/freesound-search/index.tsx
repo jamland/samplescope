@@ -138,8 +138,9 @@ const searchText = async ({
     'tags',
     'type',
   ].join(',');
+  const page_size = 30;
   const sort = query === '' ? 'created_desc' : 'score';
-  const url = `${API.SEARCH_TEXT}?query=${query}&sort=${sort}&fields=${fields}`;
+  const url = `${API.SEARCH_TEXT}?query=${query}&sort=${sort}&fields=${fields}&page_size=${page_size}`;
 
   return getByURL(url, abortController);
 };
