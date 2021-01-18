@@ -3,7 +3,7 @@
 
 # Samplescope
 
-Download [Samplescope for Mac OS](https://github.com/jamland/samplescope/releases/)
+Download [Samplescope App for macOS or Windows](https://github.com/jamland/samplescope/releases/)
 
 ## Simply
 
