@@ -15,15 +15,15 @@ const AboutApp = () => {
       <p>
         License:{' '}
         <BrowserLink
-          href="https://github.com/jamland/samplescope/blob/master/LICENSE"
-          data-link="https://github.com/jamland/samplescope/blob/master/LICENSE"
+          href="https://github.com/jamland/samplescope/blob/main/LICENSE"
+          data-link="https://github.com/jamland/samplescope/blob/main/LICENSE"
           text="⚖️ MIT"
         />
         <br />
         Privacy:{' '}
         <BrowserLink
-          href="https://github.com/jamland/samplescope/blob/master/PRIVACY.md"
-          data-link="https://github.com/jamland/samplescope/blob/master/PRIVACY.md"
+          href="https://github.com/jamland/samplescope/blob/main/PRIVACY.md"
+          data-link="https://github.com/jamland/samplescope/blob/main/PRIVACY.md"
           text="Read on GitHub"
         />
       </p>
@@ -31,8 +31,8 @@ const AboutApp = () => {
         Contacts
         <h2>
           <BrowserLink
-            href="https://twitter.com/dadasunrise"
-            data-link="https://twitter.com/dadasunrise"
+            href="https://twitter.com/samplescope"
+            data-link="https://twitter.com/samplescope"
             text={<Twitter />}
           />
           {'  '}
