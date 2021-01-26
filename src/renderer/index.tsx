@@ -26,8 +26,8 @@ import * as ReactDOM from 'react-dom';
 import { Titlebar, Color } from 'custom-electron-titlebar';
 
 import App from './App';
-// import analytics from '@modules/analytics.renderer';
-// analytics.startAnalytics();
+import analytics from '@modules/analytics/renderer';
+analytics.startAnalytics();
 
 const grey900 = '#24292e';
 new Titlebar({
