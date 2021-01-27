@@ -56,6 +56,11 @@ const AppHeader: React.FC<{}> = () => {
             className=" button-clear settings-toggler"
             onClick={handleSettingsOpen}
           >
+            <div className="menu-icon">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             {/* <img src={sampleScopeIcon} alt="samplescope logo" /> */}
             <img src={freesoundLogo} alt="asdf" />
           </button>

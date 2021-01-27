@@ -3,6 +3,7 @@
 }
 
 .app-header {
+  position: relative;
   flex: 0;
   background: var(--app-header-color);
   color: var(--app-header-text-color);
@@ -10,7 +11,8 @@
   padding: 1em 2em;
   display: flex;
   align-items: center;
-  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .app-header-search {
@@ -47,8 +49,36 @@
 }
 
 .settings-toggler {
-  padding: 0;
-  width: 30px;
-  margin: -10px 40px 0 -10px;
+  margin: 0 20px 0 -50px;
+  padding: 0 10px 0 50px;
+  height: 50px;
+  margin-top: -10px;
   background: none;
+  position: relative;
+}
+
+.settings-toggler img {
+  width: 30px;
+}
+
+.menu-icon {
+  position: absolute;
+  left: 10px;
+  opacity: 0.5;
+  pointer-events: none;
+  margin-top: 15px;
+  transition: all 0.4s ease;
+}
+
+.menu-icon > div {
+  width: 20px;
+  height: 3px;
+  background: var(--app-header-text-color);
+  margin-bottom: 6px;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+.settings-toggler:hover .menu-icon {
+  opacity: 1;
 }
