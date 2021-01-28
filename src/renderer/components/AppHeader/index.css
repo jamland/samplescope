@@ -49,8 +49,8 @@
 }
 
 .settings-toggler {
-  margin: 0 20px 0 -50px;
-  padding: 0 10px 0 50px;
+  margin: 0 20px 0 -40px;
+  padding: 0 10px 0 40px;
   height: 50px;
   margin-top: -10px;
   background: none;
@@ -71,14 +71,19 @@
 }
 
 .menu-icon > div {
-  width: 20px;
+  width: 8px;
   height: 3px;
   background: var(--app-header-text-color);
   margin-bottom: 6px;
   pointer-events: none;
   border-radius: 2px;
+  transition: all 0.2s ease;
 }
 
 .settings-toggler:hover .menu-icon {
   opacity: 1;
+}
+
+.settings-toggler:hover .menu-icon > div:nth-child(2n + 1) {
+  width: 12px;
 }
