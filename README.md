@@ -1,9 +1,10 @@
 ![Hero Image](https://github.com/jamland/samplescope/blob/main/assets/banner.png?raw=true)
 
-
 # Samplescope
 
-Download [Samplescope App for macOS or Windows](https://github.com/jamland/samplescope/releases/)
+🟢 Download [Samplescope App for macOS or Windows](https://github.com/jamland/samplescope/releases/)
+
+🟠 Please note, using this app you accepting [Application Privacy Policy](https://github.com/jamland/samplescope/blob/main/PRIVACY.md).
 
 ## Simply
 
@@ -19,6 +20,12 @@ There are 2 main stimulus for this app:
 # Development
 
 ## TBA: Description followed open source project on github
+
+<br />
+
+## Prerequisites
+
+To run app in development env you need create file `.env` based on `.env.example` in projects' root folder. This file need to be updated with correct credentials. Specifically, credentials required to access [Freesound.org](Freesound.org) (called `FREESOUND_API_KEY_DEV`). It can be generated on [Freesound API page](https://freesound.org/apiv2/apply). Other credentials are optional (most likely)
 
 ## Commands
 
@@ -56,7 +63,7 @@ You need to run publish on each platform you want to support, so `Samplescope-X.
 
 ## Private Keys
 
-There are some 3rd-party API related credentials, Github token, Apple passwords and other sensative private credentials required to run, package, deploy this app. This credentials should not be published to repository for security reasons, and should be added manually by developer.  
+There are some 3rd-party API related credentials, Github token, Apple passwords and other sensative private credentials required to run, package, deploy this app. This credentials should not be published to repository for security reasons, and should be added manually by developer.
 Specifically:
 
 - add new `.env` file. There is `.env.example` with example of required keys

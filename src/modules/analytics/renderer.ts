@@ -2,7 +2,7 @@
  * This module abstract methods for analytics.
  * It uses GA and Nucleus analytics for further considerations which is better
  */
-// import Nucleus from '@modules/analytics.nucleus';
+import Nucleus from '@modules/analytics/nucleus';
 
 // const { remote } = require('electron');
 // const analyticsGoogle = remote.getGlobal('analyticsGoogle');
@@ -12,24 +12,44 @@
  * Nucleus in renderer
  */
 const startAnalytics = () => {
-  // Nucleus.appStarted();
+  try {
+    Nucleus.appStarted();
+  } catch (error) {
+    console.warn(`Error trying start analytics: ${error.message}`);
+  }
 };
 
-const trackEvent = ({
-  name,
-  action,
-  label,
-  value,
-}: {
+type TrackEventProps = {
   name: string;
   action: string;
-  label: string;
+  label: string | number;
   value: string | number;
-}) => {
-  // analyticsGoogle.trackEvent?.(name, action, label, value);
-  // Nucleus.track?.(name, {
-  //   searchQuery: value,
-  // });
+};
+
+const trackEvent = ({ name, action, label, value }: TrackEventProps) => {
+  try {
+    // analyticsGoogle.trackEvent?.(name, action, label, value);
+
+    const data = selectData({ name, label, value });
+    Nucleus.track?.(name, data);
+  } catch (error) {
+    console.warn(`Error trying track analytics: ${error.message}`);
+  }
+};
+
+const selectData = ({ name, label, value }: Partial<TrackEventProps>) => {
+  switch (name) {
+    case 'DOWNLOAD':
+      return {
+        id: label,
+        fileName: value,
+      };
+    case 'SEARCH_TEXT':
+    default:
+      return {
+        searchQuery: value,
+      };
+  }
 };
 
 /**
@@ -37,8 +57,12 @@ const trackEvent = ({
  * Nucleas track as another event
  */
 const screenview = (screenName: string) => {
-  // analyticsGoogle.screenview?.(screenName);
-  // Nucleus.track?.(screenName);
+  try {
+    // analyticsGoogle.screenview?.(screenName);
+    Nucleus.track?.(`${screenName} Screen`);
+  } catch (error) {
+    console.warn(`Error trying track analytics: ${error.message}`);
+  }
 };
 
 export default {

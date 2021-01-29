@@ -4,6 +4,7 @@ import { DownloadCloud } from 'react-feather';
 
 import { SelectedSample } from '~/context/App.context';
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
+import analytics from '@modules/analytics/renderer';
 // import GA4 from '@modules/analytics/ga4';
 
 interface Props {
@@ -64,6 +65,13 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
 
       setDownloading(true);
       setProgress(0);
+
+      analytics.trackEvent({
+        name: 'DOWNLOAD',
+        action: 'File Downloaded',
+        label: sample.id,
+        value: `#${sample.id} ${sample.name}`,
+      });
 
       // GA4.sendEvent('download', {
       //   file_name: `${sample.id} ${sample.name}`,

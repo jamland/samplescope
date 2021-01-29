@@ -4,6 +4,7 @@ import eventEmitter from '@modules/EventEmitter';
 import SettingsHeader from './SettingsHeader';
 import ServiceList from './ServiceList';
 import AboutApp from './AboutApp';
+import analytics from '@modules/analytics/renderer';
 
 import './index.css';
 
@@ -26,9 +27,9 @@ const Settings: React.FC<Props> = (props) => {
       }
     );
 
-    // if (isOpen) {
-    //   analytics.screenview('SETTINGS');
-    // }
+    if (isOpen) {
+      analytics.screenview('SETTINGS');
+    }
 
     return () => {
       toggleSidebarEvent.unsubscribe();

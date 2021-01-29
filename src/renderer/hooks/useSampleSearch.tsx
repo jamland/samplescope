@@ -13,22 +13,23 @@ const env = remote.getGlobal('process').env;
  * So, we randomly distribute it over array of different API keys
  */
 const getApiKey = () => {
+  const isDevMode = process.env?.DEV_MODE === 'true' || env.DEV_MODE === 'true';
+
+  const apiKeyDev =
+    process.env.FREESOUND_API_KEY_DEV ?? env.FREESOUND_API_KEY_DEV;
+
+  if (isDevMode) {
+    return apiKeyDev;
+  }
+
+  // otherwise in PRODUCTION env
   // get key from renderer process otherwise from main process
   const apiKeys = [
-    process.env.SAMPLESCOPE_FREESOUND_API_KEY_01 ??
-      env.SAMPLESCOPE_FREESOUND_API_KEY_01,
-    process.env.SAMPLESCOPE_FREESOUND_API_KEY_02 ??
-      env.SAMPLESCOPE_FREESOUND_API_KEY_02,
-    process.env.SAMPLESCOPE_FREESOUND_API_KEY_03 ??
-      env.SAMPLESCOPE_FREESOUND_API_KEY_03,
-    process.env.SAMPLESCOPE_FREESOUND_API_KEY_04 ??
-      env.SAMPLESCOPE_FREESOUND_API_KEY_04,
+    process.env.FREESOUND_API_KEY_01 ?? env.FREESOUND_API_KEY_01,
+    process.env.FREESOUND_API_KEY_02 ?? env.FREESOUND_API_KEY_02,
+    process.env.FREESOUND_API_KEY_03 ?? env.FREESOUND_API_KEY_03,
+    process.env.FREESOUND_API_KEY_04 ?? env.FREESOUND_API_KEY_04,
   ];
-
-  // TODO: set separate API key for dev purposes
-  const apiKeyDev =
-    process.env.SAMPLESCOPE_FREESOUND_API_KEY ??
-    env.SAMPLESCOPE_FREESOUND_API_KEY;
 
   const randomInteger = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;

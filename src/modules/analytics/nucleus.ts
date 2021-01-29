@@ -26,4 +26,6 @@ Nucleus.setProps({
   version: process.env.npm_package_version ?? 'unknown',
 });
 
+console.log('Nucleus', Nucleus);
+
 export default Nucleus;
