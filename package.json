@@ -85,7 +85,7 @@
     "node-localstorage": "^2.1.6",
     "nodemon": "^2.0.7",
     "normalize.css": "^8.0.1",
-    "nucleus-nodejs": "^3.0.7",
+    "nucleus-nodejs": "^3.0.8",
     "prettier": "^2.2.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
