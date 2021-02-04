@@ -74,6 +74,9 @@ export interface SamplePreview {
 
   // The type of sound (wav, aif, aiff, mp3, m4a or flac).
   type: SampleFileType;
+
+  // The URI for this sound on the Freesound website.
+  url: string;
 }
 
 export interface SampleInstance {

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
 
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
 import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
 import eventEmitter from '@modules/EventEmitter';
+import { AppContext } from '~/context/App.context';
 
 import './index.css';
 
@@ -35,6 +36,7 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
   const [waveFormLoaded, setWaveformLoaded] = useState(false);
+  const { setPlaying } = useContext(AppContext);
 
   // on mount
   useEffect(() => {
@@ -75,6 +77,33 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
         }
       });
 
+      wavesurfer.current.on('play', function () {
+        if (wavesurfer.current) {
+          // setWaveformLoaded(true);
+          // wavesurfer.current.setVolume(volume);
+          console.log('🔥 play');
+          setPlaying(true);
+        }
+      });
+
+      wavesurfer.current.on('pause', function () {
+        if (wavesurfer.current) {
+          // setWaveformLoaded(true);
+          // wavesurfer.current.setVolume(volume);
+          console.log('🔥 pause');
+          setPlaying(false);
+        }
+      });
+
+      wavesurfer.current.on('finish', function () {
+        if (wavesurfer.current) {
+          // setWaveformLoaded(true);
+          // wavesurfer.current.setVolume(volume);
+          console.log('🔥 finish');
+          setPlaying(false);
+        }
+      });
+
       wavesurfer.current.drawer.on('click', (e: Event) => {
         if (wavesurfer.current) {
           const isPlaying = wavesurfer.current.isPlaying();
@@ -103,7 +132,8 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     if (!wavesurfer.current) return;
 
     if (shouldPlay) {
-      wavesurfer.current.skipBackward();
+      // wavesurfer.current.skipBackward();
+      wavesurfer.current.stop();
       wavesurfer.current.play();
     } else {
       wavesurfer.current.stop();

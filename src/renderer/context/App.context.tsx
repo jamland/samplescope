@@ -16,6 +16,7 @@ type ContextProps = State & {
   setSearchQuery: (searchQuery: string) => void;
   setSelectedSample: (sample: SamplePreview) => void;
   setResultCount: (count: FoundCount) => void;
+  setPlaying: (isPlaying: boolean) => void;
 };
 
 interface State {
@@ -23,6 +24,7 @@ interface State {
   selectedSample: SelectedSample;
   foundCount: FoundCount;
   volume: number;
+  isPlaying: boolean;
 }
 
 const initialState: State = {
@@ -30,6 +32,7 @@ const initialState: State = {
   selectedSample: null,
   foundCount: undefined,
   volume: 0.5,
+  isPlaying: false,
 };
 
 const defaultProps = {
@@ -37,6 +40,7 @@ const defaultProps = {
   setSearchQuery: () => {},
   setSelectedSample: () => {},
   setResultCount: () => {},
+  setPlaying: () => {},
 };
 
 export const AppContext = React.createContext<ContextProps>(defaultProps);
@@ -58,6 +62,7 @@ export const AppContextProvider = ({
 
     setState({
       selectedSample,
+      isPlaying: false,
     });
   };
 
@@ -73,6 +78,8 @@ export const AppContextProvider = ({
     });
   };
 
+  const setPlaying = (isPlaying: boolean) => setState({ isPlaying });
+
   return (
     <AppContext.Provider
       value={{
@@ -80,6 +87,7 @@ export const AppContextProvider = ({
         setSearchQuery,
         setSelectedSample,
         setResultCount,
+        setPlaying,
       }}
     >
       {children}

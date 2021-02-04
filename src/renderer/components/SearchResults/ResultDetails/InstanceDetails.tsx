@@ -15,6 +15,8 @@ const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
   const filesize = formatBytesToSize(sample.filesize);
   const bitrate = sample.bitrate + ' Kbps';
 
+  console.log('sample', sample);
+
   return (
     <>
       <div className="detailsTable">
@@ -25,7 +27,11 @@ const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
           <DetailsRow key="bitrate" name="bitrate" value={bitrate} />
         </div>
         <div className="detailsCol">
-          <DetailsRow key="type" name="type" value={sample.type} />
+          <DetailsRow
+            key="type"
+            name="type"
+            value={<BrowserLink href={sample.url} text={sample.type} />}
+          />
           <DetailsRow key="channels" name="channels" value={channels} />
           <DetailsRow key="filesize" name="filesize" value={filesize} />
           <DetailsRow
@@ -38,12 +44,15 @@ const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
 
       <Author sample={sample} />
 
-      <div>
+      <div className="sample-description-sm">
+        Created: {new Date(sample.created).toLocaleDateString()}
+      </div>
+      <div className="sample-description-sm">
         {' ©'} <BrowserLink href={sample.license} text="License" />
       </div>
-      <div>Created: {sample.created}</div>
 
-      <div>{sample.description}</div>
+      <br />
+      <div className="sample-description-sm">{sample.description}</div>
     </>
   );
 };
@@ -68,7 +77,7 @@ const formatBytesToSize = (bytes: number): string => {
 
 interface DetailsRowProps {
   name: string;
-  value: string | number;
+  value: string | number | JSX.Element;
 }
 
 const DetailsRow: React.FC<DetailsRowProps> = ({

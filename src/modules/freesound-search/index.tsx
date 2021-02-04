@@ -137,6 +137,7 @@ const searchText = async ({
     'similar_sounds',
     'tags',
     'type',
+    'url',
   ].join(',');
   const page_size = 30;
   const sort = query === '' ? 'created_desc' : 'score';

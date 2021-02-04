@@ -96,7 +96,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
             <span className="download-progress">{progress}%</span>
           </>
         ) : (
-          'Download'
+          'Download MP3'
         )}
       </button>
     </div>
