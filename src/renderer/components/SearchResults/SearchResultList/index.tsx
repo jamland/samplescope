@@ -26,9 +26,12 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 }: Props) => {
   // observer persist over rerenders with ref
   const observer = useRef<Ref>();
-  const { selectedSample, setSelectedSample, isPlaying } = useContext(
-    AppContext
-  );
+  const {
+    selectedSample,
+    setSelectedSample,
+    isPlaying,
+    setPlaying,
+  } = useContext(AppContext);
 
   // each time last item ref created we call this fn
   const lastSampleElementRef = useCallback(
@@ -59,6 +62,8 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
   const onItemClick = (sample: SamplePreview) => {
+    console.log('1');
+
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
 
@@ -77,11 +82,15 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     e.stopPropagation();
 
     if (sample.id !== selectedSample?.id) {
-      eventEmitter.emit(eventEmitter.play, false);
+      // eventEmitter.emit(eventEmitter.play, false);
       setSelectedSample(sample);
+      setPlaying(true);
     } else {
-      eventEmitter.emit(eventEmitter.play, !isPlaying);
+      // eventEmitter.emit(eventEmitter.play, !isPlaying);
+      setPlaying(!isPlaying);
     }
+    console.log('2');
+    console.log('playPause...');
   };
 
   const playOrReplay = () => {
@@ -140,6 +149,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
               refForLastItem={refForLastItem}
               onItemClick={onItemClick}
               onPlayPauseClick={playPause}
+              isPlaying={isPlaying}
             />
           );
         })}

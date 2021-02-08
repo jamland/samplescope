@@ -2,18 +2,18 @@
 
 .result-list-item {
   display: flex;
-  padding: 5px 0 5px 10px;
   margin: 0 0 0 -10px;
   cursor: default;
   transition: background-color 0.2s ease;
+  align-items: center;
 }
 
 .result-list-item svg {
-  margin-top: 3px;
   flex: 0 0 16px;
   margin-right: 1em;
   opacity: 0;
   transition: opacity 0.2s ease;
+  margin: 5px 15px 5px 5px;
 }
 
 .result-list-item[data-isactive='true'],
@@ -26,7 +26,7 @@
   color: var(--result-list-active-color);
 }
 
-body [data-platform="win32"] .result-list-item[data-isactive='true'] * {
+body [data-platform='win32'] .result-list-item[data-isactive='true'] * {
   font-weight: 700;
 }
 

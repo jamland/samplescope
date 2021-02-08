@@ -15,8 +15,6 @@ const InstanceDetails: React.FunctionComponent<Props> = ({ sample }: Props) => {
   const filesize = formatBytesToSize(sample.filesize);
   const bitrate = sample.bitrate + ' Kbps';
 
-  console.log('sample', sample);
-
   return (
     <>
       <div className="detailsTable">
