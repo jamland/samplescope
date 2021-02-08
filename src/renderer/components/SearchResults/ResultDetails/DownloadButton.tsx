@@ -70,7 +70,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
         name: 'DOWNLOAD',
         action: 'File Downloaded',
         label: sample.id,
-        value: `#${sample.id} ${sample.name}`,
+        value: `${sample.name}`,
       });
 
       // GA4.sendEvent('download', {
