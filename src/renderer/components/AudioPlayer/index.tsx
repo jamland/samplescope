@@ -28,6 +28,11 @@ interface Props {
   volume: number;
 }
 
+enum seekDirection {
+  forward,
+  rewind,
+}
+
 /**
  * This component play audio and generates / show waveform for it
  * using wavesurfer.js
@@ -36,6 +41,7 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
   const [waveFormLoaded, setWaveformLoaded] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false);
   const { setPlaying } = useContext(AppContext);
 
   // on mount
@@ -53,8 +59,37 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
       }
     );
 
+    const autoPlayEvent = eventEmitter.subscribe(eventEmitter.autoplay, () => {
+      setAutoPlay(true);
+    });
+
+    const playPauseEvent = eventEmitter.subscribe(
+      eventEmitter.playPause,
+      playPause
+    );
+
+    const seekForwardEvent = eventEmitter.subscribe(
+      eventEmitter.seekForward,
+      () => {
+        console.log('forward...');
+        seekForward();
+      }
+    );
+
+    const seekRewindEvent = eventEmitter.subscribe(
+      eventEmitter.seekRewind,
+      () => {
+        console.log('rewind...');
+        seekRewind();
+      }
+    );
+
     return () => {
       playEvent.unsubscribe();
+      autoPlayEvent.unsubscribe();
+      playPauseEvent.unsubscribe();
+      seekForwardEvent.unsubscribe();
+      seekRewindEvent.unsubscribe();
     };
   }, []);
 
@@ -74,13 +109,17 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
         if (wavesurfer.current) {
           setWaveformLoaded(true);
           wavesurfer.current.setVolume(volume);
+
+          if (autoPlay) {
+            console.log('autplaying.................🔊');
+            wavesurfer.current.play();
+            setAutoPlay(false);
+          }
         }
       });
 
       wavesurfer.current.on('play', function () {
         if (wavesurfer.current) {
-          // setWaveformLoaded(true);
-          // wavesurfer.current.setVolume(volume);
           console.log('🔥 play');
           setPlaying(true);
         }
@@ -88,8 +127,6 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
       wavesurfer.current.on('pause', function () {
         if (wavesurfer.current) {
-          // setWaveformLoaded(true);
-          // wavesurfer.current.setVolume(volume);
           console.log('🔥 pause');
           setPlaying(false);
         }
@@ -97,8 +134,6 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
       wavesurfer.current.on('finish', function () {
         if (wavesurfer.current) {
-          // setWaveformLoaded(true);
-          // wavesurfer.current.setVolume(volume);
           console.log('🔥 finish');
           setPlaying(false);
         }
@@ -138,6 +173,46 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     } else {
       wavesurfer.current.stop();
     }
+  };
+
+  const playPause = () => {
+    if (wavesurfer.current) {
+      wavesurfer.current.playPause();
+    }
+  };
+
+  const seekForward = () => {
+    if (wavesurfer.current) {
+      const seekTime = getSeekTime(seekDirection.forward);
+      wavesurfer.current.seekTo(seekTime);
+    }
+  };
+
+  const seekRewind = () => {
+    if (wavesurfer.current) {
+      const seekTime = getSeekTime(seekDirection.rewind);
+      wavesurfer.current.seekTo(seekTime);
+    }
+  };
+
+  const getSeekTime = (choice: seekDirection) => {
+    const seekBy = 5;
+    const currentTime = wavesurfer.current.getCurrentTime();
+    const duration = wavesurfer.current.getDuration();
+    const onePercent = duration / 100;
+    const direction = choice === seekDirection.forward ? 1 : -1;
+
+    const newTime = currentTime + onePercent * seekBy * direction;
+    const newTimeInPercents = newTime / onePercent;
+    // Seek time need to be within [0..1]
+    console.log('newTimeInPercents', newTimeInPercents);
+
+    const seekTime =
+      choice === seekDirection.forward
+        ? Math.min(newTimeInPercents / 100, 1)
+        : Math.max(newTimeInPercents / 100, 0);
+
+    return seekTime;
   };
 
   return (

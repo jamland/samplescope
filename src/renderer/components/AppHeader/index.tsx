@@ -13,9 +13,11 @@ import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
   const [inputValue, setInputValue] = useState('');
-  const { setSearchQuery: setDebouncedValue, foundCount } = useContext(
-    AppContext
-  );
+  const {
+    setSearchQuery: setDebouncedValue,
+    foundCount,
+    setKeyShortcutsActive,
+  } = useContext(AppContext);
 
   useDebounce(
     () => {
@@ -42,6 +44,16 @@ const AppHeader: React.FC<{}> = () => {
 
   const handleSettingsOpen = () => {
     eventEmitter.emit(eventEmitter.toggleSidebar, true);
+  };
+
+  const onInputFocus = () => {
+    console.log('onInputFocus');
+    setKeyShortcutsActive(false);
+  };
+
+  const onInputBlur = () => {
+    console.log('onInputBlur');
+    setKeyShortcutsActive(true);
   };
 
   const placeholderText = foundCount
@@ -74,6 +86,8 @@ const AppHeader: React.FC<{}> = () => {
             type="text"
             placeholder={placeholderText}
             onChange={handleSearch}
+            onFocus={onInputFocus}
+            onBlur={onInputBlur}
             autoFocus={true}
           />
         </div>

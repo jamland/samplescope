@@ -31,6 +31,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     setSelectedSample,
     isPlaying,
     setPlaying,
+    isKeyShortcutsActive,
   } = useContext(AppContext);
 
   // each time last item ref created we call this fn
@@ -62,8 +63,6 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     samples.length === index + 1 ? { ref: lastSampleElementRef } : {};
 
   const onItemClick = (sample: SamplePreview) => {
-    console.log('1');
-
     if (sample.id !== selectedSample?.id) setSelectedSample(sample);
   };
 
@@ -75,22 +74,32 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     setSelectedSample(nextSample);
   };
 
-  const playPause = (
+  /**
+   * If user click different file than active one
+   * -> set new active sample to the context
+   *    this will trigger loading this sample to the AudioPlayer.
+   *    And set playing icon (isPlaying) to play state.
+   *    And emit autoplay event on AudioPlayer,
+   *    so it will start play as soon as will be loaded.
+   *
+   * -> Else, emit play / pause event on AudioPlayer.
+   *    And play/pause icon (isPlaying)
+   */
+  const playPauseOnClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     sample: SamplePreview
   ) => {
+    // prevent propogated click on whole sample row
     e.stopPropagation();
 
     if (sample.id !== selectedSample?.id) {
-      // eventEmitter.emit(eventEmitter.play, false);
       setSelectedSample(sample);
       setPlaying(true);
+      eventEmitter.emit(eventEmitter.autoplay);
     } else {
-      // eventEmitter.emit(eventEmitter.play, !isPlaying);
+      eventEmitter.emit(eventEmitter.play, !isPlaying);
       setPlaying(!isPlaying);
     }
-    console.log('2');
-    console.log('playPause...');
   };
 
   const playOrReplay = () => {
@@ -102,6 +111,20 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     }
   };
 
+  const playPause = () => {
+    if (selectedSample) {
+      eventEmitter.emit(eventEmitter.playPause);
+    } else {
+      setSelectedSample(samples[0]);
+      eventEmitter.emit(eventEmitter.playPause);
+    }
+  };
+
+  /**
+   *
+   * Keyboard Shortcuts goes here
+   *
+   */
   useKeyPressEvent('ArrowDown', () => {
     const indexSelected = samples.findIndex(
       (el) => el.id === selectedSample?.id
@@ -124,15 +147,39 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     }
   });
 
-  useKeyPressEvent('ArrowRight', () => playOrReplay());
-  // Enter conflicts with searchbar enter
-  // useKeyPressEvent('Enter', () => playOrReplay());
+  // useKeyPressEvent('ArrowRight', () => {
+  //   if (isKeyShortcutsActive) {
+  //     playPause();
+  //   }
+  // });
+
+  useKeyPressEvent('Enter', playOrReplay);
+
+  const SPACEBAR = ' ';
+  useKeyPressEvent(SPACEBAR, () => {
+    if (isKeyShortcutsActive) playPause();
+  });
 
   useKeyPressEvent('ArrowLeft', () => {
-    if (selectedSample) {
-      eventEmitter.emit(eventEmitter.play, false);
+    if (selectedSample && isKeyShortcutsActive) {
+      eventEmitter.emit(eventEmitter.seekRewind);
     }
   });
+
+  useKeyPressEvent('ArrowRight', () => {
+    console.log('ArrowRight');
+
+    if (selectedSample && isKeyShortcutsActive) {
+      console.log('ArrowRight 2');
+
+      eventEmitter.emit(eventEmitter.seekForward);
+    }
+  });
+
+  /**
+   *
+   *
+   */
 
   return (
     <div>
@@ -148,7 +195,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
               sample={sample}
               refForLastItem={refForLastItem}
               onItemClick={onItemClick}
-              onPlayPauseClick={playPause}
+              onPlayPauseClick={playPauseOnClick}
               isPlaying={isPlaying}
             />
           );

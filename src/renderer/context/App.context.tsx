@@ -16,15 +16,32 @@ type ContextProps = State & {
   setSearchQuery: (searchQuery: string) => void;
   setSelectedSample: (sample: SamplePreview) => void;
   setResultCount: (count: FoundCount) => void;
-  setPlaying: (isPlaying: boolean) => void;
+  setPlaying: (choice: boolean) => void;
+  setKeyShortcutsActive: (choice: boolean) => void;
 };
 
 interface State {
   searchQuery: string;
   selectedSample: SelectedSample;
   foundCount: FoundCount;
+  /**
+   * Volume controlled via volume slider
+   * This value applied to AudioPlayer when new wave loaded
+   * And when this volume changed
+   */
   volume: number;
+  /**
+   * This value ONLY for visual represantation of PLAY/PAUSE button
+   * It is updated via click on PLAY/PAUSE button
+   * And within AudioPlayer when it is started/paused/finished
+   */
   isPlaying: boolean;
+  /**
+   * This variable used with keyboard shortcuts
+   * If TRUE player' keyboard shortcuts doesn't work
+   * So, we can disable key shortcuts while user uses search or Settings screen
+   */
+  isKeyShortcutsActive: boolean;
 }
 
 const initialState: State = {
@@ -33,6 +50,7 @@ const initialState: State = {
   foundCount: undefined,
   volume: 0.5,
   isPlaying: false,
+  isKeyShortcutsActive: true,
 };
 
 const defaultProps = {
@@ -41,6 +59,7 @@ const defaultProps = {
   setSelectedSample: () => {},
   setResultCount: () => {},
   setPlaying: () => {},
+  setKeyShortcutsActive: () => {},
 };
 
 export const AppContext = React.createContext<ContextProps>(defaultProps);
@@ -52,13 +71,13 @@ export const AppContextProvider = ({
 
   const setSearchQuery = (searchQuery: string) => {
     setSelectedSample(null);
-    setState({ searchQuery });
+    setState({ searchQuery: searchQuery.trim() });
   };
 
   const setResultCount = (foundCount: FoundCount) => setState({ foundCount });
 
   const setSelectedSample = async (selectedSample: SamplePreview | null) => {
-    if (!selectedSample) return;
+    // if (!selectedSample) return;
 
     setState({
       selectedSample,
@@ -79,6 +98,8 @@ export const AppContextProvider = ({
   };
 
   const setPlaying = (isPlaying: boolean) => setState({ isPlaying });
+  const setKeyShortcutsActive = (isKeyShortcutsActive: boolean) =>
+    setState({ isKeyShortcutsActive });
 
   return (
     <AppContext.Provider
@@ -88,6 +109,7 @@ export const AppContextProvider = ({
         setSelectedSample,
         setResultCount,
         setPlaying,
+        setKeyShortcutsActive,
       }}
     >
       {children}
