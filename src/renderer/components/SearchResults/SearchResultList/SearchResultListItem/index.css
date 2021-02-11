@@ -6,6 +6,11 @@
   cursor: default;
   transition: background-color 0.2s ease;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 80%;
+  text-overflow: ellipsis;
+  padding: 0.1em 0;
 }
 
 .result-list-item svg {

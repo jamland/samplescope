@@ -75,7 +75,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   };
 
   /**
-   * If user click different file than active one
+   * If user click different file which isn't active right now
    * -> set new active sample to the context
    *    this will trigger loading this sample to the AudioPlayer.
    *    And set playing icon (isPlaying) to play state.
@@ -97,7 +97,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
       setPlaying(true);
       eventEmitter.emit(eventEmitter.autoplay);
     } else {
-      eventEmitter.emit(eventEmitter.play, !isPlaying);
+      eventEmitter.emit(eventEmitter.playPause);
       setPlaying(!isPlaying);
     }
   };
@@ -131,7 +131,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     );
 
     if (indexSelected < samples.length - 1) {
-      // select next or firest in list
+      // select next or first in list
       const nextSample = samples[indexSelected + 1];
       setSelectedSample(nextSample);
     }
@@ -147,17 +147,15 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     }
   });
 
-  // useKeyPressEvent('ArrowRight', () => {
-  //   if (isKeyShortcutsActive) {
-  //     playPause();
-  //   }
-  // });
-
   useKeyPressEvent('Enter', playOrReplay);
 
   const SPACEBAR = ' ';
-  useKeyPressEvent(SPACEBAR, () => {
-    if (isKeyShortcutsActive) playPause();
+  useKeyPressEvent(SPACEBAR, (e) => {
+    console.log('eeee', e);
+    if (isKeyShortcutsActive) {
+      e.preventDefault();
+      playPause();
+    }
   });
 
   useKeyPressEvent('ArrowLeft', () => {

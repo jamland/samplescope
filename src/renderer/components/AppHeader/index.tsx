@@ -47,13 +47,19 @@ const AppHeader: React.FC<{}> = () => {
   };
 
   const onInputFocus = () => {
-    console.log('onInputFocus');
     setKeyShortcutsActive(false);
   };
 
   const onInputBlur = () => {
-    console.log('onInputBlur');
     setKeyShortcutsActive(true);
+  };
+
+  // is user press UP or DOWN leave input
+  // and give use opportunity to navigate with keyboard
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      (e.target as HTMLInputElement).blur();
+    }
   };
 
   const placeholderText = foundCount
@@ -88,6 +94,7 @@ const AppHeader: React.FC<{}> = () => {
             onChange={handleSearch}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
+            onKeyDown={onKeyDown}
             autoFocus={true}
           />
         </div>

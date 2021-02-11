@@ -96,7 +96,9 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   // create new WaveSurfer instance
   // On component mount and when url changes
   useEffect(() => {
-    const url = sample.previews?.['preview-lq-mp3'];
+    const url =
+      sample.previews?.['preview-hq-mp3'] ??
+      sample.previews?.['preview-lq-mp3'];
     setWaveformLoaded(false);
 
     if (url && waveformRef.current) {
@@ -111,7 +113,6 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
           wavesurfer.current.setVolume(volume);
 
           if (autoPlay) {
-            console.log('autplaying.................🔊');
             wavesurfer.current.play();
             setAutoPlay(false);
           }
@@ -120,21 +121,18 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
       wavesurfer.current.on('play', function () {
         if (wavesurfer.current) {
-          console.log('🔥 play');
           setPlaying(true);
         }
       });
 
       wavesurfer.current.on('pause', function () {
         if (wavesurfer.current) {
-          console.log('🔥 pause');
           setPlaying(false);
         }
       });
 
       wavesurfer.current.on('finish', function () {
         if (wavesurfer.current) {
-          console.log('🔥 finish');
           setPlaying(false);
         }
       });
@@ -182,14 +180,14 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   };
 
   const seekForward = () => {
-    if (wavesurfer.current) {
+    if (wavesurfer.current && wavesurfer.current.isReady) {
       const seekTime = getSeekTime(seekDirection.forward);
       wavesurfer.current.seekTo(seekTime);
     }
   };
 
   const seekRewind = () => {
-    if (wavesurfer.current) {
+    if (wavesurfer.current && wavesurfer.current.isReady) {
       const seekTime = getSeekTime(seekDirection.rewind);
       wavesurfer.current.seekTo(seekTime);
     }
