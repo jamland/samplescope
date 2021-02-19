@@ -70,18 +70,12 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
     const seekForwardEvent = eventEmitter.subscribe(
       eventEmitter.seekForward,
-      () => {
-        console.log('forward...');
-        seekForward();
-      }
+      seekForward
     );
 
     const seekRewindEvent = eventEmitter.subscribe(
       eventEmitter.seekRewind,
-      () => {
-        console.log('rewind...');
-        seekRewind();
-      }
+      seekRewind
     );
 
     return () => {
@@ -149,7 +143,7 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     }
 
     // Removes events, elements and disconnects Web Audio nodes.
-    // when component unmount
+    // on component unmount
     return () => {
       if (wavesurfer.current) wavesurfer.current.destroy();
     };
@@ -165,7 +159,6 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     if (!wavesurfer.current) return;
 
     if (shouldPlay) {
-      // wavesurfer.current.skipBackward();
       wavesurfer.current.stop();
       wavesurfer.current.play();
     } else {
@@ -193,7 +186,12 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     }
   };
 
+  /**
+   * Returns exact position to play from, between [0-1]
+   * Depends on direction position moved by +-5%
+   */
   const getSeekTime = (choice: seekDirection) => {
+    // number of % to move left or right
     const seekBy = 5;
     const currentTime = wavesurfer.current.getCurrentTime();
     const duration = wavesurfer.current.getDuration();
@@ -202,9 +200,8 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
 
     const newTime = currentTime + onePercent * seekBy * direction;
     const newTimeInPercents = newTime / onePercent;
-    // Seek time need to be within [0..1]
-    console.log('newTimeInPercents', newTimeInPercents);
 
+    // Seek time need to be within [0..1]
     const seekTime =
       choice === seekDirection.forward
         ? Math.min(newTimeInPercents / 100, 1)

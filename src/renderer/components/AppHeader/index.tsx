@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useDebounce } from 'react-use';
+import React, { useContext, useState, useRef } from 'react';
+import { useDebounce, useKeyPressEvent } from 'react-use';
 
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
@@ -12,6 +12,7 @@ import freesoundLogo from '~/images/samplescope-icon.png';
 import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
+  const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const {
     setSearchQuery: setDebouncedValue,
@@ -57,7 +58,11 @@ const AppHeader: React.FC<{}> = () => {
   // is user press UP or DOWN leave input
   // and give use opportunity to navigate with keyboard
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    const shortcutPressed = ['ArrowDown', 'ArrowUp', 'Enter'].some(
+      (el) => el === e.key
+    );
+
+    if (shortcutPressed) {
       (e.target as HTMLInputElement).blur();
     }
   };
@@ -65,6 +70,14 @@ const AppHeader: React.FC<{}> = () => {
   const placeholderText = foundCount
     ? `Search over ${Number(foundCount).toLocaleString()} samples`
     : 'Search';
+
+  // focus search input when CMD+f pressed
+  useKeyPressEvent('f', (e) => {
+    const macCmdKeyPressed = e.metaKey;
+    if (macCmdKeyPressed) {
+      inputRef.current.focus();
+    }
+  });
 
   return (
     <div className="app-header">
@@ -89,6 +102,7 @@ const AppHeader: React.FC<{}> = () => {
           <input
             // set value so it will be reflected here when changed from other places
             value={inputValue}
+            ref={inputRef}
             type="text"
             placeholder={placeholderText}
             onChange={handleSearch}

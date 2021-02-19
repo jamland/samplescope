@@ -151,7 +151,6 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 
   const SPACEBAR = ' ';
   useKeyPressEvent(SPACEBAR, (e) => {
-    console.log('eeee', e);
     if (isKeyShortcutsActive) {
       e.preventDefault();
       playPause();
@@ -165,11 +164,7 @@ const SearchResultList: React.FunctionComponent<Props> = ({
   });
 
   useKeyPressEvent('ArrowRight', () => {
-    console.log('ArrowRight');
-
     if (selectedSample && isKeyShortcutsActive) {
-      console.log('ArrowRight 2');
-
       eventEmitter.emit(eventEmitter.seekForward);
     }
   });

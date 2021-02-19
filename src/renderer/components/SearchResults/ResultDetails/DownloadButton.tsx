@@ -46,7 +46,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
 
   const onDownloadDone = (event: Event, arg: any) => {
     setDownloading(false);
-    console.log('download done!', arg);
+    // console.log('download done!', arg);
 
     // TODO: error msg
     // {message: "no url param for download", result: "error"}

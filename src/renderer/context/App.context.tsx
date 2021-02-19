@@ -42,6 +42,10 @@ interface State {
    * So, we can disable key shortcuts while user uses search or Settings screen
    */
   isKeyShortcutsActive: boolean;
+  /**
+   * Should show welcome screen or not
+   */
+  isWelcomeScreenActive: boolean;
 }
 
 const initialState: State = {
@@ -51,6 +55,7 @@ const initialState: State = {
   volume: 0.5,
   isPlaying: false,
   isKeyShortcutsActive: true,
+  isWelcomeScreenActive: true,
 };
 
 const defaultProps = {
@@ -78,7 +83,17 @@ export const AppContextProvider = ({
 
   const setSelectedSample = async (selectedSample: SamplePreview | null) => {
     // if (!selectedSample) return;
+    console.log('setSelectedSample');
 
+    if (selectedSample) {
+      setState({
+        isWelcomeScreenActive: false,
+      });
+    }
+    /**
+     * Set selected sample and stop playing if anything
+     * Hide Welcome screen when sample selected, so it will be shown only on app start
+     */
     setState({
       selectedSample,
       isPlaying: false,

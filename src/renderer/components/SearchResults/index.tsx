@@ -4,6 +4,7 @@ import SearchResultList from '~/components/SearchResults/SearchResultList';
 import ResultDetails from '~/components/SearchResults/ResultDetails';
 import ResultCount from '~/components/SearchResults/ResultCount';
 import { WithErrorBoundary } from '@components/Errors/ErrorBoundary';
+import WelcomeScreen from '@components/WelcomeScreen';
 import useSampleSearch from '@hooks/useSampleSearch';
 import { AppContext } from '~/context/App.context';
 
@@ -16,7 +17,12 @@ import './index.css';
  */
 
 const SearchResultsComponents = () => {
-  const { searchQuery, setResultCount, foundCount } = useContext(AppContext);
+  const {
+    searchQuery,
+    setResultCount,
+    foundCount,
+    isWelcomeScreenActive,
+  } = useContext(AppContext);
 
   const {
     loading,
@@ -36,7 +42,7 @@ const SearchResultsComponents = () => {
 
   return (
     <div className="search-results-wrapper">
-      <ResultDetails />
+      {isWelcomeScreenActive ? <WelcomeScreen /> : <ResultDetails />}
 
       <div style={{ backgroundColor: 'tomato' }}>{error && 'Error'}</div>
 
