@@ -1,84 +1,41 @@
 import React from 'react';
 
-// import LoaderBars from '@components/icons/LoaderBars.svg';
-// import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
-import PromoBg from '~/images/music.jpeg';
-
+import PromoBg from '~/images/music.png';
 import './index.css';
 
 const WelcomeScreen: React.FC<{}> = () => {
   return (
     <div
-      className="sample-details-section"
-      style={{
-        backgroundColor: 'rgb(39,44,55)',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        fontStyle: 'italic',
-        height: 'auto',
-      }}
+      className="welcome-screen"
     >
-      <img
-        src={PromoBg}
-        style={{
-          objectFit: 'contain',
-          borderRadius: '10px',
-          position: 'absolute',
-          zIndex: 0,
-          top: '4em',
-          left: 0,
-        }}
-      />
+      <img src={PromoBg} className="welcome-img" />
 
-      <div
-        style={{
-          padding: '2em',
-          position: 'relative',
-          marginBottom: '1em',
-          marginTop: '25vh',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '6vw',
-            whiteSpace: 'nowrap',
-            marginBottom: '.5em',
-          }}
-        >
+      <div className="welcome-text">
+        <h1>
           <b>Samplescope</b>
         </h1>
 
         <h3>Use your keyboard to control things!</h3>
 
         <ul>
-          <li style={{ fontStyle: 'italic' }}>
+          <li>
             Use <kbd>Space</kbd> &amp; <kbd>Enter ↵</kbd> to play/pause and
             replay sound.
           </li>
 
-          <li style={{ fontStyle: 'italic' }}>
+          <li>
             Navigate list with <kbd>↓</kbd> &amp; <kbd>↑</kbd>
           </li>
 
-          <li style={{ fontStyle: 'italic' }}>
+          <li>
             Seek track with <kbd>←</kbd> &amp; <kbd>→</kbd>
           </li>
 
-          <li style={{ fontStyle: 'italic' }}>
+          <li>
             Focus search input with <kbd>⌘</kbd>+<kbd>F</kbd>
           </li>
         </ul>
       </div>
-
-      {/* <AudioPlayerWithVolume sample={selectedSample} />
-
-      <div className="sample-details-text">
-        <h3>{selectedSample.name}</h3>
-
-        <InstanceDetails sample={selectedSample} />
-      </div> */}
-
-      {/* <DownloadButton sample={selectedSample} /> */}
     </div>
   );
 };

@@ -71,4 +71,5 @@ kbd {
   color: #333;
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   box-shadow: 2px 2px 0 #ccc;
+  font-style: normal;
 }

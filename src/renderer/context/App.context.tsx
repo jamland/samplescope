@@ -83,7 +83,6 @@ export const AppContextProvider = ({
 
   const setSelectedSample = async (selectedSample: SamplePreview | null) => {
     // if (!selectedSample) return;
-    console.log('setSelectedSample');
 
     if (selectedSample) {
       setState({
