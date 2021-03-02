@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useContext } from 'react';
+import React, { useRef, useCallback, useContext, useEffect } from 'react';
 import { useKeyPressEvent } from 'react-use';
 
 import {
@@ -18,6 +18,8 @@ type Props = {
 
 type Ref = IntersectionObserver;
 
+const SPACEBAR = ' ';
+
 const SearchResultList: React.FunctionComponent<Props> = ({
   loading,
   hasMore,
@@ -33,6 +35,21 @@ const SearchResultList: React.FunctionComponent<Props> = ({
     setPlaying,
     isKeyShortcutsActive,
   } = useContext(AppContext);
+
+  useEffect(() => {
+    window.addEventListener('keydown', preventScrollOnSpacebar);
+    return () => window.removeEventListener('keydown', preventScrollOnSpacebar);
+  }, []);
+
+  /**
+   * Prevent scoll list on SPACE pressed
+   * so it can be used for play/pause only
+   */
+  const preventScrollOnSpacebar = (e: KeyboardEvent) => {
+    if (e.key == SPACEBAR && e.target == document.body) {
+      e.preventDefault();
+    }
+  };
 
   // each time last item ref created we call this fn
   const lastSampleElementRef = useCallback(
@@ -149,7 +166,6 @@ const SearchResultList: React.FunctionComponent<Props> = ({
 
   useKeyPressEvent('Enter', playOrReplay);
 
-  const SPACEBAR = ' ';
   useKeyPressEvent(SPACEBAR, (e) => {
     if (isKeyShortcutsActive) {
       e.preventDefault();

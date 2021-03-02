@@ -3,16 +3,20 @@ import React from 'react';
 import PromoBg from '~/images/music.png';
 import './index.css';
 
+const remote = window.require('electron').remote;
+const platform = remote.getGlobal('process').platform;
+
 const WelcomeScreen: React.FC<{}> = () => {
+  const ctrlKeyName = platform === 'darwin' ? '⌘' : 'Ctrl';
+
   return (
-    <div
-      className="welcome-screen"
-    >
+    <div className="welcome-screen">
       <img src={PromoBg} className="welcome-img" />
 
       <div className="welcome-text">
         <h1>
           <b>Samplescope</b>
+          <br />
         </h1>
 
         <h3>Use your keyboard to control things!</h3>
@@ -20,7 +24,7 @@ const WelcomeScreen: React.FC<{}> = () => {
         <ul>
           <li>
             Use <kbd>Space</kbd> &amp; <kbd>Enter ↵</kbd> to play/pause and
-            replay sound.
+            replay sound
           </li>
 
           <li>
@@ -32,7 +36,7 @@ const WelcomeScreen: React.FC<{}> = () => {
           </li>
 
           <li>
-            Focus search input with <kbd>⌘</kbd>+<kbd>F</kbd>
+            Focus search input with <kbd>{ctrlKeyName}</kbd>+<kbd>F</kbd> (Find)
           </li>
         </ul>
       </div>

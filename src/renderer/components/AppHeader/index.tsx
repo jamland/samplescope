@@ -8,7 +8,7 @@ import eventEmitter from '@modules/EventEmitter';
 import analytics from '@modules/analytics/renderer';
 // import GA4 from '@modules/analytics/ga4';
 
-import freesoundLogo from '~/images/samplescope-icon.png';
+import samplescopeLogo from '~/images/samplescope-icon.png';
 import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
@@ -71,10 +71,12 @@ const AppHeader: React.FC<{}> = () => {
     ? `Search over ${Number(foundCount).toLocaleString()} samples`
     : 'Search';
 
-  // focus search input when CMD+f pressed
+  // focus search input when CMD+f / Ctrl+f pressed
   useKeyPressEvent('f', (e) => {
     const macCmdKeyPressed = e.metaKey;
-    if (macCmdKeyPressed) {
+    const winCtrlKeyPressed = e.ctrlKey;
+
+    if (macCmdKeyPressed || winCtrlKeyPressed) {
       inputRef.current.focus();
     }
   });
@@ -83,7 +85,7 @@ const AppHeader: React.FC<{}> = () => {
     <div className="app-header">
       <div className="app-header-search">
         <div>
-          <button
+          <div
             className=" button-clear settings-toggler"
             onClick={handleSettingsOpen}
           >
@@ -92,9 +94,9 @@ const AppHeader: React.FC<{}> = () => {
               <div></div>
               <div></div>
             </div>
-            {/* <img src={sampleScopeIcon} alt="samplescope logo" /> */}
-            <img src={freesoundLogo} alt="asdf" />
-          </button>
+
+            <img src={samplescopeLogo} alt="samplescope logo" />
+          </div>
         </div>
 
         <div className="search-box">
