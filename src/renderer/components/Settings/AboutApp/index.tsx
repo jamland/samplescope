@@ -8,11 +8,11 @@ const appVersion = window.require('electron').remote.app.getVersion();
 const AboutApp = () => {
   return (
     <div className="about-app">
-      <p>
+      <div>
         Version
         <h2>{appVersion}</h2>
-      </p>
-      <p>
+      </div>
+      <div>
         License:{' '}
         <BrowserLink
           href="https://github.com/jamland/samplescope/blob/main/LICENSE"
@@ -26,8 +26,9 @@ const AboutApp = () => {
           data-link="https://github.com/jamland/samplescope/blob/main/PRIVACY.md"
           text="Read on GitHub"
         />
-      </p>
-      <p>
+      </div>
+      <br />
+      <div>
         Contacts
         <h2>
           <BrowserLink
@@ -42,7 +43,7 @@ const AboutApp = () => {
             text={<GitHub />}
           />
         </h2>
-      </p>
+      </div>
     </div>
   );
 };
