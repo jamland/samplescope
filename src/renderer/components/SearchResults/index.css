@@ -10,6 +10,7 @@
   height: 100%;
   padding: 4em 10vw 1em 4em;
   line-height: 1em;
+  width: 100vw;
 }
 
 .result-count {

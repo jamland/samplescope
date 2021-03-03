@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import WaveSurfer, { WaveSurferParams } from 'wavesurfer.js';
 
 import { SamplePreview } from '@modules/freesound-search/freesound.types';
 import LoaderThreeDots from '@components/icons/LoaderThreeDots.svg';
 import eventEmitter from '@modules/EventEmitter';
+import { AppContext } from '~/context/App.context';
 
 import './index.css';
 
@@ -27,6 +28,11 @@ interface Props {
   volume: number;
 }
 
+enum seekDirection {
+  forward,
+  rewind,
+}
+
 /**
  * This component play audio and generates / show waveform for it
  * using wavesurfer.js
@@ -35,6 +41,8 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
   const waveformRef = useRef<HTMLDivElement>(null);
   const wavesurfer = useRef<WaveSurfer>();
   const [waveFormLoaded, setWaveformLoaded] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const { setPlaying } = useContext(AppContext);
 
   // on mount
   useEffect(() => {
@@ -51,15 +59,40 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
       }
     );
 
+    const autoPlayEvent = eventEmitter.subscribe(eventEmitter.autoplay, () => {
+      setAutoPlay(true);
+    });
+
+    const playPauseEvent = eventEmitter.subscribe(
+      eventEmitter.playPause,
+      playPause
+    );
+
+    const seekForwardEvent = eventEmitter.subscribe(
+      eventEmitter.seekForward,
+      seekForward
+    );
+
+    const seekRewindEvent = eventEmitter.subscribe(
+      eventEmitter.seekRewind,
+      seekRewind
+    );
+
     return () => {
       playEvent.unsubscribe();
+      autoPlayEvent.unsubscribe();
+      playPauseEvent.unsubscribe();
+      seekForwardEvent.unsubscribe();
+      seekRewindEvent.unsubscribe();
     };
   }, []);
 
   // create new WaveSurfer instance
   // On component mount and when url changes
   useEffect(() => {
-    const url = sample.previews?.['preview-lq-mp3'];
+    const url =
+      sample.previews?.['preview-hq-mp3'] ??
+      sample.previews?.['preview-lq-mp3'];
     setWaveformLoaded(false);
 
     if (url && waveformRef.current) {
@@ -72,6 +105,29 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
         if (wavesurfer.current) {
           setWaveformLoaded(true);
           wavesurfer.current.setVolume(volume);
+
+          if (autoPlay) {
+            wavesurfer.current.play();
+            setAutoPlay(false);
+          }
+        }
+      });
+
+      wavesurfer.current.on('play', function () {
+        if (wavesurfer.current) {
+          setPlaying(true);
+        }
+      });
+
+      wavesurfer.current.on('pause', function () {
+        if (wavesurfer.current) {
+          setPlaying(false);
+        }
+      });
+
+      wavesurfer.current.on('finish', function () {
+        if (wavesurfer.current) {
+          setPlaying(false);
         }
       });
 
@@ -87,7 +143,7 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     }
 
     // Removes events, elements and disconnects Web Audio nodes.
-    // when component unmount
+    // on component unmount
     return () => {
       if (wavesurfer.current) wavesurfer.current.destroy();
     };
@@ -103,11 +159,55 @@ const AudioPlayer: React.FC<Props> = ({ sample, volume }: Props) => {
     if (!wavesurfer.current) return;
 
     if (shouldPlay) {
-      wavesurfer.current.skipBackward();
+      wavesurfer.current.stop();
       wavesurfer.current.play();
     } else {
       wavesurfer.current.stop();
     }
+  };
+
+  const playPause = () => {
+    if (wavesurfer.current) {
+      wavesurfer.current.playPause();
+    }
+  };
+
+  const seekForward = () => {
+    if (wavesurfer.current && wavesurfer.current.isReady) {
+      const seekTime = getSeekTime(seekDirection.forward);
+      wavesurfer.current.seekTo(seekTime);
+    }
+  };
+
+  const seekRewind = () => {
+    if (wavesurfer.current && wavesurfer.current.isReady) {
+      const seekTime = getSeekTime(seekDirection.rewind);
+      wavesurfer.current.seekTo(seekTime);
+    }
+  };
+
+  /**
+   * Returns exact position to play from, between [0-1]
+   * Depends on direction position moved by +-5%
+   */
+  const getSeekTime = (choice: seekDirection) => {
+    // number of % to move left or right
+    const seekBy = 5;
+    const currentTime = wavesurfer.current.getCurrentTime();
+    const duration = wavesurfer.current.getDuration();
+    const onePercent = duration / 100;
+    const direction = choice === seekDirection.forward ? 1 : -1;
+
+    const newTime = currentTime + onePercent * seekBy * direction;
+    const newTimeInPercents = newTime / onePercent;
+
+    // Seek time need to be within [0..1]
+    const seekTime =
+      choice === seekDirection.forward
+        ? Math.min(newTimeInPercents / 100, 1)
+        : Math.max(newTimeInPercents / 100, 0);
+
+    return seekTime;
   };
 
   return (

@@ -1,0 +1,39 @@
+.welcome-screen {
+    font-style: italic;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 20px;
+    right: 30px;
+    border-radius: 10px;
+    width: 50%;
+    color: white;
+    word-break: break-word;
+    z-index: 2;
+    background-color: var(--welcome-screen-bg);
+    justify-content: flex-end;
+    height: auto;
+}
+
+.welcome-screen .welcome-img {
+    object-fit: contain;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 0;
+    top: 4em;
+    left: 0;
+}
+
+.welcome-screen .welcome-text {
+    padding: 2em;
+    position: relative;
+    margin-bottom: 1em;
+    margin-top: 25vh;
+}
+
+.welcome-screen h1 {
+    font-size: 6vw;
+    white-space: nowrap;
+    margin-bottom: .5em;
+    font-style: normal;
+}

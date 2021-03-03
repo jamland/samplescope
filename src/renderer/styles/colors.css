@@ -116,6 +116,7 @@
   --white-color: #fff;
   --blue-grey: #606c76;
   --light-grey: rgb(238, 238, 238);
+  --welcome-screen-bg: #272c37;
 
   /* theme colors */
   --primary-color: var(--yellow-500);

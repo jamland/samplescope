@@ -46,7 +46,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
 
   const onDownloadDone = (event: Event, arg: any) => {
     setDownloading(false);
-    console.log('download done!', arg);
+    // console.log('download done!', arg);
 
     // TODO: error msg
     // {message: "no url param for download", result: "error"}
@@ -70,7 +70,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
         name: 'DOWNLOAD',
         action: 'File Downloaded',
         label: sample.id,
-        value: `#${sample.id} ${sample.name}`,
+        value: `${sample.name}`,
       });
 
       // GA4.sendEvent('download', {
@@ -96,7 +96,7 @@ const DownloadButton: React.FC<Props> = ({ sample }: Props) => {
             <span className="download-progress">{progress}%</span>
           </>
         ) : (
-          'Download'
+          'Download MP3'
         )}
       </button>
     </div>

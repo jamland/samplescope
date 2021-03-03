@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useDebounce } from 'react-use';
+import React, { useContext, useState, useRef } from 'react';
+import { useDebounce, useKeyPressEvent } from 'react-use';
 
 import { AppContext } from '~/context/App.context';
 import SearchIcon from '~/components/icons/SearchIcon';
@@ -8,14 +8,17 @@ import eventEmitter from '@modules/EventEmitter';
 import analytics from '@modules/analytics/renderer';
 // import GA4 from '@modules/analytics/ga4';
 
-import freesoundLogo from '~/images/samplescope-icon.png';
+import samplescopeLogo from '~/images/samplescope-icon.png';
 import './index.css';
 
 const AppHeader: React.FC<{}> = () => {
+  const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
-  const { setSearchQuery: setDebouncedValue, foundCount } = useContext(
-    AppContext
-  );
+  const {
+    setSearchQuery: setDebouncedValue,
+    foundCount,
+    setKeyShortcutsActive,
+  } = useContext(AppContext);
 
   useDebounce(
     () => {
@@ -44,15 +47,45 @@ const AppHeader: React.FC<{}> = () => {
     eventEmitter.emit(eventEmitter.toggleSidebar, true);
   };
 
+  const onInputFocus = () => {
+    setKeyShortcutsActive(false);
+  };
+
+  const onInputBlur = () => {
+    setKeyShortcutsActive(true);
+  };
+
+  // is user press UP or DOWN leave input
+  // and give use opportunity to navigate with keyboard
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const shortcutPressed = ['ArrowDown', 'ArrowUp', 'Enter'].some(
+      (el) => el === e.key
+    );
+
+    if (shortcutPressed) {
+      (e.target as HTMLInputElement).blur();
+    }
+  };
+
   const placeholderText = foundCount
     ? `Search over ${Number(foundCount).toLocaleString()} samples`
     : 'Search';
+
+  // focus search input when CMD+f / Ctrl+f pressed
+  useKeyPressEvent('f', (e) => {
+    const macCmdKeyPressed = e.metaKey;
+    const winCtrlKeyPressed = e.ctrlKey;
+
+    if (macCmdKeyPressed || winCtrlKeyPressed) {
+      inputRef.current.focus();
+    }
+  });
 
   return (
     <div className="app-header">
       <div className="app-header-search">
         <div>
-          <button
+          <div
             className=" button-clear settings-toggler"
             onClick={handleSettingsOpen}
           >
@@ -61,9 +94,9 @@ const AppHeader: React.FC<{}> = () => {
               <div></div>
               <div></div>
             </div>
-            {/* <img src={sampleScopeIcon} alt="samplescope logo" /> */}
-            <img src={freesoundLogo} alt="asdf" />
-          </button>
+
+            <img src={samplescopeLogo} alt="samplescope logo" />
+          </div>
         </div>
 
         <div className="search-box">
@@ -71,9 +104,13 @@ const AppHeader: React.FC<{}> = () => {
           <input
             // set value so it will be reflected here when changed from other places
             value={inputValue}
+            ref={inputRef}
             type="text"
             placeholder={placeholderText}
             onChange={handleSearch}
+            onFocus={onInputFocus}
+            onBlur={onInputBlur}
+            onKeyDown={onKeyDown}
             autoFocus={true}
           />
         </div>

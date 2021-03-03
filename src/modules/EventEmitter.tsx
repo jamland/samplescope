@@ -4,13 +4,15 @@ interface Events {
 
 export class EventEmitter {
   public events: Events;
-  public play: string;
-  public toggleSidebar: string;
+  public play: string = 'play';
+  public toggleSidebar: string = 'toggleSidebar';
+  public autoplay: string = 'autoplay';
+  public playPause: string = 'playPause';
+  public seekForward: string = 'seekForward';
+  public seekRewind: string = 'seekRewind';
 
   constructor(events?: Events) {
     this.events = events || {};
-    this.play = 'play';
-    this.toggleSidebar = 'toggleSidebar';
   }
 
   public subscribe(name: string, cb: Function) {
@@ -24,7 +26,7 @@ export class EventEmitter {
   }
 
   public emit(name: string, ...args: any[]): void {
-    (this.events[name] || []).forEach(fn => fn(...args));
+    (this.events[name] || []).forEach((fn) => fn(...args));
   }
 }
 

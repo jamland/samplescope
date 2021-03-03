@@ -19,7 +19,7 @@ rules.push(
     options: {
       name: 'images/[name].[ext]',
       // Inline images smaller than 100kb as data URIs
-      limit: 100000,
+      limit: 150000,
     },
   }
   // {
