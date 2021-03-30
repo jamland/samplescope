@@ -26,7 +26,7 @@ import userId from '../../main/userId';
 
 // visitor.pageview("/").send();
 
-function trackEvent(category, action, label, value) {
+function trackEvent(category: any, action: any, label: any, value: any) {
   // visitor
   //   .event({
   //     ec: category,
@@ -48,4 +48,9 @@ function trackSessionTiming(time: string) {
   // visitor.timing('User interaction', 'User Session Time', time).send();
 }
 
-export default { trackEvent, trackScreenView, trackSessionTiming, analytics };
+export default {
+  trackEvent,
+  trackScreenView,
+  trackSessionTiming,
+  // analytics
+};
