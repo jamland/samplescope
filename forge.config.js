@@ -70,7 +70,7 @@ module.exports = {
       },
     ],
   ],
-  // hooks: {
-  //   postPackage: require('./src/hooks/notarize.js'),
-  // },
+  hooks: {
+    postPackage: require('./src/hooks/notarize.js'),
+  },
 };
