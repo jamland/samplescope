@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { download } from 'electron-dl';
+import { download, Progress } from 'electron-dl';
 import windowStateKeeper from 'electron-window-state';
 import logger from 'electron-log';
 import appMenu from './menu';
@@ -53,6 +53,7 @@ const createWindow = () => {
       enableRemoteModule: true,
       // enable devtools only for dev mode
       devTools: isDevMode,
+      contextIsolation: false,
     },
     backgroundColor: '#ffffff',
     show: false,
@@ -203,7 +204,7 @@ const savedFileOptions = {
 
   // Type: Function
   // Optional callback that receives a number between 0 and 1 representing the progress of the current download.
-  onProgress: (progress) => {
+  onProgress: (progress: Progress) => {
     mainWindow.webContents.send('download-progress', { progress });
   },
 
