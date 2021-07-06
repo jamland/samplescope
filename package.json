@@ -44,7 +44,7 @@
     }
   },
   "devDependencies": {
-    "@bugsnag/js": "^7.6.0",
+    "@bugsnag/js": "^7.10.5",
     "@bugsnag/plugin-react": "^7.7.0",
     "@electron-forge/cli": "6.0.0-beta.52",
     "@electron-forge/maker-deb": "6.0.0-beta.52",
